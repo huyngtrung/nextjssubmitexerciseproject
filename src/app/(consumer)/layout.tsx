@@ -52,34 +52,39 @@ function Navbar() {
                 </Link>
 
                 <Suspense fallback={null}>
-                    <SignedIn>
-                        <div className="hidden md:flex items-center gap-6">
-                            {navLinks.map((link) => {
-                                const isActive = pathname === link.href;
-                                return (
-                                    <Link
-                                        key={link.href}
-                                        href={link.href}
-                                        className="font-semibold text-md animate-slide-up flex items-center px-2
+                    <div className="hidden md:flex items-center gap-6"></div>
+                    {navLinks.map((link) => {
+                        const isActive = pathname === link.href;
+                        return (
+                            <Link
+                                key={link.href}
+                                href={link.href}
+                                className="font-semibold text-md animate-slide-up flex items-center px-2
                                             opacity-75 hover:opacity-100 transition delay-100 duration-300 ease-in-out
                                             hover:-translate-y-1 hover:scale-105 relative"
-                                        style={{
-                                            color: link.color,
-                                            borderBottom: isActive
-                                                ? `2px solid ${link.color}`
-                                                : '2px solid transparent',
-                                        }}
-                                    >
-                                        {link.label}
-                                    </Link>
-                                );
-                            })}
+                                style={{
+                                    color: link.color,
+                                    borderBottom: isActive
+                                        ? `2px solid ${link.color}`
+                                        : '2px solid transparent',
+                                }}
+                            >
+                                {link.label}
+                            </Link>
+                        );
+                    })}
+                    <div className="hidden md:flex items-center gap-6"></div>
+                    <SignedIn>
+                        <div className="hidden md:flex items-center gap-6">
                             <UserButtonFlower />
                         </div>
                     </SignedIn>
 
                     <SignedOut>
-                        <Button className="self-center" asChild>
+                        <Button
+                            className="self-center border-[#F1C21B] border-2 bg-transparent text-[#F1C21B]/90 font-semibold cursor-pointer hover:bg-black hover:text-[#F1C21B]/90"
+                            asChild
+                        >
                             <SignInButton>Sign In</SignInButton>
                         </Button>
                     </SignedOut>
