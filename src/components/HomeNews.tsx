@@ -42,13 +42,14 @@ export default function HomeNew() {
 
     return (
         <div className="relative w-full">
-            <div className="relative w-full h-[200px] z-0">
-                <Image
-                    src="/homeNewImgs/waveTop.svg"
-                    alt="Wave Top"
-                    fill
-                    className="object-cover"
-                />
+            <div className="relative w-full h-[240px] rotate-180">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 260">
+                    <path
+                        fill="#bde8ff"
+                        fillOpacity="1"
+                        d="M0,96L48,90.7C96,85,192,75,288,106.7C384,139,480,213,576,213.3C672,213,768,139,864,122.7C960,107,1056,149,1152,165.3C1248,181,1344,171,1392,165.3L1440,160L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
+                    ></path>
+                </svg>
             </div>
 
             <div className="relative w-full min-h-[85vh] bg-[#BDE8FF] flex justify-center items-center pt-20 home-new-container">
