@@ -1,0 +1,13 @@
+{
+    "version": "7",
+    "dialect": "mysql",
+    "entries": [
+        {
+            "idx": 0,
+            "version": "5",
+            "when": 1759721600692,
+            "tag": "0000_bitter_doctor_doom",
+            "breakpoints": true
+        }
+    ]
+}

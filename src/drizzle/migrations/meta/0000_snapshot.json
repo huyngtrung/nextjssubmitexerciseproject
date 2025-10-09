@@ -1,0 +1,104 @@
+{
+    "version": "5",
+    "dialect": "mysql",
+    "id": "a5b9ad6c-7580-43b5-a07b-fd0ce7e5622e",
+    "prevId": "00000000-0000-0000-0000-000000000000",
+    "tables": {
+        "users": {
+            "name": "users",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "varchar(255)",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "clerk_user_id": {
+                    "name": "clerk_user_id",
+                    "type": "varchar(255)",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "email": {
+                    "name": "email",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "name": {
+                    "name": "name",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "role": {
+                    "name": "role",
+                    "type": "enum('user','admin')",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "'user'"
+                },
+                "image_url": {
+                    "name": "image_url",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "deleted_at": {
+                    "name": "deleted_at",
+                    "type": "datetime",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "created_at": {
+                    "name": "created_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "(now())"
+                },
+                "updated_at": {
+                    "name": "updated_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "(now())"
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {},
+            "compositePrimaryKeys": {
+                "users_id": {
+                    "name": "users_id",
+                    "columns": ["id"]
+                }
+            },
+            "uniqueConstraints": {
+                "users_clerk_user_id_unique": {
+                    "name": "users_clerk_user_id_unique",
+                    "columns": ["clerk_user_id"]
+                }
+            },
+            "checkConstraint": {}
+        }
+    },
+    "views": {},
+    "_meta": {
+        "schemas": {},
+        "tables": {},
+        "columns": {}
+    },
+    "internal": {
+        "tables": {},
+        "indexes": {}
+    }
+}
