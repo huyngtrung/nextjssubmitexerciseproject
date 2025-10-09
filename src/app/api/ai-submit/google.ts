@@ -1,4 +1,4 @@
-import { env } from '@/data/env/server';
+// import { env } from '@/data/env/server';
 
 // Khởi tạo OpenAI client
 // const google = createGoogleGenerativeAI({

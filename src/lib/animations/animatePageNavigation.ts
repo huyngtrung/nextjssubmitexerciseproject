@@ -42,12 +42,12 @@ function createColumns() {
         if (i >= 3 && i < 10) {
             const charIdx = i - 3;
             const char = document.createElement('span');
-            char.innerText = loadingChars[charIdx];
+            char.innerText = loadingChars[charIdx] ?? '';
 
             // Chọn màu chữ khác màu nền (ép kiểu string)
-            let textColor = textColors[(i - 3) % textColors.length] as string;
+            let textColor = textColors[(i - 3) % textColors.length] ?? '#fff';
             if (textColor === color) {
-                textColor = textColors[(i - 2) % textColors.length] as string;
+                textColor = textColors[(i - 2) % textColors.length] ?? '#fff';
             }
 
             char.style.color = textColor;
