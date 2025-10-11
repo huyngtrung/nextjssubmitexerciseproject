@@ -165,12 +165,12 @@
                 "option5": "Anh"
             },
             "uploadFile": {
-                "title": "Tải Lên Bài Tập",
-                "titledes": "Kéo hoặc nhấp chuột để tải file bài tập"
+                "title": "Tải Lên Đề Bài",
+                "titledes": "Kéo hoặc nhấp chuột để tải file Đề Bài"
             },
             "uploadSolution": {
-                "title": "Tải Lên Đáp Án",
-                "titledes": "Kéo hoặc nhấp chuột để tải file đáp án"
+                "title": "Tải Lên Bài Làm",
+                "titledes": "Kéo hoặc nhấp chuột để tải file Bài Làm"
             },
             "submit": {
                 "title": "Gửi"
