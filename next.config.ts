@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
     },
     images: {
         domains: ['picsum.photos'],
+        unoptimized: true,
     },
 };
 
