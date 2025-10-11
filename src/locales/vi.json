@@ -166,11 +166,11 @@
             },
             "uploadFile": {
                 "title": "Tải Lên Đề Bài",
-                "titledes": "Kéo hoặc nhấp chuột để tải file đề bài"
+                "titledes": "Kéo hoặc nhấp chuột để tải file Đề Bài"
             },
             "uploadSolution": {
                 "title": "Tải Lên Bài Làm",
-                "titledes": "Kéo hoặc nhấp chuột để tải file bài làm"
+                "titledes": "Kéo hoặc nhấp chuột để tải file Bài Làm"
             },
             "submit": {
                 "title": "Gửi"
