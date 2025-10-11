@@ -44,7 +44,7 @@ export default function HomeNew() {
 
     return (
         <div className="relative w-full">
-            <div className="relative w-full h-[200px] z-0">
+            <div className="relative w-full h-[188px] z-0">
                 <Image src="/homeNewWaveTop.svg" alt="Wave Top" fill className="object-cover" />
             </div>
 
