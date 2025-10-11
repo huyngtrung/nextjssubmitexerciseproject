@@ -1,0 +1,204 @@
+{
+    "layout": {
+        "nav": {
+            "home": "Home",
+            "about": "About",
+            "exercise": "Exercise",
+            "signIn": "Sign In",
+            "signUp": "Sign Up",
+            "mobileNav": {
+                "close": "Close",
+                "title": "Menu",
+                "Des": "Quickly navigate to different sections of the site."
+            }
+        },
+        "footer": {
+            "aboutUs": {
+                "title": "About Us",
+                "titledes": "Empowering learners with quality content and modern web solutions — built with passion and precision."
+            },
+            "keepConnected": {
+                "title": "Keep Connected"
+            },
+            "contactUs": {
+                "title": "Contact Us",
+                "addressTitle": "hanoi, xxx,xxx,xxx."
+            },
+            "copyRight": {
+                "title": "© 2025 All Rights Reserved"
+            }
+        }
+    },
+    "home": {
+        "header": {
+            "titleHeader": "Discover",
+            "titleHeaderDes1": "The Learning World",
+            "titleHeaderDes2": "The Bright Future",
+            "titleDes": "Discover the joy of learning. EduX helps you explore knowledge and growth.",
+            "actionContext": "See how it works"
+        },
+        "StandardCurriculumn": {
+            "title": "Standard Curriculumn",
+            "card": {
+                "card1title": "card 1 title",
+                "card1des": "card 1 description",
+                "card2title": "card 2 title",
+                "card2des": "card 2 description",
+                "card3title": "card 3 title",
+                "card3des": "card 3 description",
+                "card4title": "card 4 title",
+                "card4des": "card 4 description",
+                "card5title": "card 5 title",
+                "card5des": "card 5 description"
+            },
+            "footerTitle": "Read More"
+        },
+        "chooseUs": {
+            "title": "Why Our Schools are the Right Fit for Your Child?",
+            "titleDes": "Our schools inspire growth, creativity, and curiosity. We nurture every child to reach their full potential.",
+            "card": {
+                "card1title": "Well Trained Professionals",
+                "card2title": "Awesome Infra-Structure",
+                "card3title": "International Lesson Patterns"
+            }
+        },
+        "clientsTestimonials": {
+            "title": "Parents Testimonials",
+            "titleDes": "Our community of parents shares their experiences and thoughts about the learning journey and growth their children enjoy with us.",
+            "card": {
+                "card1title": "Emily Johnson",
+                "card1des": "Emily’s child has become confident and curious thanks to engaging lessons and caring teachers.",
+                "card2title": "Luna Lovegood",
+                "card2des": "Luna is a creative thinker, bringing imaginative ideas to everything she does.",
+                "card3title": "Harry Potter",
+                "card3des": "Harry is courageous and determined, always facing challenges head-on.",
+                "card4title": "Hermione Granger",
+                "card4des": "Hermione is highly intelligent and diligent, excelling in every task she undertakes.",
+                "card5title": "Ron Weasley",
+                "card5des": "Ron is loyal and brave, supporting his friends through thick and thin."
+            }
+        },
+        "homeNew": {
+            "NewMain": {
+                "title": "A Fun toddler coloring training on classroom",
+                "titledes": "Beautiful branding for changes by Never Now in Australia. Changes is a platform for open discussion in an inclusive and...",
+                "time": "November 19, 2025"
+            },
+            "NewSub": {
+                "title1": "Creative classroom learning activities",
+                "time1": "November 19, 2025",
+                "title2": "Fun group coloring session for kids",
+                "time2": "November 19, 2025",
+                "title3": "Music and motion day in kindergarten",
+                "time3": "November 19, 2025",
+                "title4": "Outdoor exploration for toddlers",
+                "time4": "November 19, 2025"
+            }
+        },
+        "ourPartners": {
+            "title": "Our Partners",
+            "titledes": "We collaborate with trusted educational partners to provide quality learning, innovation, and growth opportunities for every student."
+        }
+    },
+    "about": {
+        "header": {
+            "title": "About"
+        },
+        "visionMission": {
+            "title": "Vision & Mission",
+            "card": {
+                "card1title": "card 1 title",
+                "card1des": "card 1 description",
+                "card2title": "card 2 title",
+                "card2des": "card 2 description",
+                "card3title": "card 3 title",
+                "card3des": "card 3 description"
+            }
+        },
+        "aboutUs": {
+            "title": "About Us",
+            "titledes": "We are dedicated to nurturing young minds, fostering curiosity, and providing a supportive environment where every student can thrive."
+        },
+        "other": {
+            "title": "We offer a high Quality Blend of Co-Curricular Activities, Sports and Academics",
+            "des": "Our school balances academics, sports, and co-curricular activities to foster well-rounded development and ignite every student’s passion for learning.",
+            "link": "Join Today"
+        },
+        "members": {
+            "title": "Improving Skills, Meet our team",
+            "des1": "Our Team is composed of passionate IT educators and industry professionals who are dedicated to helping learners achieve their goals.",
+            "des2": "We believe that everyone deserves access to top-notch education, and that is why we have built a platform that makes IT skills approachable, engaging, and effective. But we know that mastering technology is just one step in personal and professional growth, which is why our instructors focus on developing well-rounded skills, problem-solving abilities, and critical thinking alongside technical knowledge. Our team is constantly researching emerging trends and creating new courses to keep learners ahead in the fast-paced tech industry.",
+            "des3": "Our platform makes IT skills approachable and engaging, while our instructors guide learners in building well-rounded skills, problem-solving, and critical thinking for future growth."
+        },
+        "quotes": {
+            "card1title": "card 1 title",
+            "card1des": "card 1 description",
+            "card2title": "card 2 title",
+            "card2des": "card 2 description",
+            "card3title": "card 3 title",
+            "card3des": "card 3 description",
+            "card4title": "card 4 title",
+            "card4des": "card 4 description",
+            "card5title": "card 5 title",
+            "card5des": "card 5 description"
+        }
+    },
+    "exercise": {
+        "header": {
+            "title": "Exericise"
+        },
+        "submitForm": {
+            "title": "Intelligent Homework Assistant",
+            "chooseGrade": {
+                "title": "Choose Grade",
+                "option1": "Grade6",
+                "option2": "Grade7",
+                "option3": "Grade8",
+                "option4": "Grade9"
+            },
+            "chooseSubject": {
+                "title": "Choose Subject",
+                "option1": "Literature",
+                "option2": "Math",
+                "option3": "Physics",
+                "option4": "Chemistry",
+                "option5": "English"
+            },
+            "uploadFile": {
+                "title": "Upload Your Exercise",
+                "titledes": "Drag or click to upload problem file"
+            },
+            "uploadSolution": {
+                "title": "Upload Solution",
+                "titledes": "Drag or click to upload solution file"
+            },
+            "submit": {
+                "title": "Submit"
+            }
+        },
+        "macoutTutorial": {
+            "title1": "Hello",
+            "des1": "I am the mascot here to guide you.",
+            "title2": "Select Class",
+            "des2": "Please choose the class that suits you.",
+            "title3": "Select Subject",
+            "des3": "Choose the subject you want to submit your assignment for.",
+            "title4": "Upload Assignment File",
+            "des4": "Click or drag your assignment file here.",
+            "title5": "Upload Solution File",
+            "des5": "Click or drag your completed work file here.",
+            "title6": "Submit",
+            "des6": "Once the files are uploaded, click Submit to send them.",
+            "title7": "AI Results",
+            "des7": "View AI explanations and feedback here.",
+            "title8": "Goodbye!",
+            "des8": "Wish you a great learning experience!",
+            "next": "Next",
+            "back": "Back",
+            "finish": "Finish",
+            "notice": "Notice",
+            "isChooseGrade": "Please Choose Your Grade",
+            "isChooseSubject": "Please Choose Your Subject"
+        }
+    }
+}

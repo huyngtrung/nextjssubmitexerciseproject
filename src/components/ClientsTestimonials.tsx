@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { animateClients, initScrollAnimations } from '@/lib/animations/animateClientsTestimonials';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface Client {
     id: number;
@@ -11,45 +12,47 @@ interface Client {
     borderColor: string;
 }
 
-const clients: Client[] = [
-    {
-        id: 0,
-        name: 'Buck Beak',
-        text: 'In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.',
-        imgUrl: 'https://picsum.photos/seed/1/200/300',
-        borderColor: '#F0AA00',
-    },
-    {
-        id: 1,
-        name: 'Luna Lovegood',
-        text: 'Luna is a creative thinker, bringing imaginative ideas to everything she does.',
-        imgUrl: 'https://picsum.photos/seed/2/200/300',
-        borderColor: '#A5C347',
-    },
-    {
-        id: 2,
-        name: 'Harry Potter',
-        text: 'Harry is courageous and determined, always facing challenges head-on.',
-        imgUrl: 'https://picsum.photos/seed/3/200/300',
-        borderColor: '#8700FF',
-    },
-    {
-        id: 3,
-        name: 'Hermione Granger',
-        text: 'Hermione is highly intelligent and diligent, excelling in every task she undertakes.',
-        imgUrl: 'https://picsum.photos/seed/4/200/300',
-        borderColor: '#FF3075',
-    },
-    {
-        id: 4,
-        name: 'Ron Weasley',
-        text: 'Ron is loyal and brave, supporting his friends through thick and thin.',
-        imgUrl: 'https://picsum.photos/seed/5/200/300',
-        borderColor: '#3a65fd',
-    },
-];
-
 export default function ClientsTestimonials() {
+    const { texts } = useLanguage();
+
+    const clients: Client[] = [
+        {
+            id: 0,
+            name: texts.home.clientsTestimonials.card.card1title,
+            text: texts.home.clientsTestimonials.card.card1des,
+            imgUrl: 'https://picsum.photos/seed/1/200/300',
+            borderColor: '#F0AA00',
+        },
+        {
+            id: 1,
+            name: texts.home.clientsTestimonials.card.card2title,
+            text: texts.home.clientsTestimonials.card.card2des,
+            imgUrl: 'https://picsum.photos/seed/2/200/300',
+            borderColor: '#A5C347',
+        },
+        {
+            id: 2,
+            name: texts.home.clientsTestimonials.card.card3title,
+            text: texts.home.clientsTestimonials.card.card3des,
+            imgUrl: 'https://picsum.photos/seed/3/200/300',
+            borderColor: '#8700FF',
+        },
+        {
+            id: 3,
+            name: texts.home.clientsTestimonials.card.card4title,
+            text: texts.home.clientsTestimonials.card.card4des,
+            imgUrl: 'https://picsum.photos/seed/4/200/300',
+            borderColor: '#FF3075',
+        },
+        {
+            id: 4,
+            name: texts.home.clientsTestimonials.card.card5title,
+            text: texts.home.clientsTestimonials.card.card5des,
+            imgUrl: 'https://picsum.photos/seed/5/200/300',
+            borderColor: '#3a65fd',
+        },
+    ];
+
     const [selectedId, setSelectedId] = useState(0);
     const selectedClient = clients.find((c) => c.id === selectedId)!;
 
@@ -62,15 +65,16 @@ export default function ClientsTestimonials() {
     }, []);
 
     return (
-        <div className="w-full min-h-[85vh] flex items-center justify-center px-4">
-            <div className="relative z-10 grid grid-cols-2 gap-16 items-start h-full max-w-6xl w-full">
+        <div className="w-full min-h-[85vh] flex items-center justify-center px-8 md:px-4 py-20 md:py-0">
+            <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-16 items-start h-full max-w-6xl w-full">
                 {/* Left: Testimonial */}
                 <div className="space-y-12">
                     <div className="space-y-6 scroll-animate">
-                        <h3 className="text-5xl font-semibold">Clients Testimonials</h3>
-                        <p className="text-justify text-gray-500">
-                            Cum sociis natoque penatibus et magnis dis parturient montes. Nascetur
-                            ridiculus mus. Rhoncus ut, imperdiet a, venenatis vitae, justo.
+                        <h3 className=" text-4xl lg:text-5xl font-semibold">
+                            {texts.home.clientsTestimonials.title}
+                        </h3>
+                        <p className="md:min-h-[100] lg:text-lg text-justify text-gray-500">
+                            {texts.home.clientsTestimonials.titleDes}
                         </p>
                     </div>
 
@@ -95,7 +99,7 @@ export default function ClientsTestimonials() {
                         <h3 className="text-3xl font-semibold transition-opacity duration-500">
                             {selectedClient.name}
                         </h3>
-                        <p className="text-justify text-lg transition-opacity duration-500">
+                        <p className="text-justify text-lg transition-opacity duration-500 lg:min-h-0 min-h-[88]">
                             {selectedClient.text}
                         </p>
                     </div>

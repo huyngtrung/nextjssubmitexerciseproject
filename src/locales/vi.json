@@ -1,0 +1,204 @@
+{
+    "layout": {
+        "nav": {
+            "home": "Trang Chủ",
+            "about": "Giới Thiệu",
+            "exercise": "Bài Tập",
+            "signIn": "Đăng Nhập",
+            "signUp": "Đăng Ký",
+            "mobileNav": {
+                "close": "Đóng",
+                "title": "Danh Mục",
+                "Des": "Nhanh chóng truy cập các khu vực khác của trang."
+            }
+        },
+        "footer": {
+            "aboutUs": {
+                "title": "Về Chúng Tôi",
+                "titledes": "Giúp phát triển với nội dung chất lượng và giải pháp web hiện đại — xây dựng với tâm huyết và chuyên môn."
+            },
+            "keepConnected": {
+                "title": "Kết Nối"
+            },
+            "contactUs": {
+                "title": "Liên Hệ",
+                "addressTitle": "Hà Nội, Việt Nam"
+            },
+            "copyRight": {
+                "title": "© 2025 Mọi quyền được bảo lưu"
+            }
+        }
+    },
+    "home": {
+        "header": {
+            "titleHeader": "Khám Phá",
+            "titleHeaderDes1": "Thế Giới Học Tập",
+            "titleHeaderDes2": "Tương Lai Sáng",
+            "titleDes": "Khám phá niềm vui học tập. EduX giúp bạn mở rộng kiến thức và phát triển bản thân.",
+            "actionContext": "Xem cách hoạt động"
+        },
+        "StandardCurriculumn": {
+            "title": "Chương Trình Chuẩn",
+            "card": {
+                "card1title": "Tiêu đề 1",
+                "card1des": "Mô tả 1",
+                "card2title": "Tiêu đề 2",
+                "card2des": "Mô tả 2",
+                "card3title": "Tiêu đề 3",
+                "card3des": "Mô tả 3",
+                "card4title": "Tiêu đề 4",
+                "card4des": "Mô tả 4",
+                "card5title": "Tiêu đề 5",
+                "card5des": "Mô tả 5"
+            },
+            "footerTitle": "Đọc Thêm"
+        },
+        "chooseUs": {
+            "title": "Tại Sao Trường Chúng Tôi Phù Hợp Với Con Bạn?",
+            "titleDes": "Trường chúng tôi truyền cảm hứng phát triển, sáng tạo và tò mò. Chúng tôi nuôi dưỡng mỗi học sinh để đạt tiềm năng tối đa.",
+            "card": {
+                "card1title": "Giáo Viên Chuyên Nghiệp",
+                "card2title": "Cơ Sở Vật Chất Tuyệt Vời",
+                "card3title": "Mô Hình Học Quốc Tế"
+            }
+        },
+        "clientsTestimonials": {
+            "title": "Ý Kiến Phụ Huynh",
+            "titleDes": "Cộng đồng phụ huynh chia sẻ trải nghiệm và suy nghĩ về hành trình học tập và phát triển của con họ. Họ rất yêu thích chúng tôi",
+            "card": {
+                "card1title": "Emily Johnson",
+                "card1des": "Con của Emily trở nên tự tin và tò mò nhờ các bài học thú vị và giáo viên tận tâm.",
+                "card2title": "Luna Lovegood",
+                "card2des": "Luna sáng tạo, luôn mang ý tưởng độc đáo vào mọi việc cô làm.",
+                "card3title": "Harry Potter",
+                "card3des": "Harry dũng cảm và quyết tâm, luôn đối mặt thử thách.",
+                "card4title": "Hermione Granger",
+                "card4des": "Hermione thông minh và chăm chỉ, xuất sắc trong mọi nhiệm vụ.",
+                "card5title": "Ron Weasley",
+                "card5des": "Ron trung thành và dũng cảm, luôn hỗ trợ bạn bè."
+            }
+        },
+        "homeNew": {
+            "NewMain": {
+                "title": "Cùng Bé Tô Màu Cùng những cơ sở vật chất tốt",
+                "titledes": "Thương hiệu đẹp cho các thay đổi bởi Never Now ở Úc. Đây là nền tảng thảo luận mở, hợp tác và toàn diện.",
+                "time": "19 Tháng 11, 2025"
+            },
+            "NewSub": {
+                "title1": "Lớp học trải nghiệm sáng tạo",
+                "time1": "19 Tháng 11, 2025",
+                "title2": "Tô màu nhóm vui nhộn cho trẻ",
+                "time2": "19 Tháng 11, 2025",
+                "title3": "Ngày âm nhạc và vận động ở mẫu giáo",
+                "time3": "19 Tháng 11, 2025",
+                "title4": "Khám phá ngoài trời cho trẻ",
+                "time4": "19 Tháng 11, 2025"
+            }
+        },
+        "ourPartners": {
+            "title": "Đối Tác Của Chúng Tôi",
+            "titledes": "Hợp tác với các đối tác giáo dục đáng tin cậy để mang đến cơ hội học tập chất lượng và phát triển cho mọi học sinh."
+        }
+    },
+    "about": {
+        "header": {
+            "title": "Giới Thiệu"
+        },
+        "visionMission": {
+            "title": "Tầm Nhìn & Sứ Mệnh",
+            "card": {
+                "card1title": "Tiêu đề 1",
+                "card1des": "Mô tả 1",
+                "card2title": "Tiêu đề 2",
+                "card2des": "Mô tả 2",
+                "card3title": "Tiêu đề 3",
+                "card3des": "Mô tả 3"
+            }
+        },
+        "aboutUs": {
+            "title": "Về Chúng Tôi",
+            "titledes": "Chúng tôi tận tâm phát triển trí tuệ trẻ, khơi dậy tò mò và tạo môi trường hỗ trợ để mỗi học sinh phát triển."
+        },
+        "other": {
+            "title": "Hội Tụ Hoạt Động, Thể Thao và Học Thuật Chất Lượng",
+            "des": "Trường cân bằng học thuật, thể thao và hoạt động ngoại khóa để phát triển toàn diện và khơi dậy đam mê học tập.",
+            "link": "Tham Gia Ngay"
+        },
+        "members": {
+            "title": "Nâng Cao Kỹ Năng, Gặp Gỡ Đội Ngũ",
+            "des1": "Đội ngũ gồm những giáo viên IT nhiệt huyết và chuyên gia trong ngành, giúp học viên đạt mục tiêu.",
+            "des2": "Chúng tôi tin mọi người xứng đáng tiếp cận giáo dục chất lượng, vì vậy tạo nền tảng giúp học IT dễ tiếp cận, thú vị và hiệu quả. Chúng tôi còn tập trung phát triển kỹ năng toàn diện, giải quyết vấn đề và tư duy phản biện.",
+            "des3": "Nền tảng giúp học IT dễ tiếp cận và thú vị, trong khi giáo viên hướng dẫn phát triển kỹ năng toàn diện và tư duy cho tương lai."
+        },
+        "quotes": {
+            "card1title": "Tiêu đề 1",
+            "card1des": "Mô tả 1",
+            "card2title": "Tiêu đề 2",
+            "card2des": "Mô tả 2",
+            "card3title": "Tiêu đề 3",
+            "card3des": "Mô tả 3",
+            "card4title": "Tiêu đề 4",
+            "card4des": "Mô tả 4",
+            "card5title": "Tiêu đề 5",
+            "card5des": "Mô tả 5"
+        }
+    },
+    "exercise": {
+        "header": {
+            "title": "Bài Tập"
+        },
+        "submitForm": {
+            "title": "Trợ Lý Học Tập Thông Minh",
+            "chooseGrade": {
+                "title": "Chọn Lớp",
+                "option1": "Lớp 6",
+                "option2": "Lớp 7",
+                "option3": "Lớp 8",
+                "option4": "Lớp 9"
+            },
+            "chooseSubject": {
+                "title": "Chọn Môn",
+                "option1": "Văn",
+                "option2": "Toán",
+                "option3": "Lý",
+                "option4": "Hóa",
+                "option5": "Anh"
+            },
+            "uploadFile": {
+                "title": "Tải Lên Bài Tập",
+                "titledes": "Kéo hoặc nhấp chuột để tải file bài tập"
+            },
+            "uploadSolution": {
+                "title": "Tải Lên Đáp Án",
+                "titledes": "Kéo hoặc nhấp chuột để tải file đáp án"
+            },
+            "submit": {
+                "title": "Gửi"
+            }
+        },
+        "macoutTutorial": {
+            "title1": "Xin Chào",
+            "des1": "Mình là người hướng dẫn bạn.",
+            "title2": "Chọn Lớp",
+            "des2": "Đây là mục chọn khối, hãy lựa chọn chính xác.",
+            "title3": "Chọn Môn",
+            "des3": "Đây là mục chọn môn học của học",
+            "title4": "Tải Lên Bài Tập",
+            "des4": "Đây là nơi bạn gửi file bài tập của mình",
+            "title5": "Tải Lên Đáp Án",
+            "des5": "Còn đây nơi bạn gửi file bài làm của mình",
+            "title6": "Nộp Bài",
+            "des6": "Click vào nút sau để gửi bài.",
+            "title7": "Kết Quả và nhận xết",
+            "des7": "Sau khi chờ đợi bạn sẽ nhận được kết quả ở đây",
+            "title8": "Tạm Biệt!",
+            "des8": "Chúc bạn học tập vui vẻ!",
+            "next": "Tiếp",
+            "back": "Quay Lại",
+            "finish": "Hoàn Thành",
+            "notice": "Nhắc nhở",
+            "isChooseGrade": "Vui lòng chọn lớp",
+            "isChooseSubject": "Vui lòng chọn môn"
+        }
+    }
+}

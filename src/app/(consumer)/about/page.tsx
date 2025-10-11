@@ -11,6 +11,7 @@ import {
     SectionAboutPageAnimations,
 } from '@/lib/animations/initAboutPageAnimations';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
+import { useLanguage } from '@/context/LanguageContext';
 
 type IconData = { name: string; top: number; left: number };
 
@@ -31,6 +32,7 @@ const iconsList = [
 ];
 
 export default function AboutPage() {
+    const { texts } = useLanguage();
     const [icons, setIcons] = useState<IconData[]>([]);
 
     useEffect(() => {
@@ -101,40 +103,44 @@ export default function AboutPage() {
                 <div className="absolute inset-0 bg-black/40"></div>
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
                     <nav className="mb-2 text-sm text-white/80">
-                        <h1 className="text-4xl md:text-5xl font-bold mb-4">About</h1>
+                        <h1 className="text-3xl md:text-5xl font-bold mb-4">
+                            {texts.about.header.title}
+                        </h1>
                         <div className="flex gap-3 text-lg justify-center items-center">
                             <Link href="/" className="hover:text-[#F0AA00] text-[#CBECE5]">
-                                Home
+                                {texts.layout.nav.home}
                             </Link>
-                            <CircleArrowRightIcon /> About
+                            <CircleArrowRightIcon /> {texts.layout.nav.about}
                         </div>
                     </nav>
                 </div>
             </div>
 
             {/* Cards */}
-            <div className="about-card mt-16 max-w-6xl flex flex-col justify-center w-full">
+            <div className="about-card my-16 max-w-6xl px-8 md:px-0 flex flex-col justify-center w-full">
                 {/* Vision & Mission */}
-                <div className="pt-12 py-20 text-center mb-28">
-                    <h1 className="text-5xl font-bold mb-4">Vision & Mission</h1>
+                <div className="pt-12 py-0 md:py-12 text-center mb-4 md:mb-8">
+                    <h1 className="text-3xl md:text-5xl font-bold mb-4">
+                        {texts.about.visionMission.title}
+                    </h1>
                     <div className="flex items-center justify-center">
-                        <div className="h-[2px] bg-[#ff6d9d] w-10 md:w-20"></div>
-                        <div className="h-[6px] bg-[#ff6d9d] w-20 md:w-40 rounded"></div>
-                        <div className="h-[2px] bg-[#ff6d9d] w-10 md:w-20"></div>
+                        <div className="h-[2px] bg-[#ff6d9d] w-20 md:w-20"></div>
+                        <div className="h-[6px] bg-[#ff6d9d] w-32 md:w-40 rounded"></div>
+                        <div className="h-[2px] bg-[#ff6d9d] w-20 md:w-20"></div>
                     </div>
                 </div>
 
                 {/* Cards */}
-                <div className="flex flex-col md:flex-row w-full items-end justify-center gap-6 mt-16">
+                <div className="grid grid-cols-1 gap-16 md:flex md:flex-row w-full items-end justify-center px-8 md:gap-6 mt-16">
                     {['Left', 'Middle', 'Right'].map((label, idx) => (
                         <Card
                             key={idx}
-                            className={`flex-1 relative overflow-hidden flex flex-col items-center border-2 border-opacity-20 rounded-xl p-4 pb-12
+                            className={`flex-1 relative overflow-hidden flex flex-col items-center border-2 border-opacity-20 rounded-xl md:p-4 pb-12
                                 transition-transform duration-300 ease-in-out
-                                hover:-translate-y-3
-                                cursor-pointer
+                                hover:-translate-y-3  justify-center md:justify-start 
+                                cursor-pointer min-h-[480] md:min-h-[440]
                                 ${label === 'Left' ? 'border-[#5D58F0]/20 hover:border-[#817DFF]' : ''}
-                                ${label === 'Middle' ? 'border-[#FF236C]/20 hover:border-[#FF5492] -mt-8 md:-mt-12 mb-16' : ''}
+                                ${label === 'Middle' ? 'border-[#FF236C]/20 hover:border-[#FF5492] md:-mt-8  md:mb-16' : ''}
                                 ${label === 'Right' ? 'border-[#A8C347]/20 hover:border-[#C3E166]' : ''}`}
                         >
                             <div className="absolute inset-0 z-0 pointer-events-none">
@@ -168,11 +174,21 @@ export default function AboutPage() {
 
                             <CardHeader className="flex justify-center">
                                 <CardTitle className="whitespace-nowrap text-center">
-                                    Card {label}
+                                    {(() => {
+                                        const key =
+                                            `card${idx + 1}title` as keyof typeof texts.about.visionMission.card;
+                                        return texts.about.visionMission.card[key] ?? '';
+                                    })()}
                                 </CardTitle>
                             </CardHeader>
                             <CardContent className="flex flex-col items-center gap-4 p-4">
-                                <div>Description {label}</div>
+                                <div>
+                                    {(() => {
+                                        const key =
+                                            `card${idx + 1}des` as keyof typeof texts.about.visionMission.card;
+                                        return texts.about.visionMission.card[key] ?? '';
+                                    })()}
+                                </div>
                                 <Button
                                     asChild
                                     size="sm"
@@ -185,16 +201,16 @@ export default function AboutPage() {
             </div>
 
             {/* About Us Section */}
-            <div className="about-section relative w-full">
+            <div className="about-section relative w-full ">
                 <div className="relative w-full h-[200px] z-0">
                     <Image src="/waveTop.svg" alt="Wave Top" fill className="object-cover" />
                 </div>
-                <div className="relative w-full h-[80vh] bg-[#F6F6F6] flex flex-col items-center text-center px-4">
-                    <h1 className="text-5xl font-bold mb-8 mt-16">About Us</h1>
-                    <p className="max-w-xl text-gray-400 mb-6">
-                        Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus
-                        viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet.
-                        Etiam ultricies nisi vel augue.
+                <div className="px-8 relative w-full h-[80vh] bg-[#F6F6F6] flex flex-col items-center text-center md:px-4">
+                    <h1 className=" text-4xl md:text-5xl font-bold mb-8 mt-16">
+                        {texts.about.aboutUs.title}
+                    </h1>
+                    <p className="max-w-xl text-gray-400 md:mb-6 md:min-h-0 min-h-[80]">
+                        {texts.about.aboutUs.titledes}
                     </p>
                     <div className="relative w-[80vh] h-[40vh] mt-8">
                         <Image
@@ -211,33 +227,29 @@ export default function AboutPage() {
             </div>
 
             {/* Other */}
-            <div className="about-other relative z-10 h-[80vh] grid grid-cols-2 gap-16 items-start max-w-6xl w-full py-20">
+            <div className="px-12 lg:px-0 about-other relative z-10 h-[100vh] mb-24 md:mb-0 md:h-[80vh] grid grid-cols-1 md:grid-cols-2 gap-16 items-start max-w-6xl w-full py-20">
                 <div className="space-y-12">
                     <div className="space-y-6 scroll-animate">
-                        <h3 className="text-4xl font-semibold">
-                            We offer a high Quality Blend of Co-Curricular Activities, Sports and
-                            Academics
+                        <h3 className=" text-2xl md:text-4xl font-semibold min-h-[112] md:min-h-[120]">
+                            {texts.about.other.title}
                         </h3>
-                        <p className="text-justify text-gray-500 text-lg">
-                            Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.
-                            Phasellus viverra nulla ut metus varius laoreet. Aliquam lorem ante,
-                            dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut
-                            metus varius laoreet. Etiam ultricies nisi vel augue.
+                        <p className="text-justify text-gray-500 text-lg min-h-[112] md:min-h-[100]">
+                            {texts.about.other.des}
                         </p>
                     </div>
 
-                    <div className="flex items-center">
+                    <div className="flex items-center min-h-[20]">
                         <Button
                             className="bg-[#5D58EF] py-6 px-14 text-lg rounded-full hover:bg-[#FF236C]"
                             asChild
                         >
                             <Link href="/about" className="font-semibold">
-                                Join Today
+                                {texts.about.other.link}
                             </Link>
                         </Button>
                     </div>
                 </div>
-                <div className="relative w-full h-full overflow-hidden rounded-b-[50%]">
+                <div className="relative w-full h-80 md:h-full overflow-hidden rounded-b-[50%]">
                     <Image
                         src="/aboutimgs/half-img.jpg"
                         alt="halfimg"
@@ -249,7 +261,7 @@ export default function AboutPage() {
 
             {/* Members */}
             <div className="relative w-full about-members">
-                <div className="relative w-full min-h-[200px]">
+                <div className="relative w-full min-h-[80px]">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 288">
                         <path
                             fill="#F1C21B"
@@ -258,40 +270,46 @@ export default function AboutPage() {
                         ></path>
                     </svg>
                 </div>
-                <div className="relative w-full min-h-[100vh] bg-[#F1C21B] flex justify-center pb-12">
-                    <div className="max-w-6xl w-full flex flex-col lg:flex-row gap-8 items-start">
+                <div className="relative w-full min-h-[100vh] bg-[#F1C21B] flex justify-center pt-12 lg:px-0 px-12">
+                    <div className="max-w-6xl w-full flex flex-col lg:flex-row gap-8 items-start md:mb-12 mb-20">
                         <div className="w-full lg:w-1/3 flex items-center text-justify">
                             <p>
-                                <span className="font-bold text-3xl">
-                                    Improving Skills, Meet our team :
+                                <span className="font-bold text-2xl md:text-3xl">
+                                    {texts.about.members.title}
                                 </span>
                                 <br />
                                 <br />
-                                <strong>Our Team, </strong>is composed of passionate IT educators
-                                and industry professionals who are dedicated to helping learners
-                                achieve their goals.
+
+                                {/* des1 */}
+                                <span>
+                                    <strong>
+                                        {texts.about.members.des1.split(' ').slice(0, 2).join(' ')}
+                                        ,{' '}
+                                    </strong>
+                                    {texts.about.members.des1.split(' ').slice(2).join(' ')}
+                                </span>
                                 <br />
                                 <br />
-                                We believe that everyone deserves access to top-notch education, and
-                                that is why we have built a platform that makes IT skills
-                                approachable, engaging, and effective. But we know that mastering
-                                technology is just one step in personal and professional growth,
-                                which is why our instructors focus on developing well-rounded
-                                skills, problem-solving abilities, and critical thinking alongside
-                                technical knowledge. Our team is constantly researching emerging
-                                trends and creating new courses to keep learners ahead in the
-                                fast-paced tech industry.
+
+                                {/* des2 */}
+                                <span>
+                                    <strong>
+                                        {texts.about.members.des2.split(' ').slice(0, 2).join(' ')}
+                                        ,{' '}
+                                    </strong>
+                                    {texts.about.members.des2.split(' ').slice(2).join(' ')}
+                                </span>
                                 <br />
                                 <br />
-                                We believe that everyone deserves access to top-notch education, and
-                                that is why we have built a platform that makes IT skills
-                                approachable, engaging, and effective. But we know that mastering
-                                technology is just one step in personal and professional growth,
-                                which is why our instructors focus on developing well-rounded
-                                skills, problem-solving abilities, and critical thinking alongside
-                                technical knowledge. Our team is constantly researching emerging
-                                trends and creating new courses to keep learners ahead in the
-                                fast-paced tech industry.
+
+                                {/* des3 */}
+                                <span>
+                                    <strong>
+                                        {texts.about.members.des3.split(' ').slice(0, 2).join(' ')}
+                                        ,{' '}
+                                    </strong>
+                                    {texts.about.members.des3.split(' ').slice(2).join(' ')}
+                                </span>
                             </p>
                         </div>
                         <div className="w-full lg:w-2/3 relative">
@@ -351,12 +369,20 @@ export default function AboutPage() {
 
                                         <CardHeader className="flex justify-center z-10">
                                             <CardTitle className="whitespace-nowrap text-center">
-                                                Your Title
+                                                {(() => {
+                                                    const key =
+                                                        `card${index + 1}title` as keyof typeof texts.about.quotes;
+                                                    return texts.about.quotes[key] ?? '';
+                                                })()}
                                             </CardTitle>
                                         </CardHeader>
 
                                         <CardContent className="flex items-center justify-center p-6 flex-col gap-6 z-10">
-                                            <div>Your Description</div>
+                                            {(() => {
+                                                const key =
+                                                    `card${index + 1}des` as keyof typeof texts.about.quotes;
+                                                return texts.about.quotes[key] ?? '';
+                                            })()}
                                         </CardContent>
                                     </Card>
                                 </div>

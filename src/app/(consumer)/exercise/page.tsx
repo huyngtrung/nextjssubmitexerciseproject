@@ -8,10 +8,13 @@ import {
     animateTutorial,
     showMascotReminder,
 } from '@/lib/animations/animateExercisePage';
+import { useLanguage } from '@/context/LanguageContext';
 
 type Message = { text: string; sender: 'user' | 'bot' };
 
 export default function ExercisePage() {
+    const { texts } = useLanguage();
+
     const [messages, setMessages] = useState<Message[]>([]);
     const [loading, setLoading] = useState(false);
     const [problemFile, setProblemFile] = useState<File | null>(null);
@@ -73,8 +76,12 @@ export default function ExercisePage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        const notice = texts.exercise.macoutTutorial.notice;
+        const isChooseGrade = texts.exercise.macoutTutorial.isChooseGrade;
+        const isChooseSubject = texts.exercise.macoutTutorial.isChooseSubject;
+
         if (!selectedClass || !selectedSubject) {
-            showMascotReminder(selectedClass ? 'Chọn môn học!' : 'Chọn lớp!');
+            showMascotReminder(notice, selectedClass ? isChooseSubject : isChooseGrade);
             return;
         }
 
@@ -108,9 +115,59 @@ export default function ExercisePage() {
     };
 
     useEffect(() => {
-        const controller = animateTutorial();
+        // Nếu đã có tutorial cũ, ẩn nó trước
+        tutorialController?.goStep?.(); // Hoặc ẩn tutorial trước khi tạo mới
+
+        // Tạo steps dựa trên texts mới
+        const steps = [
+            {
+                elId: null,
+                title: texts.exercise.macoutTutorial.title1,
+                text: texts.exercise.macoutTutorial.des1,
+            },
+            {
+                elId: 'class-select',
+                title: texts.exercise.macoutTutorial.title2,
+                text: texts.exercise.macoutTutorial.des2,
+            },
+            {
+                elId: 'subject-select',
+                title: texts.exercise.macoutTutorial.title3,
+                text: texts.exercise.macoutTutorial.des3,
+            },
+            {
+                elId: 'problem-upload',
+                title: texts.exercise.macoutTutorial.title4,
+                text: texts.exercise.macoutTutorial.des4,
+            },
+            {
+                elId: 'solution-upload',
+                title: texts.exercise.macoutTutorial.title5,
+                text: texts.exercise.macoutTutorial.des5,
+            },
+            {
+                elId: 'submit-btn',
+                title: texts.exercise.macoutTutorial.title6,
+                text: texts.exercise.macoutTutorial.des6,
+            },
+            {
+                elId: 'chat-box',
+                title: texts.exercise.macoutTutorial.title7,
+                text: texts.exercise.macoutTutorial.des7,
+            },
+            {
+                elId: null,
+                title: texts.exercise.macoutTutorial.title8,
+                text: texts.exercise.macoutTutorial.des8,
+            },
+        ];
+        const next = texts.exercise.macoutTutorial.next;
+        const back = texts.exercise.macoutTutorial.back;
+        const finish = texts.exercise.macoutTutorial.finish;
+
+        const controller = animateTutorial(steps, next, back, finish);
         setTutorialController(controller);
-    }, []);
+    }, [texts]); // Re-run khi ngôn ngữ thay đổi
 
     return (
         <div className="relative flex flex-col items-center overflow-hidden  bg-gray-50 min-h-screen">
@@ -125,19 +182,21 @@ export default function ExercisePage() {
                 <div className="absolute inset-0 bg-black/40" />
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
                     <nav className="mb-2 text-sm text-white/80">
-                        <h1 className="text-4xl md:text-5xl font-bold mb-4">Exercise</h1>
+                        <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                            {texts.exercise.header.title}
+                        </h1>
                         <div className="flex gap-3 text-lg justify-center items-center">
                             <Link href="/" className="hover:text-yellow-400 text-cyan-200">
-                                Home
+                                {texts.layout.nav.home}
                             </Link>
-                            <CircleArrowRightIcon /> Exercise
+                            <CircleArrowRightIcon /> {texts.layout.nav.exercise}
                         </div>
                     </nav>
                 </div>
             </div>
 
             {/* Main content */}
-            <div className="w-full max-w-4xl ">
+            <div className="w-full max-w-4xl">
                 {/* img background */}
                 <div className=" pointer-events-none z-0">
                     <div className="absolute w-full h-full">
@@ -175,15 +234,15 @@ export default function ExercisePage() {
                         </div>
                     </div>
                 </div>
-                {/* img background */}
+                {/* img background end*/}
 
                 {/* upload file */}
-                <div className="w-full max-w-4xl px-4 flex flex-col justify-center gap-6 h-[100vh] ">
+                <div className="w-full max-w-4xl px-4 flex flex-col justify-center gap-6 h-[140vh] md:h-[100vh]">
                     {/* header */}
                     <div className="py-8 text-center">
                         <div className="inline-block">
-                            <h1 className="text-5xl font-bold mb-4">
-                                Intelligent Homework Assistant
+                            <h1 className=" text-2xl md:text-5xl font-bold mb-4">
+                                {texts.exercise.submitForm.title}
                             </h1>
                             <div className="flex items-center justify-center w-full">
                                 <div className="h-[2px] bg-[#B1C74D] flex-1"></div>
@@ -197,24 +256,34 @@ export default function ExercisePage() {
                     <div className="flex gap-4 justify-center mb-4 relative">
                         <div className="flex flex-col relative ">
                             <label htmlFor="class-select" className="font-semibold mb-1">
-                                Choose Grade
+                                {texts.exercise.submitForm.chooseGrade.title}
                             </label>
                             <select
                                 id="class-select"
-                                className="border px-4 py-2 rounded-lg"
+                                className="border px-4 py-2 rounded-lg min-w-[200]"
                                 value={selectedClass}
                                 onChange={(e) => setSelectedClass(e.target.value)}
                             >
-                                <option value="">-- Choose Grade --</option>
-                                <option value="6">Grade 6</option>
-                                <option value="7">Grade 7</option>
-                                <option value="8">Grade 8</option>
-                                <option value="9">Grade 9</option>
+                                <option value="">
+                                    -- {texts.exercise.submitForm.chooseGrade.title} --
+                                </option>
+                                <option value="6">
+                                    {texts.exercise.submitForm.chooseGrade.option1}
+                                </option>
+                                <option value="7">
+                                    {texts.exercise.submitForm.chooseGrade.option2}
+                                </option>
+                                <option value="8">
+                                    {texts.exercise.submitForm.chooseGrade.option3}
+                                </option>
+                                <option value="9">
+                                    {texts.exercise.submitForm.chooseGrade.option4}
+                                </option>
                             </select>
                         </div>
                         <div className="flex flex-col relative">
                             <label htmlFor="subject-select" className="font-semibold mb-1">
-                                Choose Subject
+                                {texts.exercise.submitForm.chooseSubject.title}
                             </label>
                             <select
                                 id="subject-select"
@@ -222,23 +291,38 @@ export default function ExercisePage() {
                                 value={selectedSubject}
                                 onChange={(e) => setSelectedSubject(e.target.value)}
                             >
-                                <option value="">-- Choose Subject --</option>
-                                <option value="van">Literature</option>
-                                <option value="toan">Math</option>
-                                <option value="ly">Physics</option>
-                                <option value="hoa">Chemistry</option>
-                                <option value="anh">English</option>
+                                <option value="">
+                                    -- {texts.exercise.submitForm.chooseSubject.title} --
+                                </option>
+                                <option value="van">
+                                    {texts.exercise.submitForm.chooseSubject.option1}
+                                </option>
+                                <option value="toan">
+                                    {texts.exercise.submitForm.chooseSubject.option2}
+                                </option>
+                                <option value="ly">
+                                    {texts.exercise.submitForm.chooseSubject.option3}
+                                </option>
+                                <option value="hoa">
+                                    {texts.exercise.submitForm.chooseSubject.option4}
+                                </option>
+                                <option value="anh">
+                                    {texts.exercise.submitForm.chooseSubject.option5}
+                                </option>
                             </select>
                         </div>
                     </div>
-                    <div className="flex gap-4">
+
+                    <div className="md:flex gap-4">
                         <form
                             onSubmit={handleSubmit}
-                            className="flex flex-col gap-4 relative z-10 flex-1"
+                            className="grid grid-cols-1 md:flex md:flex-col gap-4 relative z-10 md:flex-1  md:mb-12 mb-12"
                         >
                             {/* Problem Upload */}
                             <div className="flex flex-col gap-2">
-                                <span className="font-semibold text-lg">Upload Your Exercise</span>
+                                <span className="font-semibold text-lg">
+                                    {texts.exercise.submitForm.uploadFile.title}
+                                </span>
                                 <div
                                     id="problem-upload"
                                     className="relative border-2 border-dashed border-gray-300 rounded-xl p-4 hover:border-blue-400 transition"
@@ -273,7 +357,7 @@ export default function ExercisePage() {
                                         </div>
                                     ) : (
                                         <span className="text-gray-400 text-center block">
-                                            Drag or click to upload problem file
+                                            {texts.exercise.submitForm.uploadFile.titledes}
                                         </span>
                                     )}
                                 </div>
@@ -281,7 +365,9 @@ export default function ExercisePage() {
 
                             {/* Solution Upload */}
                             <div className="flex flex-col gap-2">
-                                <span className="font-semibold text-lg">Upload Solution</span>
+                                <span className="font-semibold text-lg">
+                                    {texts.exercise.submitForm.uploadSolution.title}
+                                </span>
                                 <div
                                     id="solution-upload"
                                     className="relative border-2 border-dashed border-gray-300 rounded-xl p-4 hover:border-green-400 transition"
@@ -316,7 +402,7 @@ export default function ExercisePage() {
                                         </div>
                                     ) : (
                                         <span className="text-gray-400 text-center block">
-                                            Drag or click to upload solution file
+                                            {texts.exercise.submitForm.uploadSolution.titledes}
                                         </span>
                                     )}
                                 </div>
@@ -334,7 +420,7 @@ export default function ExercisePage() {
                                 }
                                 className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                Submit
+                                {texts.exercise.submitForm.submit.title}
                             </button>
                         </form>
                         {/* Chat Box */}

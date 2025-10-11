@@ -2,10 +2,11 @@
 
 import { Button } from '@/components/ui/button';
 import { UserButtonFlower } from '@/components/UserButtonFlower';
-import { SignedIn, SignedOut, SignInButton } from '@clerk/nextjs';
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
 import Link from 'next/link';
 import { ReactNode, Suspense } from 'react';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 // import {
 //     DribbbleIcon,
 //     FacebookIcon,
@@ -18,6 +19,18 @@ import { usePathname } from 'next/navigation';
 //     TwitterIcon,
 // } from 'lucide-react';
 import Footer from '@/components/Footer';
+import { useLanguage } from '@/context/LanguageContext';
+import {
+    Sheet,
+    SheetClose,
+    SheetContent,
+    SheetDescription,
+    SheetFooter,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from '@/components/ui/sheet';
+import { BookIcon, FileTextIcon, HouseIcon, MenuIcon } from 'lucide-react';
 
 export default function ConsumerLayout({ children }: { children: ReactNode }) {
     return (
@@ -30,12 +43,14 @@ export default function ConsumerLayout({ children }: { children: ReactNode }) {
 }
 
 function Navbar() {
+    const { lang, setLang, texts } = useLanguage();
     const pathname = usePathname();
+
     const navLinks = [
-        { href: '/', label: 'Home', color: '#A5C347' },
-        { href: '/about', label: 'About', color: '#FF236C' },
+        { href: '/', label: texts.layout.nav.home, color: '#A5C347' },
+        { href: '/about', label: texts.layout.nav.about, color: '#FF236C' },
+        { href: '/exercise', label: texts.layout.nav.exercise, color: '#00D2DC' },
         // { href: '/bookread', label: 'Library', color: '#00D2DC' },
-        { href: '/exercise', label: 'Exercise', color: '#00D2DC' },
         // { href: '/exercise', label: 'Exercise', color: '#8800FF' },
     ];
 
@@ -43,51 +58,185 @@ function Navbar() {
         <header
             className={`flex z-20 py-8 fixed top-0 w-full transition-colors duration-300 bg-transparent`}
         >
-            <nav className="flex gap-4 container mx-28 px-8 py-4 bg-white/5 backdrop-blur-xs rounded-full border-2 border-gray-300 shadow-lg shadow-white/20">
-                <Link
-                    className="animate-slide-up mr-auto text-lg flex items-center font-semibold text-orange-600 transition delay-100 duration-300 ease-in-out hover:-translate-y-1 hover:scale-105"
-                    href="/"
-                >
-                    Logo
-                </Link>
-
+            <nav className="flex justify-center items-center gap-4 container md:mx-48 mx-4 px-8 py-4 bg-white/5 backdrop-blur-xs rounded-full border-2 border-gray-300 shadow-lg shadow-white/20">
                 <Suspense fallback={null}>
-                    <div className="hidden md:flex items-center gap-6"></div>
-                    {navLinks.map((link) => {
-                        const isActive = pathname === link.href;
-                        return (
-                            <Link
-                                key={link.href}
-                                href={link.href}
-                                className="font-semibold text-md animate-slide-up flex items-center px-2
-                                            opacity-75 hover:opacity-100 transition delay-100 duration-300 ease-in-out
-                                            hover:-translate-y-1 hover:scale-105 relative"
-                                style={{
-                                    color: link.color,
-                                    borderBottom: isActive
-                                        ? `2px solid ${link.color}`
-                                        : '2px solid transparent',
-                                }}
-                            >
-                                {link.label}
-                            </Link>
-                        );
-                    })}
-                    <div className="hidden md:flex items-center gap-6"></div>
-                    <SignedIn>
-                        <div className="hidden md:flex items-center gap-6">
-                            <UserButtonFlower />
-                        </div>
-                    </SignedIn>
+                    <Button
+                        onClick={() => setLang(lang === 'vi' ? 'en' : 'vi')}
+                        className="hidden border-2 border-[#8800FF] bg-transparent/50 cursor-pointer p-1 rounded-full lg:flex items-center justify-center w-10 h-10"
+                    >
+                        <Image
+                            src={`/languageImgs/${lang === 'vi' ? 'vietnam' : 'united-kingdom'}.png`}
+                            alt={lang === 'vi' ? 'Vietnam' : 'English'}
+                            width={32}
+                            height={32}
+                            className="rounded-full"
+                        />
+                    </Button>
+                    <Link
+                        className=" hidden md:flex animate-slide-up mr-auto text-lg items-center font-semibold text-orange-600 transition delay-100 duration-300 ease-in-out hover:-translate-y-1 hover:scale-105"
+                        href="/"
+                    >
+                        Logo
+                    </Link>
 
-                    <SignedOut>
-                        <Button
-                            className="self-center border-[#F1C21B] border-2 bg-transparent text-[#F1C21B]/90 font-semibold cursor-pointer hover:bg-black hover:text-[#F1C21B]/90"
-                            asChild
-                        >
-                            <SignInButton>Sign In</SignInButton>
-                        </Button>
-                    </SignedOut>
+                    {/* table & moblie */}
+                    <div className="hidden lg:flex items-center gap-4 ">
+                        {navLinks.map((link) => {
+                            const isActive = pathname === link.href;
+                            return (
+                                <Link
+                                    key={link.href}
+                                    href={link.href}
+                                    className="font-semibold text-md animate-slide-up flex items-center justify-center px-2
+                                            opacity-75 hover:opacity-100 transition delay-100 duration-300 ease-in-out
+                                            hover:-translate-y-1 hover:scale-105 relative min-w-[94]"
+                                    style={{
+                                        color: link.color,
+                                        borderBottom: isActive
+                                            ? `2px solid ${link.color}`
+                                            : '2px solid transparent',
+                                    }}
+                                >
+                                    {link.label}
+                                </Link>
+                            );
+                        })}
+                        <div className="hidden md:flex items-center gap-6"></div>
+                        <SignedIn>
+                            <div className="hidden md:flex items-center gap-6">
+                                <UserButtonFlower />
+                            </div>
+                        </SignedIn>
+                        <SignedOut>
+                            <Button
+                                className="self-center border-[#F1C21B] border-2 bg-transparent text-[#F1C21B]/90 font-semibold cursor-pointer hover:bg-black hover:text-[#F1C21B]/90 
+                            min-w-[120px] px-3"
+                                asChild
+                            >
+                                <SignInButton>{texts.layout.nav.signIn}</SignInButton>
+                            </Button>
+                        </SignedOut>
+                    </div>
+                    <div className="flex lg:hidden items-center justify-between w-full gap-2">
+                        <div className="flex items-center gap-2">
+                            <Button
+                                onClick={() => setLang(lang === 'vi' ? 'en' : 'vi')}
+                                className="border-2 border-[#8800FF] bg-transparent/50 cursor-pointer p-1 rounded-full flex items-center justify-center w-10 h-10"
+                            >
+                                <Image
+                                    src={`/languageImgs/${lang === 'vi' ? 'vietnam' : 'united-kingdom'}.png`}
+                                    alt={lang === 'vi' ? 'Vietnam' : 'English'}
+                                    width={32}
+                                    height={32}
+                                    className="rounded-full"
+                                />
+                            </Button>
+                            <Link
+                                className="flex md:hidden animate-slide-up mr-auto text-lg items-center font-semibold text-orange-600 transition delay-100 duration-300 ease-in-out hover:-translate-y-1 hover:scale-105"
+                                href="/"
+                            >
+                                Logo
+                            </Link>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <Sheet>
+                                <SheetTrigger asChild>
+                                    <MenuIcon className="cursor-pointer text-accent" />
+                                </SheetTrigger>
+                                <SheetContent className="bg-white">
+                                    <div className=" pointer-events-none z-0">
+                                        <div className="absolute w-full h-full">
+                                            <div className="relative w-full h-full top-[30vh] right-[10vh]">
+                                                <Image
+                                                    src={`/exerciseimgs/alumni-form-bg-shape1.png`}
+                                                    alt="123"
+                                                    fill
+                                                    className="object-contain"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className=" pointer-events-none z-0">
+                                        <div className="absolute w-full h-full">
+                                            <div className="relative w-full h-full left-[10vh]">
+                                                <Image
+                                                    src={`/exerciseimgs/alumni-form-bg-shape2.png`}
+                                                    alt="123"
+                                                    fill
+                                                    className="object-contain"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <SheetHeader>
+                                        <SheetTitle className="text-3xl">
+                                            {texts.layout.nav.mobileNav.title}
+                                        </SheetTitle>
+                                        <SheetDescription>
+                                            {texts.layout.nav.mobileNav.Des}
+                                        </SheetDescription>
+                                    </SheetHeader>
+
+                                    <div className="grid flex-1 auto-rows-min border-t-2 border-[#A5C347] bg-white">
+                                        <Button
+                                            className="font-semibold justify-start text-lg text-[#A5C347] opacity-75 bg-white/90 rounded-none py-8 border-b-2 border-[#EC2265] hover:bg-white"
+                                            asChild
+                                        >
+                                            <Link href="/">
+                                                <HouseIcon /> {texts.layout.nav.home}
+                                            </Link>
+                                        </Button>
+                                        <Button
+                                            className="font-semibold justify-start text-lg text-[#EC2265] opacity-75 bg-white/90 rounded-none py-8 border-b-2 border-[#00D2DC] hover:bg-white"
+                                            asChild
+                                        >
+                                            <Link href="/about">
+                                                <FileTextIcon /> {texts.layout.nav.about}
+                                            </Link>
+                                        </Button>
+                                        <Button
+                                            className="font-semibold justify-start text-lg text-[#00D2DC] opacity-75 bg-white/90 rounded-none py-8 border-b-2 border-[#7B02E5] hover:bg-white"
+                                            asChild
+                                        >
+                                            <Link href="/exercise">
+                                                <BookIcon /> {texts.layout.nav.exercise}
+                                            </Link>
+                                        </Button>
+                                    </div>
+                                    <SheetFooter>
+                                        <SheetClose asChild>
+                                            <Button variant="outline">
+                                                {texts.layout.nav.mobileNav.close}
+                                            </Button>
+                                        </SheetClose>
+                                    </SheetFooter>
+                                </SheetContent>
+                            </Sheet>
+                            <SignedOut>
+                                <Button
+                                    className="self-center text-xs border-[#F1C21B] border-2 bg-transparent text-[#F1C21B]/90 font-semibold cursor-pointer hover:bg-black hover:text-[#F1C21B]/90 
+                                    min-w-[100px] px-1"
+                                    asChild
+                                >
+                                    <SignInButton>{texts.layout.nav.signIn}</SignInButton>
+                                </Button>
+                            </SignedOut>
+                            <SignedIn>
+                                <div className="size-8 self-center">
+                                    <UserButton
+                                        appearance={{
+                                            elements: {
+                                                userButtonAvatarBox: {
+                                                    width: '100%',
+                                                    height: '100%',
+                                                },
+                                            },
+                                        }}
+                                    />
+                                </div>
+                            </SignedIn>
+                        </div>
+                    </div>
                 </Suspense>
             </nav>
         </header>

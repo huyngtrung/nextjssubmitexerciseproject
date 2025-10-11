@@ -3,34 +3,36 @@ import Image from 'next/image';
 import { Card, CardContent, CardHeader } from './ui/card';
 import { useEffect } from 'react';
 import { animateHomeNew } from '@/lib/animations/animateHomeNew';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function HomeNew() {
+    const { texts } = useLanguage();
     const posts = [
         {
             id: 1,
-            date: 'November 10, 2025',
-            title: 'Creative classroom learning activities',
+            date: texts.home.homeNew.NewSub.time1,
+            title: texts.home.homeNew.NewSub.title1,
             color: '#65C8FF',
             imgUrl: 'blog-22-1000x625.jpg',
         },
         {
             id: 2,
-            date: 'November 12, 2025',
-            title: 'Fun group coloring session for kids',
+            date: texts.home.homeNew.NewSub.time2,
+            title: texts.home.homeNew.NewSub.title2,
             color: '#95B226',
             imgUrl: 'blog-1-1000x625.jpg',
         },
         {
             id: 3,
-
-            title: 'Music and motion day in kindergarten',
+            date: texts.home.homeNew.NewSub.time3,
+            title: texts.home.homeNew.NewSub.title3,
             color: '#5D58F0',
             imgUrl: 'blog-11-1000x625.jpg',
         },
         {
             id: 4,
-            date: 'November 19, 2025',
-            title: 'Outdoor exploration for toddlers',
+            date: texts.home.homeNew.NewSub.time4,
+            title: texts.home.homeNew.NewSub.title4,
             color: '#799F05',
             imgUrl: 'blog-15-1000x625.jpg',
         },
@@ -51,8 +53,8 @@ export default function HomeNew() {
                 />
             </div>
 
-            <div className="relative w-full min-h-[85vh] bg-[#BDE8FF] flex justify-center items-center pt-20 home-new-container">
-                <div className="relative z-10 grid grid-cols-2 gap-6 max-w-6xl w-full px-8">
+            <div className="relative w-full min-h-[85vh] bg-[#BDE8FF] flex justify-center items-center pt-8 pb-16 md:pb-0 md:pt-20 home-new-container">
+                <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl w-full px-8">
                     {/* Cột bên trái: bài nổi bật */}
                     <div>
                         <Card className="room-main p-0 h-full rounded-2xl border-0 cursor-pointer">
@@ -65,26 +67,24 @@ export default function HomeNew() {
                                         className="object-cover rounded-t-2xl"
                                     />
                                     <span className="absolute bottom-0 left-4 translate-y-1/2 bg-[#65C8FF] text-white text-md font-semibold px-6 py-2 rounded-full shadow-md">
-                                        November 19, 2025
+                                        {texts.home.homeNew.NewMain.time}
                                     </span>
                                 </div>
                             </CardHeader>
 
                             <CardContent className="flex flex-col justify-center h-full gap-8 mb-4 mx-4 ">
-                                <h1 className="text-2xl font-semibold -mb-2">
-                                    A Fun toddler coloring training on classroom
+                                <h1 className="text-2xl font-semibold -mb-2 min-h-[60] md:min-h-0">
+                                    {texts.home.homeNew.NewMain.title}
                                 </h1>
-                                <p className="text-md text-gray-600 leading-relaxed">
-                                    Beautiful branding for changes by Never Now in Australia.
-                                    Changes is a platform for open discussion in an inclusive and
-                                    collaborative environment, providing the...
+                                <p className="text-md text-gray-600 leading-relaxed min-h-[80] md:min-h-0 ">
+                                    {texts.home.homeNew.NewMain.titledes}
                                 </p>
                             </CardContent>
                         </Card>
                     </div>
 
                     {/* ✅ Cột bên phải: hiển thị danh sách dạng grid */}
-                    <div className="grid grid-cols-2 gap-6 ">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
                         {posts.map((post) => (
                             <Card
                                 key={post.id}

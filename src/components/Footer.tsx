@@ -14,8 +14,10 @@ import {
     PhoneIcon,
 } from 'lucide-react';
 import { Button } from './ui/button';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function Footer() {
+    const { texts } = useLanguage();
     const [bubbles, setBubbles] = useState<
         { size: number; distance: number; position: number; time: number; delay: number }[]
     >([]);
@@ -139,26 +141,25 @@ export default function Footer() {
                                 className="text-xl flex items-center justify-center font-semibold text-blue-600"
                                 href="/"
                             >
-                                About Us
+                                {texts.layout.footer.aboutUs.title}
                             </Link>
                         </Button>
                         <p className="text-gray-100 max-w-xl mx-auto text-sm">
-                            Empowering learners with quality content and modern web solutions —
-                            built with passion and precision.
+                            {texts.layout.footer.aboutUs.titledes}
                         </p>
                     </div>
 
                     {/* Keep Connected */}
                     <div>
                         <Button
-                            className="bg-white text-blue-600 px-6 py-6 mb-4 rounded-full font-semibold shadow-md hover:bg-gray-300 transition cursor-pointer"
+                            className="bg-white text-blue-600 px-6 py-6 mb-4 rounded-full font-semibold shadow-md hover:bg-gray-300 transition cursor-pointer "
                             asChild
                         >
                             <Link
                                 className="text-xl flex items-center justify-center font-semibold text-blue-600"
                                 href="/"
                             >
-                                Keep Connected
+                                {texts.layout.footer.keepConnected.title}
                             </Link>
                         </Button>
                         <div className="flex justify-center gap-4">
@@ -191,12 +192,12 @@ export default function Footer() {
                                 className="text-xl flex items-center justify-center font-semibold text-blue-600"
                                 href="/"
                             >
-                                Contact Us
+                                {texts.layout.footer.contactUs.title}
                             </Link>
                         </Button>
                         <div className="flex gap-4 mb-2">
                             <HomeIcon />
-                            <span>Ha Noi, xxxx, xxxx</span>
+                            <span> {texts.layout.footer.contactUs.addressTitle}</span>
                         </div>
                         <div className="flex gap-4 mb-2">
                             <PhoneIcon />
@@ -204,12 +205,12 @@ export default function Footer() {
                         </div>
                         <div className="flex gap-4">
                             <MailIcon />
-                            <span>huynguyen2004119007@gmail.com</span>
+                            <span>yourgmail@gmail.com</span>
                         </div>
                     </div>
                 </div>
 
-                <p className="text-xs text-gray-200 mt-10">© 2025 All Rights Reserved</p>
+                <p className="text-xs text-gray-200 mt-10">{texts.layout.footer.copyRight.title}</p>
             </div>
         </footer>
     );
