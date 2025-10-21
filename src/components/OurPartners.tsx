@@ -42,8 +42,7 @@ function getTextsForLang(lang: string): OurPartnersTexts {
     return texts.en;
 }
 
-export default function OurPartners({ params }: { params: { lang: string } }) {
-    const lang = params.lang === 'vi' ? 'vi' : 'en';
+export default function OurPartners({ lang }: { lang: 'vi' | 'en' }) {
     const textsForLang = getTextsForLang(lang);
 
     return (

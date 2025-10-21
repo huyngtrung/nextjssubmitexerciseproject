@@ -53,9 +53,7 @@ function getTextsForLang(lang: string): HomeHeaderTexts {
     return texts.en;
 }
 
-export default function HeroSection({ params }: { params: { lang: string } }) {
-    const lang = params.lang === 'vi' ? 'vi' : 'en';
-
+export default function HeroSection({ lang }: { lang: 'vi' | 'en' }) {
     const textsForLang = getTextsForLang(lang);
 
     useEffect(() => {

@@ -81,8 +81,7 @@ function getTextsForLang(lang: string): HomeNew {
     return texts.en;
 }
 
-export default function HomeNew({ params }: { params: { lang: string } }) {
-    const lang = params.lang === 'vi' ? 'vi' : 'en';
+export default function HomeNew({ lang }: { lang: 'vi' | 'en' }) {
     const textsForLang = getTextsForLang(lang);
 
     const posts = [

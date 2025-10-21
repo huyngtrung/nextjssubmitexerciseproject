@@ -56,8 +56,7 @@ function getTextsForLang(lang: string): ChooseUsTexts {
     return texts.en;
 }
 
-export default function ChooseUs({ params }: { params: { lang: string } }) {
-    const lang = params.lang === 'vi' ? 'vi' : 'en';
+export default function ChooseUs({ lang }: { lang: 'vi' | 'en' }) {
     const textsForLang = getTextsForLang(lang);
 
     useEffect(() => {

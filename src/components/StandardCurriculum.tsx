@@ -109,8 +109,7 @@ function getTextsForLang(lang: string): StandardCurriculumTexts {
     return texts.en;
 }
 
-export default function StandardCurriculum({ params }: { params: { lang: string } }) {
-    const lang = params.lang === 'vi' ? 'vi' : 'en';
+export default function StandardCurriculum({ lang }: { lang: 'vi' | 'en' }) {
     const textsForLang = getTextsForLang(lang);
 
     const [shapes, setShapes] = useState<JSX.Element[]>([]);

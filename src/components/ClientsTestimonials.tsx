@@ -91,8 +91,7 @@ function getTextsForLang(lang: string): ClientsTestimonials {
     return texts.en;
 }
 
-export default function ClientsTestimonials({ params }: { params: { lang: string } }) {
-    const lang = params.lang === 'vi' ? 'vi' : 'en';
+export default function ClientsTestimonials({ lang }: { lang: 'vi' | 'en' }) {
     const textsForLang = getTextsForLang(lang);
 
     const clients: Client[] = [
