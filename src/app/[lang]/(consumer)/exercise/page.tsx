@@ -36,11 +36,27 @@ export default async function ExercisePage({ params }: { params: { lang: string 
     );
 }
 
-async function getUserClassesWithExercises(userId: string) {
+type ExerciseInfo = {
+    id: string;
+    name: string | null;
+    description: string | null;
+    subject: string | null;
+    dueDate: Date | null;
+    maxScore: number | null;
+};
+
+type ClassWithExercises = {
+    id: string;
+    name: string;
+    description: string | null;
+    exercises: ExerciseInfo[];
+};
+
+export async function getUserClassesWithExercises(userId: string): Promise<ClassWithExercises[]> {
     'use cache';
     cacheTag(getUserGlobalTag(), getClassroomGlobalTag(), getExerciseGlobalTag());
 
-    // 1 query: lấy lớp + bài tập
+    // 1️⃣ Query dữ liệu
     const rows = await db
         .select({
             classId: ClassesTable.id,
@@ -59,9 +75,10 @@ async function getUserClassesWithExercises(userId: string) {
         .leftJoin(ExercisesTable, eq(ExercisesTable.id, ExerciseClassesTable.exerciseId))
         .where(eq(UserClassesTable.userId, userId));
 
-    // Map bài tập vào từng lớp
-    const classMap: Record<string, any> = {};
-    rows.forEach((row) => {
+    // 2️⃣ Gom bài tập theo lớp
+    const classMap: Record<string, ClassWithExercises> = {};
+
+    for (const row of rows) {
         if (!classMap[row.classId]) {
             classMap[row.classId] = {
                 id: row.classId,
@@ -72,7 +89,7 @@ async function getUserClassesWithExercises(userId: string) {
         }
 
         if (row.exerciseId) {
-            classMap[row.classId].exercises.push({
+            classMap[row.classId]!.exercises.push({
                 id: row.exerciseId,
                 name: row.exerciseName,
                 description: row.exerciseDescription,
@@ -81,7 +98,7 @@ async function getUserClassesWithExercises(userId: string) {
                 maxScore: row.maxScore,
             });
         }
-    });
+    }
 
     return Object.values(classMap);
 }
