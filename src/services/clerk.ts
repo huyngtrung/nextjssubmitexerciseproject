@@ -6,7 +6,7 @@ import { eq } from 'drizzle-orm';
 import { cacheTag } from 'next/dist/server/use-cache/cache-tag';
 import { redirect } from 'next/navigation';
 
-const client = await clerkClient(); //generate clerk api
+const client = await clerkClient();
 
 export async function getCurrentUser({ allData = false } = {}) {
     const { userId, sessionClaims, redirectToSignIn } = await auth();

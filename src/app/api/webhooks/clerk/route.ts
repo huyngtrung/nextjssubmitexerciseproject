@@ -17,10 +17,8 @@ export async function POST(req: Request) {
         });
     }
 
-    // const payload = await req.json();
-    // const body = JSON.stringify(payload);
-
-    const body = await req.text();
+    const payload = await req.json();
+    const body = JSON.stringify(payload);
 
     const wh = new Webhook(env.CLERK_WEBHOOK_SECRET);
     let event: WebhookEvent;
@@ -44,7 +42,7 @@ export async function POST(req: Request) {
             const email = event.data.email_addresses.find(
                 (email) => email.id === event.data.primary_email_address_id,
             )?.email_address;
-            const name = `${event.data.first_name} ${event.data.last_name}`.trim();
+            const name = event.data.username;
             if (email == null) return new Response('No email', { status: 400 });
             if (name === '') return new Response('No name', { status: 400 });
 
@@ -53,6 +51,8 @@ export async function POST(req: Request) {
                     clerkUserId: event.data.id,
                     email,
                     name,
+                    firstName: event.data.first_name,
+                    lastName: event.data.last_name,
                     imageUrl: event.data.image_url,
                     role: 'user',
                 });
@@ -64,6 +64,8 @@ export async function POST(req: Request) {
                     {
                         email,
                         name,
+                        firstName: event.data.first_name,
+                        lastName: event.data.last_name,
                         imageUrl: event.data.image_url,
                         role: event.data.public_metadata.role,
                     },

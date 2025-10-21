@@ -10,6 +10,12 @@
                 "close": "Đóng",
                 "title": "Danh Mục",
                 "Des": "Nhanh chóng truy cập các khu vực khác của trang."
+            },
+            "admin": {
+                "home": "Tổng quan",
+                "classroom": "Lớp Học",
+                "student": "Học sinh",
+                "exercise": "Bài Tập"
             }
         },
         "footer": {
@@ -145,7 +151,9 @@
     },
     "exercise": {
         "header": {
-            "title": "Bài Tập"
+            "title": "Bài Tập",
+            "PracticeMode": "Chế độ Luyện Tập",
+            "HomeworkMode": "Chế Độ Bài Tập"
         },
         "submitForm": {
             "title": "Trợ Lý Học Tập Thông Minh",

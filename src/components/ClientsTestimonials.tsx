@@ -2,7 +2,6 @@
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { animateClients, initScrollAnimations } from '@/lib/animations/animateClientsTestimonials';
-import { useLanguage } from '@/context/LanguageContext';
 
 interface Client {
     id: number;
@@ -12,42 +11,123 @@ interface Client {
     borderColor: string;
 }
 
-export default function ClientsTestimonials() {
-    const { texts } = useLanguage();
+type Lang = 'vi' | 'en';
+
+type ClientsTestimonials = {
+    home: {
+        clientsTestimonials: {
+            title: string;
+            titleDes: string;
+            card: {
+                card1title: string;
+                card1des: string;
+                card2title: string;
+                card2des: string;
+                card3title: string;
+                card3des: string;
+                card4title: string;
+                card4des: string;
+                card5title: string;
+                card5des: string;
+            };
+        };
+    };
+};
+
+const texts: Record<Lang, ClientsTestimonials> = {
+    vi: {
+        home: {
+            clientsTestimonials: {
+                title: 'Ý Kiến Phụ Huynh',
+                titleDes:
+                    'Cộng đồng phụ huynh chia sẻ trải nghiệm và suy nghĩ về hành trình học tập và phát triển của con họ. Họ rất yêu thích chúng tôi',
+                card: {
+                    card1title: 'Emily Johnson',
+                    card1des:
+                        'Con của Emily trở nên tự tin và tò mò nhờ các bài học thú vị và giáo viên tận tâm.',
+                    card2title: 'Luna Lovegood',
+                    card2des: 'Luna sáng tạo, luôn mang ý tưởng độc đáo vào mọi việc cô làm.',
+                    card3title: 'Harry Potter',
+                    card3des: 'Harry dũng cảm và quyết tâm, luôn đối mặt thử thách.',
+                    card4title: 'Hermione Granger',
+                    card4des: 'Hermione thông minh và chăm chỉ, xuất sắc trong mọi nhiệm vụ.',
+                    card5title: 'Ron Weasley',
+                    card5des: 'Ron trung thành và dũng cảm, luôn hỗ trợ bạn bè.',
+                },
+            },
+        },
+    },
+    en: {
+        home: {
+            clientsTestimonials: {
+                title: 'Parents Testimonials',
+                titleDes:
+                    'Our community of parents shares their experiences and thoughts about the learning journey and growth their children enjoy with us.',
+                card: {
+                    card1title: 'Emily Johnson',
+                    card1des:
+                        'Emily’s child has become confident and curious thanks to engaging lessons and caring teachers.',
+                    card2title: 'Luna Lovegood',
+                    card2des:
+                        'Luna is a creative thinker, bringing imaginative ideas to everything she does.',
+                    card3title: 'Harry Potter',
+                    card3des:
+                        'Harry is courageous and determined, always facing challenges head-on.',
+                    card4title: 'Hermione Granger',
+                    card4des:
+                        'Hermione is highly intelligent and diligent, excelling in every task she undertakes.',
+                    card5title: 'Ron Weasley',
+                    card5des:
+                        'Ron is loyal and brave, supporting his friends through thick and thin.',
+                },
+            },
+        },
+    },
+};
+
+function getTextsForLang(lang: string): ClientsTestimonials {
+    if (lang === 'vi') return texts.vi;
+    if (lang === 'en') return texts.en;
+    return texts.en;
+}
+
+export default function ClientsTestimonials({ params }: { params: { lang: string } }) {
+    const lang = params.lang === 'vi' ? 'vi' : 'en';
+    const textsForLang = getTextsForLang(lang);
 
     const clients: Client[] = [
         {
             id: 0,
-            name: texts.home.clientsTestimonials.card.card1title,
-            text: texts.home.clientsTestimonials.card.card1des,
+            name: textsForLang.home.clientsTestimonials.card.card1title,
+            text: textsForLang.home.clientsTestimonials.card.card1des,
             imgUrl: 'https://picsum.photos/seed/1/200/300',
             borderColor: '#F0AA00',
         },
         {
             id: 1,
-            name: texts.home.clientsTestimonials.card.card2title,
-            text: texts.home.clientsTestimonials.card.card2des,
+            name: textsForLang.home.clientsTestimonials.card.card2title,
+            text: textsForLang.home.clientsTestimonials.card.card2des,
             imgUrl: 'https://picsum.photos/seed/2/200/300',
             borderColor: '#A5C347',
         },
         {
             id: 2,
-            name: texts.home.clientsTestimonials.card.card3title,
-            text: texts.home.clientsTestimonials.card.card3des,
+            name: textsForLang.home.clientsTestimonials.card.card3title,
+            text: textsForLang.home.clientsTestimonials.card.card3des,
             imgUrl: 'https://picsum.photos/seed/3/200/300',
             borderColor: '#8700FF',
         },
         {
             id: 3,
-            name: texts.home.clientsTestimonials.card.card4title,
-            text: texts.home.clientsTestimonials.card.card4des,
+            name: textsForLang.home.clientsTestimonials.card.card4title,
+            text: textsForLang.home.clientsTestimonials.card.card4des,
             imgUrl: 'https://picsum.photos/seed/4/200/300',
             borderColor: '#FF3075',
         },
         {
             id: 4,
-            name: texts.home.clientsTestimonials.card.card5title,
-            text: texts.home.clientsTestimonials.card.card5des,
+            name: textsForLang.home.clientsTestimonials.card.card5title,
+            text: textsForLang.home.clientsTestimonials.card.card5des,
             imgUrl: 'https://picsum.photos/seed/5/200/300',
             borderColor: '#3a65fd',
         },
@@ -71,10 +151,10 @@ export default function ClientsTestimonials() {
                 <div className="space-y-12">
                     <div className="space-y-6 scroll-animate">
                         <h3 className=" text-4xl lg:text-5xl font-semibold">
-                            {texts.home.clientsTestimonials.title}
+                            {textsForLang.home.clientsTestimonials.title}
                         </h3>
                         <p className="md:min-h-[100] lg:text-lg text-justify text-gray-500">
-                            {texts.home.clientsTestimonials.titleDes}
+                            {textsForLang.home.clientsTestimonials.titleDes}
                         </p>
                     </div>
 

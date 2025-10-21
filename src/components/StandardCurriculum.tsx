@@ -37,8 +37,82 @@ const CARD_IMAGES = [
     '/science-1-42.svg',
 ];
 
-export default function StandardCurriculum() {
-    const { texts } = useLanguage();
+type Lang = 'vi' | 'en';
+
+type StandardCurriculumTexts = {
+    home: {
+        StandardCurriculumn: {
+            title: string;
+            card: {
+                card1title: string;
+                card1des: string;
+                card2title: string;
+                card2des: string;
+                card3title: string;
+                card3des: string;
+                card4title: string;
+                card4des: string;
+                card5title: string;
+                card5des: string;
+            };
+            footerTitle: string;
+        };
+    };
+};
+
+const texts: Record<Lang, StandardCurriculumTexts> = {
+    vi: {
+        home: {
+            StandardCurriculumn: {
+                title: 'Chương Trình Chuẩn',
+                card: {
+                    card1title: 'Tiêu đề 1',
+                    card1des: 'Mô tả 1',
+                    card2title: 'Tiêu đề 2',
+                    card2des: 'Mô tả 2',
+                    card3title: 'Tiêu đề 3',
+                    card3des: 'Mô tả 3',
+                    card4title: 'Tiêu đề 4',
+                    card4des: 'Mô tả 4',
+                    card5title: 'Tiêu đề 5',
+                    card5des: 'Mô tả 5',
+                },
+                footerTitle: 'Đọc Thêm',
+            },
+        },
+    },
+    en: {
+        home: {
+            StandardCurriculumn: {
+                title: 'Standard Curriculumn',
+                card: {
+                    card1title: 'card 1 title',
+                    card1des: 'card 1 description',
+                    card2title: 'card 2 title',
+                    card2des: 'card 2 description',
+                    card3title: 'card 3 title',
+                    card3des: 'card 3 description',
+                    card4title: 'card 4 title',
+                    card4des: 'card 4 description',
+                    card5title: 'card 5 title',
+                    card5des: 'card 5 description',
+                },
+                footerTitle: 'Read More',
+            },
+        },
+    },
+};
+
+function getTextsForLang(lang: string): StandardCurriculumTexts {
+    if (lang === 'vi') return texts.vi;
+    if (lang === 'en') return texts.en;
+    return texts.en;
+}
+
+export default function StandardCurriculum({ params }: { params: { lang: string } }) {
+    const lang = params.lang === 'vi' ? 'vi' : 'en';
+    const textsForLang = getTextsForLang(lang);
+
     const [shapes, setShapes] = useState<JSX.Element[]>([]);
     const containerRef = useRef<HTMLDivElement>(null);
     const headerContainerRef = useRef<HTMLDivElement>(null);
@@ -46,32 +120,32 @@ export default function StandardCurriculum() {
 
     const cards = [
         {
-            title: texts.home.StandardCurriculumn.card?.card1title ?? '',
-            des: texts.home.StandardCurriculumn.card?.card1des ?? '',
+            title: textsForLang.home.StandardCurriculumn.card?.card1title ?? '',
+            des: textsForLang.home.StandardCurriculumn.card?.card1des ?? '',
             color: CARD_COLORS[0],
             img: CARD_IMAGES[0],
         },
         {
-            title: texts.home.StandardCurriculumn.card?.card2title ?? '',
-            des: texts.home.StandardCurriculumn.card?.card2des ?? '',
+            title: textsForLang.home.StandardCurriculumn.card?.card2title ?? '',
+            des: textsForLang.home.StandardCurriculumn.card?.card2des ?? '',
             color: CARD_COLORS[1],
             img: CARD_IMAGES[1],
         },
         {
-            title: texts.home.StandardCurriculumn.card?.card3title ?? '',
-            des: texts.home.StandardCurriculumn.card?.card3des ?? '',
+            title: textsForLang.home.StandardCurriculumn.card?.card3title ?? '',
+            des: textsForLang.home.StandardCurriculumn.card?.card3des ?? '',
             color: CARD_COLORS[2],
             img: CARD_IMAGES[2],
         },
         {
-            title: texts.home.StandardCurriculumn.card?.card4title ?? '',
-            des: texts.home.StandardCurriculumn.card?.card4des ?? '',
+            title: textsForLang.home.StandardCurriculumn.card?.card4title ?? '',
+            des: textsForLang.home.StandardCurriculumn.card?.card4des ?? '',
             color: CARD_COLORS[3],
             img: CARD_IMAGES[3],
         },
         {
-            title: texts.home.StandardCurriculumn.card?.card5title ?? '',
-            des: texts.home.StandardCurriculumn.card?.card5des ?? '',
+            title: textsForLang.home.StandardCurriculumn.card?.card5title ?? '',
+            des: textsForLang.home.StandardCurriculumn.card?.card5des ?? '',
             color: CARD_COLORS[4],
             img: CARD_IMAGES[4],
         },
@@ -130,7 +204,7 @@ export default function StandardCurriculum() {
             <div className="relative z-10 text-center text-gray-800">
                 <div className="md-12 md:mb-16" ref={headerContainerRef}>
                     <h1 className="card-fade-seq text-4xl md:text-5xl font-bold mb-4 text-center">
-                        {texts.home.StandardCurriculumn.title}
+                        {textsForLang.home.StandardCurriculumn.title}
                     </h1>
                     <div className="flex items-center justify-center card-fade-seq">
                         <div className="h-[2px] bg-[#ff6d9d] w-20 md:w-20"></div>
@@ -204,7 +278,10 @@ export default function StandardCurriculum() {
                                                     size="sm"
                                                 >
                                                     <Link href="/" style={{ color: card.color }}>
-                                                        Read More
+                                                        {
+                                                            textsForLang.home.StandardCurriculumn
+                                                                .footerTitle
+                                                        }
                                                     </Link>
                                                 </Button>
                                             </CardContent>

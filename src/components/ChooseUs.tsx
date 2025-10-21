@@ -1,11 +1,64 @@
 'use client';
-import { useLanguage } from '@/context/LanguageContext';
 import { animateChooseUs } from '@/lib/animations/animateChooseUs';
 import Image from 'next/image';
 import { useEffect } from 'react';
 
-export default function ChooseUs() {
-    const { texts } = useLanguage();
+type Lang = 'vi' | 'en';
+
+type ChooseUsTexts = {
+    home: {
+        chooseUs: {
+            title: string;
+            titleDes: string;
+            card: {
+                card1title: string;
+                card2title: string;
+                card3title: string;
+            };
+        };
+    };
+};
+
+const texts: Record<Lang, ChooseUsTexts> = {
+    vi: {
+        home: {
+            chooseUs: {
+                title: 'Tại Sao Trường Chúng Tôi Phù Hợp Với Con Bạn?',
+                titleDes:
+                    'Trường chúng tôi truyền cảm hứng phát triển, sáng tạo và tò mò. Chúng tôi nuôi dưỡng mỗi học sinh để đạt tiềm năng tối đa.',
+                card: {
+                    card1title: 'Giáo Viên Chuyên Nghiệp',
+                    card2title: 'Cơ Sở Vật Chất Tuyệt Vời',
+                    card3title: 'Mô Hình Học Quốc Tế',
+                },
+            },
+        },
+    },
+    en: {
+        home: {
+            chooseUs: {
+                title: 'Tại Sao Trường Chúng Tôi Phù Hợp Với Con Bạn?',
+                titleDes:
+                    'Trường chúng tôi truyền cảm hứng phát triển, sáng tạo và tò mò. Chúng tôi nuôi dưỡng mỗi học sinh để đạt tiềm năng tối đa.',
+                card: {
+                    card1title: 'Giáo Viên Chuyên Nghiệp',
+                    card2title: 'Cơ Sở Vật Chất Tuyệt Vời',
+                    card3title: 'Mô Hình Học Quốc Tế',
+                },
+            },
+        },
+    },
+};
+
+function getTextsForLang(lang: string): ChooseUsTexts {
+    if (lang === 'vi') return texts.vi;
+    if (lang === 'en') return texts.en;
+    return texts.en;
+}
+
+export default function ChooseUs({ params }: { params: { lang: string } }) {
+    const lang = params.lang === 'vi' ? 'vi' : 'en';
+    const textsForLang = getTextsForLang(lang);
 
     useEffect(() => {
         animateChooseUs();
@@ -23,10 +76,10 @@ export default function ChooseUs() {
                 <div className="space-y-6 lg:mt-0 mt-20">
                     <div className="space-y-8 chooseus-text">
                         <h3 className="text-3xl lg:text-4xl font-bold text-white text-center lg:text-left">
-                            {texts.home.chooseUs.title}
+                            {textsForLang.home.chooseUs.title}
                         </h3>
                         <p className="text-white text-center lg:text-left min-h-[80] lg:min-h-0">
-                            {texts.home.chooseUs.titleDes}
+                            {textsForLang.home.chooseUs.titleDes}
                         </p>
                     </div>
 
@@ -41,7 +94,7 @@ export default function ChooseUs() {
                                 />
                             </div>
                             <span className="font-semibold text-lg">
-                                {texts.home.chooseUs.card.card1title}
+                                {textsForLang.home.chooseUs.card.card1title}
                             </span>
                         </div>
                         <div className="flex items-center gap-3 bg-white rounded-full px-6 py-2 chooseus-icon">
@@ -54,7 +107,7 @@ export default function ChooseUs() {
                                 />
                             </div>
                             <span className="font-semibold text-lg">
-                                {texts.home.chooseUs.card.card2title}
+                                {textsForLang.home.chooseUs.card.card2title}
                             </span>
                         </div>
                         <div className="flex items-center gap-3 bg-white rounded-full px-6 py-2 chooseus-icon">
@@ -67,7 +120,7 @@ export default function ChooseUs() {
                                 />
                             </div>
                             <span className="font-semibold text-lg">
-                                {texts.home.chooseUs.card.card3title}
+                                {textsForLang.home.chooseUs.card.card3title}
                             </span>
                         </div>
                     </div>

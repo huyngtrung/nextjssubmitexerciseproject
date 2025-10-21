@@ -3,36 +3,114 @@ import Image from 'next/image';
 import { Card, CardContent, CardHeader } from './ui/card';
 import { useEffect } from 'react';
 import { animateHomeNew } from '@/lib/animations/animateHomeNew';
-import { useLanguage } from '@/context/LanguageContext';
 
-export default function HomeNew() {
-    const { texts } = useLanguage();
+type Lang = 'vi' | 'en';
+
+type HomeNew = {
+    home: {
+        homeNew: {
+            NewMain: {
+                title: string;
+                titledes: string;
+                time: string;
+            };
+            NewSub: {
+                title1: string;
+                time1: string;
+                title2: string;
+                time2: string;
+                title3: string;
+                time3: string;
+                title4: string;
+                time4: string;
+            };
+        };
+    };
+};
+
+const texts: Record<Lang, HomeNew> = {
+    vi: {
+        home: {
+            homeNew: {
+                NewMain: {
+                    title: 'Cùng Bé Tô Màu Cùng những cơ sở vật chất tốt',
+                    titledes:
+                        'Thương hiệu đẹp cho các thay đổi bởi Never Now ở Úc. Đây là nền tảng thảo luận mở, hợp tác và toàn diện.',
+                    time: '19 Tháng 11, 2025',
+                },
+                NewSub: {
+                    title1: 'Lớp học trải nghiệm sáng tạo',
+                    time1: '19 Tháng 11, 2025',
+                    title2: 'Tô màu nhóm vui nhộn cho trẻ',
+                    time2: '19 Tháng 11, 2025',
+                    title3: 'Ngày âm nhạc và vận động ở mẫu giáo',
+                    time3: '19 Tháng 11, 2025',
+                    title4: 'Khám phá ngoài trời cho trẻ',
+                    time4: '19 Tháng 11, 2025',
+                },
+            },
+        },
+    },
+    en: {
+        home: {
+            homeNew: {
+                NewMain: {
+                    title: 'Cùng Bé Tô Màu Cùng những cơ sở vật chất tốt',
+                    titledes:
+                        'Thương hiệu đẹp cho các thay đổi bởi Never Now ở Úc. Đây là nền tảng thảo luận mở, hợp tác và toàn diện.',
+                    time: '19 Tháng 11, 2025',
+                },
+                NewSub: {
+                    title1: 'Lớp học trải nghiệm sáng tạo',
+                    time1: '19 Tháng 11, 2025',
+                    title2: 'Tô màu nhóm vui nhộn cho trẻ',
+                    time2: '19 Tháng 11, 2025',
+                    title3: 'Ngày âm nhạc và vận động ở mẫu giáo',
+                    time3: '19 Tháng 11, 2025',
+                    title4: 'Khám phá ngoài trời cho trẻ',
+                    time4: '19 Tháng 11, 2025',
+                },
+            },
+        },
+    },
+};
+
+function getTextsForLang(lang: string): HomeNew {
+    if (lang === 'vi') return texts.vi;
+    if (lang === 'en') return texts.en;
+    return texts.en;
+}
+
+export default function HomeNew({ params }: { params: { lang: string } }) {
+    const lang = params.lang === 'vi' ? 'vi' : 'en';
+    const textsForLang = getTextsForLang(lang);
+
     const posts = [
         {
             id: 1,
-            date: texts.home.homeNew.NewSub.time1,
-            title: texts.home.homeNew.NewSub.title1,
+            date: textsForLang.home.homeNew.NewSub.time1,
+            title: textsForLang.home.homeNew.NewSub.title1,
             color: '#65C8FF',
             imgUrl: 'blog-22-1000x625.jpg',
         },
         {
             id: 2,
-            date: texts.home.homeNew.NewSub.time2,
-            title: texts.home.homeNew.NewSub.title2,
+            date: textsForLang.home.homeNew.NewSub.time2,
+            title: textsForLang.home.homeNew.NewSub.title2,
             color: '#95B226',
             imgUrl: 'blog-1-1000x625.jpg',
         },
         {
             id: 3,
-            date: texts.home.homeNew.NewSub.time3,
-            title: texts.home.homeNew.NewSub.title3,
+            date: textsForLang.home.homeNew.NewSub.time3,
+            title: textsForLang.home.homeNew.NewSub.title3,
             color: '#5D58F0',
             imgUrl: 'blog-11-1000x625.jpg',
         },
         {
             id: 4,
-            date: texts.home.homeNew.NewSub.time4,
-            title: texts.home.homeNew.NewSub.title4,
+            date: textsForLang.home.homeNew.NewSub.time4,
+            title: textsForLang.home.homeNew.NewSub.title4,
             color: '#799F05',
             imgUrl: 'blog-15-1000x625.jpg',
         },
@@ -66,17 +144,17 @@ export default function HomeNew() {
                                         className="object-cover rounded-t-2xl"
                                     />
                                     <span className="absolute bottom-0 left-4 translate-y-1/2 bg-[#65C8FF] text-white text-md font-semibold px-6 py-2 rounded-full shadow-md">
-                                        {texts.home.homeNew.NewMain.time}
+                                        {textsForLang.home.homeNew.NewMain.time}
                                     </span>
                                 </div>
                             </CardHeader>
 
                             <CardContent className="flex flex-col justify-center h-full gap-8 mb-4 mx-4 ">
                                 <h1 className="text-2xl font-semibold -mb-2 min-h-[60] md:min-h-0">
-                                    {texts.home.homeNew.NewMain.title}
+                                    {textsForLang.home.homeNew.NewMain.title}
                                 </h1>
                                 <p className="text-md text-gray-600 leading-relaxed min-h-[80] md:min-h-0 ">
-                                    {texts.home.homeNew.NewMain.titledes}
+                                    {textsForLang.home.homeNew.NewMain.titledes}
                                 </p>
                             </CardContent>
                         </Card>

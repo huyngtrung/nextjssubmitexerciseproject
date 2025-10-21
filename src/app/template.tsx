@@ -3,7 +3,6 @@ import { animatePageIn, animatePageOut } from '@/lib/animations/animatePageNavig
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-// Template component
 export default function Template({ children }: { children: React.ReactNode }) {
     const pathname = usePathname() ?? '';
     const router = useRouter();

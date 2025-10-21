@@ -10,6 +10,12 @@
                 "close": "Close",
                 "title": "Menu",
                 "Des": "Quickly navigate to different sections of the site."
+            },
+            "admin": {
+                "home": "Dashborad",
+                "classroom": "Classrooms",
+                "student": "students",
+                "exercise": "Exercises"
             }
         },
         "footer": {
@@ -145,7 +151,9 @@
     },
     "exercise": {
         "header": {
-            "title": "Exericise"
+            "title": "Exericise",
+            "PracticeMode": "Practice Mode",
+            "HomeworkMode": "Homework Mode"
         },
         "submitForm": {
             "title": "Intelligent Homework Assistant",

@@ -1,18 +1,57 @@
 'use client';
 
-import { useLanguage } from '@/context/LanguageContext';
 import Image from 'next/image';
 
 const SVG_FILES = ['client1-logo', 'client2-logo', 'client3-logo', 'client4-logo'];
 
-export default function OurPartners() {
-    const { texts } = useLanguage();
+type Lang = 'vi' | 'en';
+
+type OurPartnersTexts = {
+    home: {
+        ourPartners: {
+            title: string;
+            titledes: string;
+        };
+    };
+};
+
+const texts: Record<Lang, OurPartnersTexts> = {
+    vi: {
+        home: {
+            ourPartners: {
+                title: 'Đối Tác Của Chúng Tôi',
+                titledes:
+                    'Hợp tác với các đối tác giáo dục đáng tin cậy để mang đến cơ hội học tập chất lượng và phát triển cho mọi học sinh.',
+            },
+        },
+    },
+    en: {
+        home: {
+            ourPartners: {
+                title: 'Our Partners',
+                titledes:
+                    'We collaborate with trusted educational partners to provide quality learning, innovation, and growth opportunities for every student.',
+            },
+        },
+    },
+};
+
+function getTextsForLang(lang: string): OurPartnersTexts {
+    if (lang === 'vi') return texts.vi;
+    if (lang === 'en') return texts.en;
+    return texts.en;
+}
+
+export default function OurPartners({ params }: { params: { lang: string } }) {
+    const lang = params.lang === 'vi' ? 'vi' : 'en';
+    const textsForLang = getTextsForLang(lang);
+
     return (
         <div className="relative flex items-center flex-col px-12 md:px-20 md:pt-20 overflow-hidden bg-white min-h-[80vh]">
             <div className="relative z-10 text-center md:mb-0 mb-20">
                 <div className="mb-16 flex flex-col items-center">
                     <h1 className="card-fade-seq text-4xl md:text-5xl font-bold mb-4 text-center">
-                        {texts.home.ourPartners.title}
+                        {textsForLang.home.ourPartners.title}
                     </h1>
 
                     <div className="flex items-center justify-center card-fade-seq">
@@ -22,7 +61,7 @@ export default function OurPartners() {
                     </div>
 
                     <p className="text-gray-400 my-12 md:w-[100vh]">
-                        {texts.home.ourPartners.titledes}
+                        {textsForLang.home.ourPartners.titledes}
                     </p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-16 items-center justify-items-center">
