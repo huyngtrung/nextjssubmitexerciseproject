@@ -17,11 +17,6 @@ export default async function ExercisePage({ params }: { params: { lang: string 
     const user = await getCurrentUser();
     const lang = params.lang === 'vi' ? 'vi' : 'en';
 
-    let classesWithExercises;
-    if (user.userId) {
-        classesWithExercises = await getUserClassesWithExercises(user.userId);
-    }
-
     const userExercise = {
         id: user.userId,
         role: user.role,
