@@ -13,9 +13,9 @@ import { getCurrentUser } from '@/services/clerk';
 import { eq } from 'drizzle-orm';
 import { cacheTag } from 'next/dist/server/use-cache/cache-tag';
 
-export default async function ExercisePage({ params }: { params: { lang: string } }) {
+export default async function ExercisePage({ params }: { params: Promise<{ lang: 'vi' | 'en' }> }) {
     const user = await getCurrentUser();
-    const lang = params.lang === 'vi' ? 'vi' : 'en';
+    const { lang } = await params;
 
     const userExercise = {
         id: user.userId,
@@ -47,7 +47,7 @@ type ClassWithExercises = {
     exercises: ExerciseInfo[];
 };
 
-export async function getUserClassesWithExercises(userId: string): Promise<ClassWithExercises[]> {
+async function getUserClassesWithExercises(userId: string): Promise<ClassWithExercises[]> {
     'use cache';
     cacheTag(getUserGlobalTag(), getClassroomGlobalTag(), getExerciseGlobalTag());
 
