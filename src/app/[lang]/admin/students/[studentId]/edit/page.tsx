@@ -86,7 +86,7 @@ export default async function EditStudentPage({
     );
 }
 
-export async function getStudent(userId: string) {
+async function getStudent(userId: string) {
     'use cache';
     cacheTag(getUserGlobalTag());
 
@@ -195,7 +195,7 @@ export async function getStudent(userId: string) {
 //     };
 // }
 
-export async function getAllClassrooms() {
+async function getAllClassrooms() {
     return db
         .select({
             id: ClassesTable.id,

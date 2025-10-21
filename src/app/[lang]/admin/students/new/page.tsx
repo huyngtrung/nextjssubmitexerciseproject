@@ -58,7 +58,7 @@ export default async function NewStudentsPage({
     );
 }
 
-export async function getAllClassrooms() {
+async function getAllClassrooms() {
     return db
         .select({
             id: ClassesTable.id,
