@@ -47,9 +47,9 @@ function getTextsForLang(lang: string): StudentTexts {
 export default async function EditStudentPage({
     params,
 }: {
-    params: { lang: string; studentId: string };
+    params: Promise<{ lang: 'vi' | 'en'; studentId: string }>;
 }) {
-    const { lang, studentId } = params;
+    const { lang, studentId } = await params;
 
     const language = lang === 'vi' ? 'vi' : 'en';
     const textsForLang = getTextsForLang(language);

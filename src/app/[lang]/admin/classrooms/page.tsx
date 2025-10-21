@@ -45,8 +45,12 @@ function getTextsForLang(lang: string): ClassroomTexts {
     return texts.en;
 }
 
-export default async function ClassroomPage({ params }: { params: { lang: string } }) {
-    const lang = params.lang === 'vi' ? 'vi' : 'en';
+export default async function ClassroomPage({
+    params,
+}: {
+    params: Promise<{ lang: 'vi' | 'en' }>;
+}) {
+    const { lang } = await params;
 
     const classrooms = await getclassrooms();
     const textsForLang = getTextsForLang(lang);

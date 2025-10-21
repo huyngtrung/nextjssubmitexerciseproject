@@ -33,8 +33,12 @@ function getTextsForLang(lang: string): ClassroomNewTexts {
     return texts.en;
 }
 
-export default async function NewClassroomsPage({ params }: { params: { lang: string } }) {
-    const lang = params.lang === 'vi' ? 'vi' : 'en';
+export default async function NewClassroomsPage({
+    params,
+}: {
+    params: Promise<{ lang: 'vi' | 'en' }>;
+}) {
+    const { lang } = await params;
     const textsForLang = getTextsForLang(lang);
 
     return (

@@ -45,8 +45,8 @@ function getTextsForLang(lang: string): StudentTexts {
     return texts.en;
 }
 
-export default async function StudentPage({ params }: { params: { lang: string } }) {
-    const lang = params.lang === 'vi' ? 'vi' : 'en';
+export default async function StudentPage({ params }: { params: Promise<{ lang: 'vi' | 'en' }> }) {
+    const { lang } = await params;
 
     const students = await getStudents();
     const textsForLang = getTextsForLang(lang);
@@ -68,7 +68,6 @@ export default async function StudentPage({ params }: { params: { lang: string }
     );
 }
 
-// --- Interface cho lớp ---
 interface StudentClass {
     id: string;
     name: string;
@@ -76,17 +75,18 @@ interface StudentClass {
     order: number;
 }
 
-// --- Interface cho học sinh ---
-interface Student {
+interface StudentMapEntry {
     id: string;
-    clerkUserId: string | null;
-    name: string;
-    role: string;
+    clerkUserId: string; // nếu component yêu cầu string
+    name: string | null;
+    firstName: string | null;
+    lastName: string | null;
+    role: 'user' | 'admin';
     email: string;
     classes: StudentClass[];
 }
 
-async function getStudents(): Promise<Student[]> {
+async function getStudents(): Promise<StudentMapEntry[]> {
     'use cache';
 
     cacheTag(getClassroomGlobalTag(), getUserGlobalTag(), getExerciseGlobalTag());
@@ -96,6 +96,8 @@ async function getStudents(): Promise<Student[]> {
             userId: UserTable.id,
             clerkUserId: UserTable.clerkUserId,
             name: UserTable.name,
+            firstName: UserTable.firstName,
+            lastName: UserTable.lastName,
             role: UserTable.role,
             email: UserTable.email,
             classId: ClassesTable.id,
@@ -108,24 +110,31 @@ async function getStudents(): Promise<Student[]> {
         .leftJoin(ClassesTable, eq(UserClassesTable.classId, ClassesTable.id))
         .where(eq(UserTable.role, 'user'));
 
-    const studentsMap: Record<string, Student> = {};
+    const studentsMap: Record<string, StudentMapEntry> = {};
 
     for (const row of rows) {
-        // Tạo học sinh nếu chưa có
-        if (!studentsMap[row.userId]) {
+        if (!row.userId) continue;
+
+        // Khởi tạo StudentMapEntry nếu chưa có
+        if (!(row.userId in studentsMap)) {
             studentsMap[row.userId] = {
                 id: row.userId,
-                clerkUserId: row.clerkUserId ?? null,
-                name: row.name ?? '',
-                role: row.role ?? '',
+                clerkUserId: row.clerkUserId ?? '',
+                name: row.name ?? null,
+                firstName: row.firstName ?? null,
+                lastName: row.lastName ?? null,
+                role: row.role === 'admin' ? 'admin' : 'user',
                 email: row.email ?? '',
                 classes: [],
             };
         }
 
+        // Truy cập chắc chắn object
+        const student = studentsMap[row.userId]!;
+
         // Thêm lớp nếu có
         if (row.classId) {
-            studentsMap[row.userId].classes.push({
+            student.classes.push({
                 id: row.classId,
                 name: row.className ?? '',
                 description: row.classDescription ?? '',

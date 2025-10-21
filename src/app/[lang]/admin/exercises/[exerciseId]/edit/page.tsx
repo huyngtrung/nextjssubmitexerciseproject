@@ -47,9 +47,9 @@ function getTextsForLang(lang: string): ExerciseTexts {
 export default async function EditExercisePage({
     params,
 }: {
-    params: { lang: string; exerciseId: string };
+    params: Promise<{ lang: 'vi' | 'en'; exerciseId: string }>;
 }) {
-    const { lang, exerciseId } = params;
+    const { lang, exerciseId } = await params;
 
     const language = lang === 'vi' ? 'vi' : 'en';
     const textsForLang = getTextsForLang(language);
