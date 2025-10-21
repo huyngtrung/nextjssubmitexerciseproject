@@ -56,7 +56,7 @@ export default async function NewExercisesPage({
     );
 }
 
-export async function getAllClassrooms() {
+async function getAllClassrooms() {
     return db
         .select({
             id: ClassesTable.id,
