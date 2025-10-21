@@ -72,7 +72,24 @@ export default async function ExercisePage({ params }: { params: { lang: string 
     );
 }
 
-async function getExercises() {
+interface ExerciseClass {
+    id: string;
+    name: string; // đảm bảo luôn là string
+    description: string; // có thể là rỗng nếu null
+    order: number; // có thể là 0 nếu null
+}
+
+interface ExerciseItem {
+    id: string;
+    name: string;
+    description: string; // có thể là rỗng nếu null
+    dueDate: Date | null;
+    maxScore: number | null;
+    subject: string; // có thể là rỗng nếu null
+    classes: ExerciseClass[];
+}
+
+async function getExercises(): Promise<ExerciseItem[]> {
     'use cache';
 
     cacheTag(getClassroomGlobalTag(), getUserGlobalTag(), getExerciseGlobalTag());
@@ -94,33 +111,31 @@ async function getExercises() {
         .leftJoin(ExerciseClassesTable, eq(ExercisesTable.id, ExerciseClassesTable.exerciseId))
         .leftJoin(ClassesTable, eq(ExerciseClassesTable.classId, ClassesTable.id));
 
-    // Gom các lớp của cùng 1 user vào mảng
-    const exercisesMap: Record<string, any> = {};
+    const exercisesMap: Record<string, ExerciseItem> = {};
 
     for (const row of rows) {
-        if (!exercisesMap[row.id]) {
-            exercisesMap[row.id] = {
+        let exerciseItem = exercisesMap[row.id];
+        if (!exerciseItem) {
+            exerciseItem = exercisesMap[row.id] = {
                 id: row.id,
-                name: row.name,
-                description: row.description,
-                dueDate: row.dueDate,
-                maxScore: row.maxScore,
-                subject: row.subject,
+                name: row.name ?? '', // fallback ''
+                description: row.description ?? '',
+                dueDate: row.dueDate ?? null,
+                maxScore: row.maxScore ?? null,
+                subject: row.subject ?? '',
                 classes: [],
             };
         }
 
         if (row.classId) {
-            exercisesMap[row.id].classes.push({
+            exerciseItem.classes.push({
                 id: row.classId,
-                name: row.className,
-                description: row.classDescription,
-                order: row.classOrder,
+                name: row.className ?? '', // fallback ''
+                description: row.classDescription ?? '', // fallback ''
+                order: row.classOrder ?? 0, // fallback 0
             });
         }
     }
-
-    return Object.values(exercisesMap);
 
     return Object.values(exercisesMap);
 }

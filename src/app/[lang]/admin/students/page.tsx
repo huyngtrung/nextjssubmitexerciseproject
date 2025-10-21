@@ -68,19 +68,34 @@ export default async function StudentPage({ params }: { params: { lang: string }
     );
 }
 
-async function getStudents() {
+// --- Interface cho lớp ---
+interface StudentClass {
+    id: string;
+    name: string;
+    description: string;
+    order: number;
+}
+
+// --- Interface cho học sinh ---
+interface Student {
+    id: string;
+    clerkUserId: string | null;
+    name: string;
+    role: string;
+    email: string;
+    classes: StudentClass[];
+}
+
+async function getStudents(): Promise<Student[]> {
     'use cache';
 
     cacheTag(getClassroomGlobalTag(), getUserGlobalTag(), getExerciseGlobalTag());
 
-    // Lấy tất cả học sinh cùng với các lớp họ đang học
     const rows = await db
         .select({
             userId: UserTable.id,
             clerkUserId: UserTable.clerkUserId,
             name: UserTable.name,
-            firstName: UserTable.firstName,
-            lastName: UserTable.lastName,
             role: UserTable.role,
             email: UserTable.email,
             classId: ClassesTable.id,
@@ -93,27 +108,28 @@ async function getStudents() {
         .leftJoin(ClassesTable, eq(UserClassesTable.classId, ClassesTable.id))
         .where(eq(UserTable.role, 'user'));
 
-    // Gom các lớp của cùng 1 user vào mảng
-    const studentsMap: Record<string, any> = {};
+    const studentsMap: Record<string, Student> = {};
 
     for (const row of rows) {
+        // Tạo học sinh nếu chưa có
         if (!studentsMap[row.userId]) {
             studentsMap[row.userId] = {
                 id: row.userId,
-                clerkUserId: row.clerkUserId,
-                name: row.name,
-                role: row.role,
-                email: row.email,
+                clerkUserId: row.clerkUserId ?? null,
+                name: row.name ?? '',
+                role: row.role ?? '',
+                email: row.email ?? '',
                 classes: [],
             };
         }
 
+        // Thêm lớp nếu có
         if (row.classId) {
             studentsMap[row.userId].classes.push({
                 id: row.classId,
-                name: row.className,
-                description: row.classDescription,
-                order: row.classOrder,
+                name: row.className ?? '',
+                description: row.classDescription ?? '',
+                order: row.classOrder ?? 0,
             });
         }
     }
