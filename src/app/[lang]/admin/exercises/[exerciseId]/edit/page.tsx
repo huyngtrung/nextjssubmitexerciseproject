@@ -86,7 +86,7 @@ export default async function EditExercisePage({
     );
 }
 
-export async function getExercise(exerciseId: string) {
+async function getExercise(exerciseId: string) {
     'use cache';
     cacheTag(getExerciseGlobalTag());
 
@@ -132,7 +132,7 @@ export async function getExercise(exerciseId: string) {
     };
 }
 
-export async function getAllClassrooms() {
+async function getAllClassrooms() {
     return db
         .select({
             id: ClassesTable.id,
