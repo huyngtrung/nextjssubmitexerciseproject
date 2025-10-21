@@ -310,7 +310,11 @@ export default function PracticeMode({ textsForLang }: PracticeModeProps) {
     };
 
     useEffect(() => {
-        (window as any).practiceTutorialController = animateTutorial();
+        (
+            window as typeof window & {
+                practiceTutorialController?: ReturnType<typeof animateTutorial>;
+            }
+        ).practiceTutorialController = animateTutorial();
     }, [textsForLang]);
 
     return (
