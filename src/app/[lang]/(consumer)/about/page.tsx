@@ -70,41 +70,53 @@ const texts: Record<Lang, AboutPageTexts> = {
             visionMission: {
                 title: 'Tầm Nhìn & Sứ Mệnh',
                 card: {
-                    card1title: 'Tiêu đề 1',
-                    card1des: 'Mô tả 1',
-                    card2title: 'Tiêu đề 2',
-                    card2des: 'Mô tả 2',
-                    card3title: 'Tiêu đề 3',
-                    card3des: 'Mô tả 3',
+                    card1title: 'Hỗ Trợ Học Sinh Toàn Diện',
+                    card1des:
+                        'Cung cấp nền tảng làm bài tập và hướng dẫn chi tiết giúp học sinh nắm vững kiến thức.',
+                    card2title: 'Phát Triển Kỹ Năng Tư Duy',
+                    card2des:
+                        'Rèn luyện khả năng giải quyết vấn đề, tư duy sáng tạo và tự học hiệu quả.',
+                    card3title: 'Tạo Môi Trường Học Tập Tích Cực',
+                    card3des:
+                        'Khuyến khích sự hứng thú, sáng tạo và chủ động trong học tập hàng ngày.',
                 },
             },
             aboutUs: {
                 title: 'Về Chúng Tôi',
                 titledes:
-                    'Chúng tôi tận tâm phát triển trí tuệ trẻ, khơi dậy tò mò và tạo môi trường hỗ trợ để mỗi học sinh phát triển.',
+                    'Chúng tôi tận tâm phát triển trí tuệ trẻ, khơi dậy tò mò và tạo môi trường hỗ trợ để mỗi học sinh phát triển toàn diện. Nền tảng của chúng tôi cung cấp bài tập, hướng dẫn chi tiết và các hoạt động học tập thú vị giúp học sinh rèn luyện kỹ năng, nâng cao kiến thức và tự tin hơn trong học tập hàng ngày.',
             },
             other: {
-                title: 'Hội Tụ Hoạt Động, Thể Thao và Học Thuật Chất Lượng',
-                des: 'Trường cân bằng học thuật, thể thao và hoạt động ngoại khóa để phát triển toàn diện và khơi dậy đam mê học tập.',
-                link: 'Tham Gia Ngay',
+                title: 'Nền Tảng Học Tập Toàn Diện Cho Học Sinh',
+                des: 'Khám phá môi trường học tập sáng tạo, đầy đủ bài tập và hướng dẫn chi tiết, giúp học sinh nâng cao kiến thức, kỹ năng và tự tin trong học tập hàng ngày.',
+                link: 'Bắt Đầu Ngay',
             },
             members: {
-                title: 'Nâng Cao Kỹ Năng, Gặp Gỡ Đội Ngũ',
-                des1: 'Đội ngũ gồm những giáo viên IT nhiệt huyết và chuyên gia trong ngành, giúp học viên đạt mục tiêu.',
-                des2: 'Chúng tôi tin mọi người xứng đáng tiếp cận giáo dục chất lượng, vì vậy tạo nền tảng giúp học IT dễ tiếp cận, thú vị và hiệu quả. Chúng tôi còn tập trung phát triển kỹ năng toàn diện, giải quyết vấn đề và tư duy phản biện.',
-                des3: 'Nền tảng giúp học IT dễ tiếp cận và thú vị, trong khi giáo viên hướng dẫn phát triển kỹ năng toàn diện và tư duy cho tương lai.',
+                title: 'Gặp Gỡ Đội Ngũ Phát Triển Ứng Dụng',
+                des1: 'Nhóm chúng tôi gồm những chuyên gia phát triển, thiết kế và nội dung giáo dục, làm việc cùng nhau để tạo ra nền tảng học tập hiệu quả và thân thiện với học sinh.',
+                des2: 'Chúng tôi tin rằng mọi học sinh đều xứng đáng tiếp cận giáo dục chất lượng. Vì vậy, nền tảng được thiết kế dễ sử dụng, thú vị và hỗ trợ tối đa trong việc làm bài tập, rèn luyện kỹ năng và tư duy phản biện.',
+                des3: 'Đội ngũ phát triển cam kết mang đến trải nghiệm học tập trực tuyến sáng tạo và toàn diện, giúp học sinh tự tin học tập và khám phá tri thức mỗi ngày.',
             },
             quotes: {
-                card1title: 'Tiêu đề 1',
-                card1des: 'Mô tả 1',
-                card2title: 'Tiêu đề 2',
-                card2des: 'Mô tả 2',
-                card3title: 'Tiêu đề 3',
-                card3des: 'Mô tả 3',
-                card4title: 'Tiêu đề 4',
-                card4des: 'Mô tả 4',
-                card5title: 'Tiêu đề 5',
-                card5des: 'Mô tả 5',
+                card1title: 'Kiên Nhẫn Học Tập',
+                card1des:
+                    'Mỗi bài tập là một bước tiến nhỏ trên con đường khám phá kiến thức. Hãy kiên nhẫn và nỗ lực mỗi ngày.',
+
+                card2title: 'Tò Mò và Khám Phá',
+                card2des:
+                    'Sự tò mò sẽ dẫn bạn đến những phát hiện mới. Hãy hỏi, tìm hiểu và học hỏi không ngừng.',
+
+                card3title: 'Tự Tin Làm Bài Tập',
+                card3des:
+                    'Tin vào khả năng của bản thân, từng bước hoàn thành bài tập sẽ giúp bạn tự tin hơn mỗi ngày.',
+
+                card4title: 'Học Từ Sai Lầm',
+                card4des:
+                    'Mỗi lỗi sai là cơ hội để cải thiện. Hãy học từ chúng và không ngừng tiến bộ.',
+
+                card5title: 'Sáng Tạo Trong Học Tập',
+                card5des:
+                    'Đừng ngại nghĩ khác và tìm cách riêng để giải quyết vấn đề. Sáng tạo giúp học tập trở nên thú vị và hiệu quả.',
             },
         },
     },
@@ -122,41 +134,52 @@ const texts: Record<Lang, AboutPageTexts> = {
             visionMission: {
                 title: 'Vision & Mission',
                 card: {
-                    card1title: 'card 1 title',
-                    card1des: 'card 1 description',
-                    card2title: 'card 2 title',
-                    card2des: 'card 2 description',
-                    card3title: 'card 3 title',
-                    card3des: 'card 3 description',
+                    card1title: 'Comprehensive Student Support',
+                    card1des:
+                        'Provide a platform for assignments and detailed guidance to help students master knowledge.',
+                    card2title: 'Develop Thinking Skills',
+                    card2des:
+                        'Cultivate problem-solving, creative thinking, and effective self-learning skills.',
+                    card3title: 'Create a Positive Learning Environment',
+                    card3des: 'Encourage enthusiasm, creativity, and active learning every day.',
                 },
             },
             aboutUs: {
                 title: 'About Us',
                 titledes:
-                    'We are dedicated to nurturing young minds, fostering curiosity, and providing a supportive environment where every student can thrive.',
+                    'We are dedicated to developing young minds, sparking curiosity, and providing a supportive environment for every student to grow. Our platform offers assignments, detailed guidance, and engaging learning activities that help students strengthen skills, enhance knowledge, and gain confidence in their daily studies.',
             },
             other: {
-                title: 'We offer a high Quality Blend of Co-Curricular Activities, Sports and Academics',
-                des: 'Our school balances academics, sports, and co-curricular activities to foster well-rounded development and ignite every student’s passion for learning.',
-                link: 'Join Today',
+                title: 'Comprehensive Learning Platform for Students',
+                des: 'Discover a creative learning environment with complete assignments and detailed guidance, helping students enhance knowledge, skills, and confidence in their daily studies.',
+                link: 'Get Started Now',
             },
             members: {
-                title: 'Improving Skills, Meet our team',
-                des1: 'Our Team is composed of passionate IT educators and industry professionals who are dedicated to helping learners achieve their goals.',
-                des2: 'We believe that everyone deserves access to top-notch education, and that is why we have built a platform that makes IT skills approachable, engaging, and effective. But we know that mastering technology is just one step in personal and professional growth, which is why our instructors focus on developing well-rounded skills, problem-solving abilities, and critical thinking alongside technical knowledge. Our team is constantly researching emerging trends and creating new courses to keep learners ahead in the fast-paced tech industry.',
-                des3: 'Our platform makes IT skills approachable and engaging, while our instructors guide learners in building well-rounded skills, problem-solving, and critical thinking for future growth.',
+                title: 'Meet Our App Team',
+                des1: 'Our team consists of developers, designers, and educational content experts working together to create an effective and student-friendly learning platform.',
+                des2: 'We believe every student deserves access to quality education. Therefore, the platform is designed to be easy to use, engaging, and supportive for completing assignments, building skills, and developing critical thinking.',
+                des3: 'The development team is committed to delivering a creative and comprehensive online learning experience, helping students confidently learn and explore knowledge every day.',
             },
             quotes: {
-                card1title: 'card 1 title',
-                card1des: 'card 1 description',
-                card2title: 'card 2 title',
-                card2des: 'card 2 description',
-                card3title: 'card 3 title',
-                card3des: 'card 3 description',
-                card4title: 'card 4 title',
-                card4des: 'card 4 description',
-                card5title: 'card 5 title',
-                card5des: 'card 5 description',
+                card1title: 'Patience in Learning',
+                card1des:
+                    'Every assignment is a small step on the journey of discovering knowledge. Be patient and strive every day.',
+
+                card2title: 'Curiosity and Exploration',
+                card2des:
+                    'Curiosity leads to new discoveries. Ask questions, explore, and keep learning continuously.',
+
+                card3title: 'Confidence in Assignments',
+                card3des:
+                    'Believe in yourself. Completing assignments step by step will help you gain confidence every day.',
+
+                card4title: 'Learning from Mistakes',
+                card4des:
+                    'Every mistake is an opportunity to improve. Learn from them and keep progressing.',
+
+                card5title: 'Creativity in Learning',
+                card5des:
+                    'Don’t hesitate to think differently and find your own way to solve problems. Creativity makes learning fun and effective.',
             },
         },
     },

@@ -24,24 +24,24 @@ const texts: Record<Lang, HomeHeaderTexts> = {
     vi: {
         home: {
             header: {
-                titleHeader: 'Khám Phá',
-                titleHeaderDes1: 'Thế Giới Học Tập',
-                titleHeaderDes2: 'Tương Lai Sáng',
+                titleHeader: 'Hỗ Trợ Học Tập',
+                titleHeaderDes1: 'Gia sư AI, giải bài và gợi ý nhanh',
+                titleHeaderDes2: 'Tích lũy kiến thức, tiến bộ mỗi ngày',
                 titleDes:
                     'Khám phá niềm vui học tập. EduX giúp bạn mở rộng kiến thức và phát triển bản thân.',
-                actionContext: 'Xem cách hoạt động',
+                actionContext: 'Bắt Đầu Ôn Tập Ngay',
             },
         },
     },
     en: {
         home: {
             header: {
-                titleHeader: 'Discover',
-                titleHeaderDes1: 'The Learning World',
-                titleHeaderDes2: 'The Bright Future',
+                titleHeader: 'Learning Support',
+                titleHeaderDes1: 'AI tutor, solves problems & gives tips',
+                titleHeaderDes2: 'Build knowledge, improve every day',
                 titleDes:
                     'Discover the joy of learning. EduX helps you explore knowledge and growth.',
-                actionContext: 'See how it works',
+                actionContext: 'Start Learning Now',
             },
         },
     },

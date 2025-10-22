@@ -168,7 +168,7 @@ export default function NavbarClient({ isAdmin }: NavbarClientProps) {
                     {/* Logo */}
                     <Link
                         className="hidden md:flex animate-slide-up mr-auto text-lg items-center font-semibold text-orange-600 transition delay-100 duration-300 ease-in-out hover:-translate-y-1 hover:scale-105"
-                        href="/"
+                        href="/vi"
                     >
                         Logo
                     </Link>
@@ -240,7 +240,7 @@ export default function NavbarClient({ isAdmin }: NavbarClientProps) {
                             </Button>
                             <Link
                                 className="flex md:hidden animate-slide-up mr-auto text-lg items-center font-semibold text-orange-600 transition delay-100 duration-300 ease-in-out hover:-translate-y-1 hover:scale-105"
-                                href="/"
+                                href="/vi"
                             >
                                 Logo
                             </Link>

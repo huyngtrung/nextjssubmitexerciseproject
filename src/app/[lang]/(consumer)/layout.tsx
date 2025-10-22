@@ -30,7 +30,7 @@ async function AdminLink() {
             <div className="hidden lg:flex fixed top-10 right-4 z-50 flex-col items-end gap-2">
                 <div>
                     <Link
-                        href="vi/admin"
+                        href="/vi/admin"
                         className="animate-slide-up cursor-pointer hover:bg-accent/10 items-center px-3 py-2 text-orange-600 font-semibold rounded-md
                        opacity-75 hover:opacity-100 transition delay-100 duration-300 ease-in-out hover:-translate-y-1 hover:scale-105
                        bg-black/80 backdrop-blur-sm shadow-md"
@@ -44,7 +44,7 @@ async function AdminLink() {
             <div className="flex lg:hidden fixed bottom-24 right-4 z-50 flex-col items-end gap-2">
                 <div>
                     <Link
-                        href="vi/admin"
+                        href="/vi/admin"
                         className="animate-slide-up cursor-pointer hover:bg-accent/10 items-center px-3 py-2 text-orange-600 font-semibold rounded-md
                        opacity-75 hover:opacity-100 transition delay-100 duration-300 ease-in-out hover:-translate-y-1 hover:scale-105
                        bg-black/80 backdrop-blur-sm shadow-md"

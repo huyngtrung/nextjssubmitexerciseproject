@@ -14,10 +14,93 @@ import {
     PhoneIcon,
 } from 'lucide-react';
 import { Button } from './ui/button';
-import { useLanguage } from '@/context/LanguageContext';
+import { usePathname } from 'next/navigation';
 
 export default function Footer() {
-    const { texts } = useLanguage();
+    const pathname = usePathname(); // ví dụ: '/vi/about'
+    const lang = pathname.split('/')[1] || 'en'; // lấy 'vi' hoặc 'en', mặc định 'en'
+    const textsByLang = {
+        en: {
+            layout: {
+                nav: {
+                    home: 'Home',
+                    about: 'About',
+                    exercise: 'Exercise',
+                    signIn: 'Sign In',
+                    signUp: 'Sign Up',
+                    mobileNav: {
+                        close: 'Close',
+                        title: 'Menu',
+                        Des: 'Quickly navigate to different sections of the site.',
+                    },
+                    admin: {
+                        home: 'Dashborad',
+                        classroom: 'Classrooms',
+                        student: 'students',
+                        exercise: 'Exercises',
+                    },
+                },
+                footer: {
+                    aboutUs: {
+                        title: 'About Us',
+                        titledes:
+                            'Empowering learners with quality content and modern web solutions — built with passion and precision.',
+                    },
+                    keepConnected: {
+                        title: 'Keep Connected',
+                    },
+                    contactUs: {
+                        title: 'Contact Us',
+                        addressTitle: 'hanoi, xxx,xxx,xxx.',
+                    },
+                    copyRight: {
+                        title: '© 2025 All Rights Reserved',
+                    },
+                },
+            },
+        },
+        vi: {
+            layout: {
+                nav: {
+                    home: 'Trang Chủ',
+                    about: 'Giới Thiệu',
+                    exercise: 'Bài Tập',
+                    signIn: 'Đăng Nhập',
+                    signUp: 'Đăng Ký',
+                    mobileNav: {
+                        close: 'Đóng',
+                        title: 'Danh Mục',
+                        Des: 'Nhanh chóng truy cập các khu vực khác của trang.',
+                    },
+                    admin: {
+                        home: 'Tổng quan',
+                        classroom: 'Lớp Học',
+                        student: 'Học sinh',
+                        exercise: 'Bài Tập',
+                    },
+                },
+                footer: {
+                    aboutUs: {
+                        title: 'Về Chúng Tôi',
+                        titledes:
+                            'Giúp phát triển với nội dung chất lượng và giải pháp web hiện đại — xây dựng với tâm huyết và chuyên môn.',
+                    },
+                    keepConnected: {
+                        title: 'Kết Nối',
+                    },
+                    contactUs: {
+                        title: 'Liên Hệ',
+                        addressTitle: 'Hà Nội, Việt Nam',
+                    },
+                    copyRight: {
+                        title: '© 2025 Mọi quyền được bảo lưu',
+                    },
+                },
+            },
+        },
+    };
+
+    const texts = textsByLang[lang as 'en' | 'vi'] ?? textsByLang['en'];
     const [bubbles, setBubbles] = useState<
         { size: number; distance: number; position: number; time: number; delay: number }[]
     >([]);

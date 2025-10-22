@@ -15,7 +15,6 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import Link from 'next/link';
 import { animateCards } from '@/lib/animations/animateCards';
 import { animateBlurIn } from '@/lib/animations/animateblurin';
-import { useLanguage } from '@/context/LanguageContext';
 
 const SHAPE_SIZES = [40, 60, 80, 100, 120];
 const SVG_FILES = [
@@ -66,16 +65,16 @@ const texts: Record<Lang, StandardCurriculumTexts> = {
             StandardCurriculumn: {
                 title: 'Chương Trình Chuẩn',
                 card: {
-                    card1title: 'Tiêu đề 1',
-                    card1des: 'Mô tả 1',
-                    card2title: 'Tiêu đề 2',
-                    card2des: 'Mô tả 2',
-                    card3title: 'Tiêu đề 3',
-                    card3des: 'Mô tả 3',
-                    card4title: 'Tiêu đề 4',
-                    card4des: 'Mô tả 4',
-                    card5title: 'Tiêu đề 5',
-                    card5des: 'Mô tả 5',
+                    card1title: 'Lớp 5',
+                    card1des: 'Nền tảng kiến thức cơ bản, chuẩn bị cho các lớp cao hơn.',
+                    card2title: 'Lớp 6',
+                    card2des: 'Mở rộng hiểu biết, phát triển kỹ năng tư duy và sáng tạo.',
+                    card3title: 'Lớp 7',
+                    card3des: 'Nâng cao kiến thức, rèn luyện khả năng giải quyết vấn đề.',
+                    card4title: 'Lớp 8',
+                    card4des: 'Củng cố kiến thức, áp dụng thực hành và học tập theo dự án.',
+                    card5title: 'Lớp 9',
+                    card5des: 'Chuẩn bị cho các kỳ thi quan trọng và định hướng học tập tiếp theo.',
                 },
                 footerTitle: 'Đọc Thêm',
             },
@@ -86,16 +85,16 @@ const texts: Record<Lang, StandardCurriculumTexts> = {
             StandardCurriculumn: {
                 title: 'Standard Curriculumn',
                 card: {
-                    card1title: 'card 1 title',
-                    card1des: 'card 1 description',
-                    card2title: 'card 2 title',
-                    card2des: 'card 2 description',
-                    card3title: 'card 3 title',
-                    card3des: 'card 3 description',
-                    card4title: 'card 4 title',
-                    card4des: 'card 4 description',
-                    card5title: 'card 5 title',
-                    card5des: 'card 5 description',
+                    card1title: 'Grade 5',
+                    card1des: 'Basic knowledge foundation, preparing for higher grades.',
+                    card2title: 'Grade 6',
+                    card2des: 'Expand understanding, develop thinking and creativity skills.',
+                    card3title: 'Grade 7',
+                    card3des: 'Enhance knowledge, practice problem-solving skills.',
+                    card4title: 'Grade 8',
+                    card4des: 'Consolidate knowledge, apply practice and project-based learning.',
+                    card5title: 'Grade 9',
+                    card5des: 'Prepare for major exams and plan for future learning.',
                 },
                 footerTitle: 'Read More',
             },
@@ -241,8 +240,8 @@ export default function StandardCurriculum({ lang }: { lang: 'vi' | 'en' }) {
                                             <div className="relative w-32 h-32 md:w-40 md:h-40 z-10">
                                                 <div className="absolute -inset-4 md:-inset-6 z-0">
                                                     <Image
-                                                        src="/blob.svg"
-                                                        alt="Background"
+                                                        src={`/blob${index + 1}.svg`} // blob1.svg, blob2.svg,...blob5.svg
+                                                        alt={`Background Blob ${index + 1}`}
                                                         fill
                                                         className="object-cover rounded-lg rotate-90"
                                                     />
@@ -262,14 +261,14 @@ export default function StandardCurriculum({ lang }: { lang: 'vi' | 'en' }) {
 
                                             <CardHeader className="flex justify-center z-10">
                                                 <CardTitle
-                                                    className="whitespace-nowrap text-center"
+                                                    className="whitespace-nowrap text-center text-xl"
                                                     style={{ color: card.color }}
                                                 >
                                                     {card.title}
                                                 </CardTitle>
                                             </CardHeader>
 
-                                            <CardContent className="flex items-center justify-center p-6 flex-col gap-6 z-10">
+                                            <CardContent className="flex items-center justify-center p-6 flex-col gap-6 z-10 -mt-4">
                                                 <div style={{ color: card.color }}>{card.des}</div>
                                                 <Button
                                                     asChild

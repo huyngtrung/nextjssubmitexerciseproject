@@ -540,8 +540,8 @@ export default function PracticeMode({ textsForLang }: PracticeModeProps) {
                                         className="whitespace-pre-line"
                                         dangerouslySetInnerHTML={{
                                             __html: msg.text
-                                                .replace(/\[PAR\]/g, ' ') // ngắt đoạn
-                                                .replace(/\[LINE\]/g, ' '), // xuống dòng
+                                                .replace(/\[PAR\]/g, '<></>') // ngắt đoạn
+                                                .replace(/\[LINE\]/g, '<></>'), // xuống dòng
                                         }}
                                     />
                                     <button

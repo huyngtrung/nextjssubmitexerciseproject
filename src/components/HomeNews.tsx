@@ -33,20 +33,20 @@ const texts: Record<Lang, HomeNew> = {
         home: {
             homeNew: {
                 NewMain: {
-                    title: 'Cùng Bé Tô Màu Cùng những cơ sở vật chất tốt',
+                    title: 'Bài Tập Mới Nhất Cho Học Sinh',
                     titledes:
-                        'Thương hiệu đẹp cho các thay đổi bởi Never Now ở Úc. Đây là nền tảng thảo luận mở, hợp tác và toàn diện.',
+                        'Cập nhật các bài tập và hướng dẫn chi tiết giúp học sinh ôn luyện hiệu quả và nâng cao kỹ năng.',
                     time: '19 Tháng 11, 2025',
                 },
                 NewSub: {
-                    title1: 'Lớp học trải nghiệm sáng tạo',
-                    time1: '19 Tháng 11, 2025',
-                    title2: 'Tô màu nhóm vui nhộn cho trẻ',
-                    time2: '19 Tháng 11, 2025',
-                    title3: 'Ngày âm nhạc và vận động ở mẫu giáo',
-                    time3: '19 Tháng 11, 2025',
-                    title4: 'Khám phá ngoài trời cho trẻ',
-                    time4: '19 Tháng 11, 2025',
+                    title1: 'Bài Tập Toán Lớp 5: Ôn Tập Phép Cộng Trừ',
+                    time1: '20 Tháng 11, 2025',
+                    title2: 'Bài Tập Tiếng Việt: Viết Đoạn Văn Ngắn',
+                    time2: '20 Tháng 11, 2025',
+                    title3: 'Bài Tập Khoa Học: Thí Nghiệm Đơn Giản Tại Nhà',
+                    time3: '21 Tháng 11, 2025',
+                    title4: 'Bài Tập Lịch Sử: Tìm Hiểu Các Vị Vua Việt Nam',
+                    time4: '22 Tháng 11, 2025',
                 },
             },
         },
@@ -55,20 +55,20 @@ const texts: Record<Lang, HomeNew> = {
         home: {
             homeNew: {
                 NewMain: {
-                    title: 'Cùng Bé Tô Màu Cùng những cơ sở vật chất tốt',
+                    title: 'Latest Assignments for Students',
                     titledes:
-                        'Thương hiệu đẹp cho các thay đổi bởi Never Now ở Úc. Đây là nền tảng thảo luận mở, hợp tác và toàn diện.',
-                    time: '19 Tháng 11, 2025',
+                        'Stay updated with new assignments and detailed guidance to help students review effectively and improve skills.',
+                    time: 'November 19, 2025',
                 },
                 NewSub: {
-                    title1: 'Lớp học trải nghiệm sáng tạo',
-                    time1: '19 Tháng 11, 2025',
-                    title2: 'Tô màu nhóm vui nhộn cho trẻ',
-                    time2: '19 Tháng 11, 2025',
-                    title3: 'Ngày âm nhạc và vận động ở mẫu giáo',
-                    time3: '19 Tháng 11, 2025',
-                    title4: 'Khám phá ngoài trời cho trẻ',
-                    time4: '19 Tháng 11, 2025',
+                    title1: 'Grade 5 Math: Review Addition and Subtraction',
+                    time1: 'November 19, 2025',
+                    title2: 'Vietnamese: Writing Short Paragraphs',
+                    time2: 'November 19, 2025',
+                    title3: 'Science: Simple Experiments at Home',
+                    time3: 'November 19, 2025',
+                    title4: 'History: Learn About Vietnamese Kings',
+                    time4: 'November 19, 2025',
                 },
             },
         },

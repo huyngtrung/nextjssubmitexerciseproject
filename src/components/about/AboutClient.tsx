@@ -192,12 +192,12 @@ export default function AboutClient({ lang, textsForLang }: AboutClientProps) {
                         <Card
                             key={idx}
                             className={`flex-1 relative overflow-hidden flex flex-col items-center border-2 border-opacity-20 rounded-xl md:p-4 pb-12
-                                transition-transform duration-300 ease-in-out
-                                hover:-translate-y-3  justify-center md:justify-start 
-                                cursor-pointer min-h-[480] md:min-h-[440]
-                                ${label === 'Left' ? 'border-[#5D58F0]/20 hover:border-[#817DFF]' : ''}
-                                ${label === 'Middle' ? 'border-[#FF236C]/20 hover:border-[#FF5492] md:-mt-8  md:mb-16' : ''}
-                                ${label === 'Right' ? 'border-[#A8C347]/20 hover:border-[#C3E166]' : ''}`}
+                            transition-transform duration-300 ease-in-out
+                            hover:-translate-y-3 justify-center md:justify-start 
+                            cursor-pointer min-h-[480] md:min-h-[440]
+                            ${label === 'Left' ? 'border-[#5D58F0]/20 hover:border-[#8743C4]' : ''}
+                            ${label === 'Middle' ? 'border-[#FF236C]/20 hover:border-[#FF5492] md:-mt-8 md:mb-16' : ''}
+                            ${label === 'Right' ? 'border-[#A8C347]/20 hover:border-[#F1C21B]' : ''}`}
                         >
                             <div className="absolute inset-0 z-0 pointer-events-none">
                                 <div
@@ -205,20 +205,26 @@ export default function AboutClient({ lang, textsForLang }: AboutClientProps) {
                                     style={{
                                         background:
                                             label === 'Left'
-                                                ? 'linear-gradient(to bottom, rgba(93,88,240,0.5), rgba(93,88,240,0.2), transparent)'
+                                                ? 'linear-gradient(to bottom, rgba(135,67,196,0.5), rgba(135,67,196,0.2), transparent)'
                                                 : label === 'Middle'
-                                                  ? 'linear-gradient(to bottom, rgba(255,35,108,0.5), rgba(255,35,108,0.2), transparent)'
-                                                  : 'linear-gradient(to bottom, rgba(168,195,71,0.5), rgba(168,195,71,0.2), transparent)',
+                                                  ? 'linear-gradient(to bottom, rgba(241,34,75,0.5), rgba(241,34,75,0.2), transparent)'
+                                                  : 'linear-gradient(to bottom, rgba(241,194,27,0.5), rgba(241,194,27,0.2), transparent)',
                                     }}
                                 />
                             </div>
 
-                            <div className="relative w-32 h-32 md:w-40 md:h-40 mb-4">
+                            <div className="relative w-40 h-40 md:w-40 md:h-40 mb-4">
                                 <Image
-                                    src="/blob.svg"
-                                    alt="Background"
+                                    src={`/aboutimgs/${
+                                        label === 'Left'
+                                            ? 'purple-shape.png'
+                                            : label === 'Middle'
+                                              ? 'pink-shape.png'
+                                              : 'blob.svg'
+                                    }`}
+                                    alt="Background Shape"
                                     fill
-                                    className="object-cover rounded-lg rotate-90"
+                                    className="object-contain rounded-lg rotate-0"
                                 />
                                 <Image
                                     src="/science-1-42.svg"
@@ -229,7 +235,17 @@ export default function AboutClient({ lang, textsForLang }: AboutClientProps) {
                             </div>
 
                             <CardHeader className="flex justify-center">
-                                <CardTitle className="whitespace-nowrap text-center">
+                                <CardTitle
+                                    className="whitespace-nowrap text-center text-xl"
+                                    style={{
+                                        color:
+                                            label === 'Left'
+                                                ? '#8743C4'
+                                                : label === 'Middle'
+                                                  ? '#F1284F'
+                                                  : '#F1C21B',
+                                    }}
+                                >
                                     {(() => {
                                         const key =
                                             `card${idx + 1}title` as keyof typeof textsForLang.about.visionMission.card;
@@ -237,8 +253,19 @@ export default function AboutClient({ lang, textsForLang }: AboutClientProps) {
                                     })()}
                                 </CardTitle>
                             </CardHeader>
-                            <CardContent className="flex flex-col items-center gap-4 p-4">
-                                <div>
+
+                            <CardContent
+                                className="flex flex-col items-center gap-4 p-4 px-12"
+                                style={{
+                                    color:
+                                        label === 'Left'
+                                            ? '#8743C4'
+                                            : label === 'Middle'
+                                              ? '#F1284F'
+                                              : '#F1C21B',
+                                }}
+                            >
+                                <div className="text-center">
                                     {(() => {
                                         const key =
                                             `card${idx + 1}des` as keyof typeof textsForLang.about.visionMission.card;
@@ -409,7 +436,7 @@ export default function AboutClient({ lang, textsForLang }: AboutClientProps) {
                             >
                                 {/* Nội dung overlay */}
                                 <div className="relative z-10 w-full h-full flex items-center justify-center ">
-                                    <Card className="overflow-hidden h-full w-full flex items-center justify-center rounded-xl p-4 cursor-pointer bg-[#ff0f5b]/80 border-0 shadow-none">
+                                    <Card className="overflow-hidden h-full w-full flex items-center justify-center rounded-xl p-4 cursor-pointer bg-[#ff0f5b]/60 border-0 shadow-none">
                                         {/* Nền ảnh và màu */}
                                         <div
                                             className="absolute inset-0 "
@@ -421,7 +448,7 @@ export default function AboutClient({ lang, textsForLang }: AboutClientProps) {
                                             }}
                                         />
                                         <div className="absolute inset-0 bg-white/20" />
-                                        <div className="w-16 h-16 border-2 border-white rounded-full flex items-center justify-center bg-[#ff0f5b]/80">
+                                        <div className="w-16 h-16 border-2 border-white rounded-full flex items-center justify-center bg-[#ff0f5b]/60">
                                             <svg
                                                 className="w-9 h-9 transition-colors duration-500 rotate-180"
                                                 viewBox="0 0 24 24"
@@ -433,7 +460,7 @@ export default function AboutClient({ lang, textsForLang }: AboutClientProps) {
                                         </div>
 
                                         <CardHeader className="flex justify-center z-10">
-                                            <CardTitle className="whitespace-nowrap text-center">
+                                            <CardTitle className="whitespace-nowrap text-center text-3xl">
                                                 {(() => {
                                                     const key =
                                                         `card${index + 1}title` as keyof typeof textsForLang.about.quotes;
@@ -442,7 +469,7 @@ export default function AboutClient({ lang, textsForLang }: AboutClientProps) {
                                             </CardTitle>
                                         </CardHeader>
 
-                                        <CardContent className="flex items-center justify-center p-6 flex-col gap-6 z-10">
+                                        <CardContent className="flex items-center justify-center p-6 flex-col gap-6 z-10 text-xl">
                                             {(() => {
                                                 const key =
                                                     `card${index + 1}des` as keyof typeof textsForLang.about.quotes;

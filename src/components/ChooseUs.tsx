@@ -23,13 +23,13 @@ const texts: Record<Lang, ChooseUsTexts> = {
     vi: {
         home: {
             chooseUs: {
-                title: 'Tại Sao Trường Chúng Tôi Phù Hợp Với Con Bạn?',
+                title: 'Tại Sao Chọn Nền Tảng Làm Bài Tập Của Chúng Tôi?',
                 titleDes:
-                    'Trường chúng tôi truyền cảm hứng phát triển, sáng tạo và tò mò. Chúng tôi nuôi dưỡng mỗi học sinh để đạt tiềm năng tối đa.',
+                    'Chúng tôi giúp học sinh rèn luyện kiến thức, cải thiện kỹ năng và hoàn thành bài tập hiệu quả mỗi ngày.',
                 card: {
-                    card1title: 'Giáo Viên Chuyên Nghiệp',
-                    card2title: 'Cơ Sở Vật Chất Tuyệt Vời',
-                    card3title: 'Mô Hình Học Quốc Tế',
+                    card1title: 'Hướng Dẫn Bài Tập Chi Tiết',
+                    card2title: 'Giao Diện Thân Thiện & Dễ Sử Dụng',
+                    card3title: 'Hệ Thống Bài Tập Phù Hợp Mỗi Cấp Lớp',
                 },
             },
         },
@@ -37,13 +37,13 @@ const texts: Record<Lang, ChooseUsTexts> = {
     en: {
         home: {
             chooseUs: {
-                title: 'Tại Sao Trường Chúng Tôi Phù Hợp Với Con Bạn?',
+                title: 'Why Choose Our Homework Platform?',
                 titleDes:
-                    'Trường chúng tôi truyền cảm hứng phát triển, sáng tạo và tò mò. Chúng tôi nuôi dưỡng mỗi học sinh để đạt tiềm năng tối đa.',
+                    'We help students strengthen knowledge, improve skills, and complete assignments efficiently every day.',
                 card: {
-                    card1title: 'Giáo Viên Chuyên Nghiệp',
-                    card2title: 'Cơ Sở Vật Chất Tuyệt Vời',
-                    card3title: 'Mô Hình Học Quốc Tế',
+                    card1title: 'Step-by-Step Assignment Guidance',
+                    card2title: 'User-Friendly Interface',
+                    card3title: 'Grade-Appropriate Exercises',
                 },
             },
         },

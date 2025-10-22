@@ -1,3 +1,3 @@
 export default async function AdminPage() {
-    return <>123</>;
+    return <div className="flex justify-center items-center">Teacher Dashboard</div>;
 }

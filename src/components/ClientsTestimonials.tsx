@@ -40,19 +40,23 @@ const texts: Record<Lang, ClientsTestimonials> = {
             clientsTestimonials: {
                 title: 'Ý Kiến Phụ Huynh',
                 titleDes:
-                    'Cộng đồng phụ huynh chia sẻ trải nghiệm và suy nghĩ về hành trình học tập và phát triển của con họ. Họ rất yêu thích chúng tôi',
+                    'Các phụ huynh chia sẻ trải nghiệm khi con họ làm bài tập và học cùng giáo viên Sơn Tùng M-TP. Họ đánh giá rất cao phương pháp giảng dạy và sự hỗ trợ tận tình.',
                 card: {
-                    card1title: 'Emily Johnson',
+                    card1title: 'Phụ huynh của Sơn Tùng M-TP',
                     card1des:
-                        'Con của Emily trở nên tự tin và tò mò nhờ các bài học thú vị và giáo viên tận tâm.',
-                    card2title: 'Luna Lovegood',
-                    card2des: 'Luna sáng tạo, luôn mang ý tưởng độc đáo vào mọi việc cô làm.',
-                    card3title: 'Harry Potter',
-                    card3des: 'Harry dũng cảm và quyết tâm, luôn đối mặt thử thách.',
-                    card4title: 'Hermione Granger',
-                    card4des: 'Hermione thông minh và chăm chỉ, xuất sắc trong mọi nhiệm vụ.',
-                    card5title: 'Ron Weasley',
-                    card5des: 'Ron trung thành và dũng cảm, luôn hỗ trợ bạn bè.',
+                        'Nhờ sự hướng dẫn tận tâm của thầy, con tôi hoàn thành bài tập hiệu quả, học hỏi nhanh chóng và tự tin hơn mỗi ngày.',
+                    card2title: 'Phụ huynh của Minh Anh',
+                    card2des:
+                        'Con tôi thấy các bài tập thú vị và dễ hiểu hơn, giúp cải thiện kỹ năng nhanh chóng.',
+                    card3title: 'Phụ huynh của Thuỳ Linh',
+                    card3des:
+                        'Tôi rất hài lòng cách thầy giải thích chi tiết, giúp con nắm chắc kiến thức và áp dụng tốt.',
+                    card4title: 'Phụ huynh của Hoàng Nam',
+                    card4des:
+                        'Nhờ hướng dẫn của thầy, con tôi tự tin hơn khi làm bài tập và đối mặt các thử thách.',
+                    card5title: 'Phụ huynh của Ngọc Mai',
+                    card5des:
+                        'Phương pháp học vừa hiệu quả vừa sáng tạo, giúp con tôi hứng thú với việc học mỗi ngày.',
                 },
             },
         },
@@ -60,25 +64,25 @@ const texts: Record<Lang, ClientsTestimonials> = {
     en: {
         home: {
             clientsTestimonials: {
-                title: 'Parents Testimonials',
+                title: 'Parent Testimonials',
                 titleDes:
-                    'Our community of parents shares their experiences and thoughts about the learning journey and growth their children enjoy with us.',
+                    'Parents share their experiences observing their children completing assignments and learning with teacher Sơn Tùng M-TP. They highly appreciate his teaching methods and support.',
                 card: {
-                    card1title: 'Emily Johnson',
+                    card1title: 'Parent of Son Tung M-TP',
                     card1des:
-                        'Emily’s child has become confident and curious thanks to engaging lessons and caring teachers.',
-                    card2title: 'Luna Lovegood',
+                        'Thanks to his dedicated guidance, my child completes assignments efficiently, learns quickly, and gains confidence every day.',
+                    card2title: 'Parent of Minh Anh',
                     card2des:
-                        'Luna is a creative thinker, bringing imaginative ideas to everything she does.',
-                    card3title: 'Harry Potter',
+                        'My child finds the assignments engaging and easy to understand, helping improve skills rapidly.',
+                    card3title: 'Parent of Thuy Linh',
                     card3des:
-                        'Harry is courageous and determined, always facing challenges head-on.',
-                    card4title: 'Hermione Granger',
+                        'I am very pleased with the detailed explanations, which help my child grasp concepts and apply them effectively.',
+                    card4title: 'Parent of Hoang Nam',
                     card4des:
-                        'Hermione is highly intelligent and diligent, excelling in every task she undertakes.',
-                    card5title: 'Ron Weasley',
+                        'With his guidance, my child feels more confident tackling assignments and challenges.',
+                    card5title: 'Parent of Ngoc Mai',
                     card5des:
-                        'Ron is loyal and brave, supporting his friends through thick and thin.',
+                        'The learning methods are effective and creative, making my child excited to study every day.',
                 },
             },
         },
@@ -149,7 +153,7 @@ export default function ClientsTestimonials({ lang }: { lang: 'vi' | 'en' }) {
                 {/* Left: Testimonial */}
                 <div className="space-y-12">
                     <div className="space-y-6 scroll-animate">
-                        <h3 className=" text-4xl lg:text-5xl font-semibold">
+                        <h3 className=" text-2xl lg:text-5xl font-semibold">
                             {textsForLang.home.clientsTestimonials.title}
                         </h3>
                         <p className="md:min-h-[100] lg:text-lg text-justify text-gray-500">
@@ -178,7 +182,7 @@ export default function ClientsTestimonials({ lang }: { lang: 'vi' | 'en' }) {
                         <h3 className="text-3xl font-semibold transition-opacity duration-500">
                             {selectedClient.name}
                         </h3>
-                        <p className="text-justify text-lg transition-opacity duration-500 lg:min-h-0 min-h-[88]">
+                        <p className="text-justify text-lg transition-opacity duration-500 lg:min-h-0 min-h-[92]">
                             {selectedClient.text}
                         </p>
                     </div>
