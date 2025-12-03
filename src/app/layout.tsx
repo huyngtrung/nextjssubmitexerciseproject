@@ -28,7 +28,7 @@ export default function RootLayout({
     return (
         <ClerkProvider>
             <html lang="en">
-                <body className={`antialiased ${varela.className}`}>
+                <body className={`antialiased ${varela.className}`} suppressHydrationWarning={true}>
                     <LanguageProvider>
                         {children}
                         <Toaster richColors position="top-right" />

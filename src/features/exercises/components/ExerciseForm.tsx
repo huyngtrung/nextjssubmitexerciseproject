@@ -30,6 +30,7 @@ type StudentTableTexts = {
         description: string;
         dueDate: string;
         includedClassrooms: string;
+        file: string;
     };
     save: string;
 };
@@ -43,6 +44,7 @@ const texts: Record<Lang, StudentTableTexts> = {
             description: 'Mô Tả',
             dueDate: 'Ngày Đến Hạn',
             includedClassrooms: 'Lớp Học',
+            file: 'Tài Liệu Bài Tập',
         },
         save: 'Lưu',
     },
@@ -54,6 +56,7 @@ const texts: Record<Lang, StudentTableTexts> = {
             description: 'Description',
             dueDate: 'Due Date',
             includedClassrooms: 'Inclued Classrooms',
+            file: 'Exercise File',
         },
         save: 'Save',
     },
@@ -78,6 +81,7 @@ export function ExerciseForm({
         subjectName: string;
         dueDate?: Date;
         maxScore?: number;
+        s3Key?: string;
         classes?: {
             classId: string;
             name: string;
@@ -103,6 +107,7 @@ export function ExerciseForm({
                       : '',
                   maxScore: exercise.maxScore ?? 0,
                   classroomIds: exercise?.classes?.map((c) => c.classId) ?? [],
+                  file: undefined,
               }
             : {
                   name: '',
@@ -111,10 +116,20 @@ export function ExerciseForm({
                   dueDate: '',
                   maxScore: 0,
                   classroomIds: [],
+                  file: undefined,
               },
     });
 
     async function handleOnSubmit(values: z.infer<typeof exerciseSchema>) {
+        if (!exercise?.id && !values.file) {
+            actionToast({
+                actionData: {
+                    error: true,
+                    message: lang === 'vi' ? 'Vui lòng chọn file bài tập' : 'Please select a file',
+                },
+            });
+            return;
+        }
         const classIds = values.classroomIds;
 
         const formattedValues = {
@@ -281,6 +296,44 @@ export function ExerciseForm({
                             </FormItem>
                         )}
                     />
+
+                    <FormField
+                        control={form.control}
+                        name="file"
+                        render={({ field }) => {
+                            const displayName =
+                                field.value?.name || getFileNameFromS3Key(exercise?.s3Key);
+                            return (
+                                <FormItem>
+                                    <FormLabel>{textsForLang.input.file}</FormLabel>
+                                    <FormControl>
+                                        <label className="flex items-center gap-4 cursor-pointer border border-dashed rounded-md pl-2 hover:bg-gray-50 transition">
+                                            <span className="text-sm text-muted-foreground">
+                                                {displayName || 'Click hoặc kéo file vào đây'}
+                                            </span>
+                                            <Input
+                                                type="file"
+                                                accept=".pdf,.doc,.docx"
+                                                className="hidden"
+                                                onChange={(e) =>
+                                                    field.onChange(e.target.files?.[0] ?? null)
+                                                }
+                                            />
+                                            <Button
+                                                className="border-0 cursor-pointer"
+                                                type="button"
+                                                variant="outline"
+                                                size="sm"
+                                            >
+                                                Chọn file
+                                            </Button>
+                                        </label>
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            );
+                        }}
+                    />
                 </div>
 
                 <div className="self-end">
@@ -324,4 +377,20 @@ function formatDateForInput(value: string | Date) {
     }
 
     return `${year}-${month}-${day}T${hour}:${minute}`;
+}
+
+function getFileNameFromS3Key(s3Key: string | undefined): string {
+    if (!s3Key) return '';
+    // Kiểm tra exercises/ prefix
+    if (!s3Key.startsWith('exercises/')) return s3Key;
+
+    // Loại bỏ "exercises/"
+    const withoutPrefix = s3Key.replace(/^exercises\//, '');
+
+    // Xác định vị trí _ sau timestamp và UUID (UUID chuẩn 36 ký tự)
+    // timestamp: 19 ký tự "YYYY-MM-DD_HH-MM-SS" + "_" + UUID: 36 ký tự + "_"
+    const prefixLength = 19 + 1 + 36 + 1; // 57 ký tự
+    const fileName = withoutPrefix.slice(prefixLength);
+
+    return fileName;
 }

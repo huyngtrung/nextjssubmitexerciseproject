@@ -1,3 +1,4 @@
+'use client';
 import { ActionButton } from '@/components/ActionButton';
 import { Button } from '@/components/ui/button';
 import {
@@ -12,6 +13,17 @@ import { formatPlural } from '@/lib/formatters';
 import { Trash2Icon } from 'lucide-react';
 import Link from 'next/link';
 import { deleteclassroom } from '../actions/classrooms';
+import { useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { useDebouncedSearch } from '@/lib/useDebouncedSearch';
+
+interface SearchResult {
+    id: string;
+    name: string;
+    description?: string;
+    usersCount: number;
+    exercisesCount: number;
+}
 
 type Lang = 'vi' | 'en';
 
@@ -34,33 +46,21 @@ type ClassroomTableTexts = {
 const texts: Record<Lang, ClassroomTableTexts> = {
     vi: {
         tableHead: {
-            title1: {
-                singular: 'Lớp Học',
-                plural: 'Lớp Học',
-            },
+            title1: { singular: 'Lớp Học', plural: 'Lớp Học' },
             title2: 'Số Lượng Học Sinh',
             title3: 'Số Lượng Bài Tập',
             title4: 'Thao Tác',
         },
-        action: {
-            edit: 'Sửa',
-            delete: 'Xóa',
-        },
+        action: { edit: 'Sửa', delete: 'Xóa' },
     },
     en: {
         tableHead: {
-            title1: {
-                singular: 'Classroom',
-                plural: 'Classrooms',
-            },
+            title1: { singular: 'Classroom', plural: 'Classrooms' },
             title2: 'Students',
             title3: 'Exercises',
             title4: 'Actions',
         },
-        action: {
-            edit: 'Edit',
-            delete: 'Delete',
-        },
+        action: { edit: 'Edit', delete: 'Delete' },
     },
 };
 
@@ -85,73 +85,158 @@ export function ClassroomTable({
 }) {
     const textsForLang = getTextsForLang(lang);
 
-    return (
-        <Table className="border-[1px] border-gray-300 rounded-md">
-            <TableHeader className="bg-muted/50">
-                <TableRow className="text-sm font-semibold text-foreground">
-                    <TableHead>
-                        {formatPlural(classrooms.length, {
-                            singular: textsForLang.tableHead.title1.singular,
-                            plural: textsForLang.tableHead.title1.plural,
-                        })}
-                    </TableHead>
+    const [searchQuery, setSearchQuery] = useState('');
+    const { data: searchResults, loading: isSearching } = useDebouncedSearch<SearchResult>(
+        searchQuery,
+        '/api/classrooms/search',
+        300,
+    );
 
-                    <TableHead className="text-sm font-semibold text-foreground text-center">
-                        {textsForLang.tableHead.title2}
-                    </TableHead>
-                    <TableHead className="text-sm font-semibold text-foreground text-center pr-6">
-                        {textsForLang.tableHead.title3}
-                    </TableHead>
-                    <TableHead className="text-sm font-semibold text-foreground text-right pr-6">
-                        {textsForLang.tableHead.title4}
-                    </TableHead>
-                </TableRow>
-            </TableHeader>
-            <TableBody>
-                {classrooms.map((classroom) => (
-                    <TableRow key={classroom.id}>
-                        <TableCell>
-                            <div className="flex flex-col gap-1">
-                                <div className="font-semibold">{classroom.name}</div>
-                                <div className="text-muted-foreground">
-                                    {formatPlural(classroom.usersCount, {
-                                        singular: 'user',
-                                        plural: 'users',
-                                    })}{' '}
-                                    •{' '}
-                                    {formatPlural(classroom.exercisesCount, {
-                                        singular: 'exercise',
-                                        plural: 'exercises',
-                                    })}
-                                </div>
-                            </div>
-                        </TableCell>
-                        <TableCell className="text-center text-sm text-foreground">
-                            {classroom.usersCount}
-                        </TableCell>
-                        <TableCell className="text-center text-sm text-foreground">
-                            {classroom.exercisesCount}
-                        </TableCell>
-                        <TableCell className="text-right">
-                            <div className="flex justify-end gap-2 items-center">
-                                <Button asChild>
-                                    <Link href={`/${lang}/admin/classrooms/${classroom.id}/edit`}>
-                                        {textsForLang.action.edit}
-                                    </Link>
-                                </Button>
-                                <ActionButton
-                                    variant="destructive"
-                                    requireAreYouSure
-                                    action={deleteclassroom.bind(null, classroom.id, lang)}
-                                >
-                                    <Trash2Icon />
-                                    <span className="sr-only"> {textsForLang.action.delete}</span>
-                                </ActionButton>
-                            </div>
-                        </TableCell>
+    const [currentPage, setCurrentPage] = useState(1);
+    const rowsPerPage = 5;
+
+    // Nếu query rỗng, hiển thị toàn bộ classrooms
+    const displayedClassrooms =
+        searchQuery.trim() === ''
+            ? classrooms
+            : searchResults.map((item) => ({
+                  id: item.id,
+                  name: item.name,
+                  description: item.description ?? '',
+                  usersCount: item.usersCount ?? 0,
+                  exercisesCount: item.exercisesCount ?? 0,
+              }));
+
+    // Phân trang
+    const totalPages = Math.ceil(displayedClassrooms.length / rowsPerPage);
+    const paginatedClassrooms = displayedClassrooms.slice(
+        (currentPage - 1) * rowsPerPage,
+        currentPage * rowsPerPage,
+    );
+
+    const goToPage = (page: number) => {
+        if (page < 1) page = 1;
+        if (page > totalPages) page = totalPages;
+        setCurrentPage(page);
+    };
+
+    return (
+        <>
+            <div className="mb-6">
+                <Input
+                    value={searchQuery}
+                    onChange={(e) => {
+                        setSearchQuery(e.target.value);
+                        setCurrentPage(1); // reset page khi search
+                    }}
+                    placeholder={lang === 'vi' ? 'Tìm lớp học...' : 'Search classrooms...'}
+                    className="max-w-sm"
+                />
+            </div>
+            {isSearching && <p>{lang === 'vi' ? 'Đang tìm...' : 'Searching...'}</p>}
+            <Table className="border-[1px] border-gray-300 rounded-md">
+                <TableHeader className="bg-muted/50">
+                    <TableRow className="text-sm font-semibold text-foreground">
+                        <TableHead>
+                            {formatPlural(classrooms.length, {
+                                singular: textsForLang.tableHead.title1.singular,
+                                plural: textsForLang.tableHead.title1.plural,
+                            })}
+                        </TableHead>
+
+                        <TableHead className="text-sm font-semibold text-foreground text-center">
+                            {textsForLang.tableHead.title2}
+                        </TableHead>
+                        <TableHead className="text-sm font-semibold text-foreground text-center pr-6">
+                            {textsForLang.tableHead.title3}
+                        </TableHead>
+                        <TableHead className="text-sm font-semibold text-foreground text-right pr-6">
+                            {textsForLang.tableHead.title4}
+                        </TableHead>
                     </TableRow>
-                ))}
-            </TableBody>
-        </Table>
+                </TableHeader>
+                <TableBody>
+                    {paginatedClassrooms.map((classroom) => (
+                        <TableRow key={classroom.id}>
+                            <TableCell>
+                                <div className="flex flex-col gap-1">
+                                    <div className="font-semibold">{classroom.name}</div>
+                                    <div className="text-muted-foreground">
+                                        {formatPlural(classroom.usersCount, {
+                                            singular: 'user',
+                                            plural: 'users',
+                                        })}{' '}
+                                        •{' '}
+                                        {formatPlural(classroom.exercisesCount, {
+                                            singular: 'exercise',
+                                            plural: 'exercises',
+                                        })}
+                                    </div>
+                                </div>
+                            </TableCell>
+                            <TableCell className="text-center text-sm text-foreground">
+                                {classroom.usersCount}
+                            </TableCell>
+                            <TableCell className="text-center text-sm text-foreground">
+                                {classroom.exercisesCount}
+                            </TableCell>
+                            <TableCell className="text-right">
+                                <div className="flex justify-end gap-2 items-center">
+                                    <Button asChild>
+                                        <Link
+                                            href={`/${lang}/admin/classrooms/${classroom.id}/edit`}
+                                        >
+                                            {textsForLang.action.edit}
+                                        </Link>
+                                    </Button>
+                                    <ActionButton
+                                        variant="destructive"
+                                        requireAreYouSure
+                                        action={deleteclassroom.bind(null, classroom.id, lang)}
+                                    >
+                                        <Trash2Icon />
+                                        <span className="sr-only">
+                                            {textsForLang.action.delete}
+                                        </span>
+                                    </ActionButton>
+                                </div>
+                            </TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+
+            {/* Pagination controls */}
+            {totalPages > 1 && (
+                <div className="flex justify-center items-center mt-4 gap-2">
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => goToPage(currentPage - 1)}
+                        disabled={currentPage === 1}
+                    >
+                        {'<'}
+                    </Button>
+                    {Array.from({ length: totalPages }, (_, i) => (
+                        <Button
+                            key={i}
+                            variant={currentPage === i + 1 ? 'default' : 'outline'}
+                            size="sm"
+                            onClick={() => goToPage(i + 1)}
+                        >
+                            {i + 1}
+                        </Button>
+                    ))}
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => goToPage(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                    >
+                        {'>'}
+                    </Button>
+                </div>
+            )}
+        </>
     );
 }

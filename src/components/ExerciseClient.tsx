@@ -7,7 +7,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { UserRole } from '@/drizzle/schema';
 import PracticeMode from './exercise/PracticeMode';
 import HomeWorkMode from './exercise/HomeworkMode';
-
+import NoteSheet from './exercise/NoteSheet';
+import { ClassWithExercises } from '@/app/[lang]/(consumer)/exercise/page';
+import { useEffect, useState } from 'react';
 type Lang = 'vi' | 'en';
 
 export type ExercisePageTexts = {
@@ -52,6 +54,18 @@ export type ExercisePageTexts = {
             };
             submit: {
                 title: string;
+            };
+        };
+        homeWordMode: {
+            userInfo: {
+                title: string;
+                classroom: string;
+                name: string;
+            };
+            exerciseInfo: {
+                subjectTitle: string;
+                exerciseTitle: string;
+                noExercise: string;
             };
         };
         macoutTutorial: {
@@ -126,6 +140,18 @@ const texts: Record<Lang, ExercisePageTexts> = {
                     title: 'Gửi',
                 },
             },
+            homeWordMode: {
+                userInfo: {
+                    title: 'Thông Tin Học Sinh',
+                    classroom: 'Lớp',
+                    name: 'Họ Tên',
+                },
+                exerciseInfo: {
+                    subjectTitle: 'Chọn Môn Học',
+                    exerciseTitle: 'Bài Tập Trong Môn',
+                    noExercise: 'Chưa có bài tập nào trong môn này',
+                },
+            },
             macoutTutorial: {
                 title1: 'Xin Chào',
                 des1: 'Mình là người hướng dẫn bạn.',
@@ -196,6 +222,18 @@ const texts: Record<Lang, ExercisePageTexts> = {
                     title: 'Submit',
                 },
             },
+            homeWordMode: {
+                userInfo: {
+                    title: 'Student Information',
+                    classroom: 'Clasroom',
+                    name: 'Name',
+                },
+                exerciseInfo: {
+                    subjectTitle: 'Choose Subject',
+                    exerciseTitle: 'All Exrcises in Subject',
+                    noExercise: 'No exercises in this subject',
+                },
+            },
             macoutTutorial: {
                 title1: 'Hello',
                 des1: 'I am the mascot here to guide you.',
@@ -240,9 +278,16 @@ export default function ExerciseClient({
         role: UserRole | undefined;
         name: string | undefined | null;
         clerkUserId: string | null;
+        exerciseClasses: ClassWithExercises[];
     };
 }) {
     const textsForLang = getTextsForLang(lang);
+
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
     return (
         <div className="relative flex flex-col items-center overflow-hidden bg-gray-50 min-h-screen">
@@ -270,6 +315,7 @@ export default function ExerciseClient({
                 </div>
             </div>
 
+            {isMounted && <NoteSheet />}
             {/* Main content */}
             <div className="w-full max-w-4xl">
                 {/* img background */}
@@ -311,7 +357,7 @@ export default function ExerciseClient({
                 </div>
                 {/* img background end*/}
 
-                <div className="w-full max-w-4xl px-4 flex flex-col justify-center gap-6 min-h-[130vh] md:h-[100vh]">
+                <div className="w-full max-w-4xl px-4 flex flex-col justify-center gap-6 min-h-[120vh] md:h-[100vh]">
                     {/* header */}
                     <div className="py-8 text-center">
                         <div className="inline-block">

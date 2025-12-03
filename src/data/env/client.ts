@@ -9,6 +9,7 @@ export const env = createEnv({
         NEXT_PUBLIC_SERVER_URL: z.string().min(1),
         NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL: z.string().min(1),
         NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL: z.string().min(1),
+        NEXT_PUBLIC_AMS_S3_BUCKET_NAME: z.string().min(1),
     },
     experimental__runtimeEnv: {
         NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
@@ -19,5 +20,6 @@ export const env = createEnv({
             process.env.NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL,
         NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL:
             process.env.NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL,
+        NEXT_PUBLIC_AMS_S3_BUCKET_NAME: process.env.NEXT_PUBLIC_AMS_S3_BUCKET_NAME,
     },
 });

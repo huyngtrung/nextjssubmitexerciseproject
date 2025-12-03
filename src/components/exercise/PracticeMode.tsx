@@ -5,9 +5,8 @@ import { X } from 'lucide-react';
 import { gsap } from 'gsap';
 import ScrollToPlugin from 'gsap/ScrollToPlugin';
 import { ExercisePageTexts } from '../ExerciseClient';
+import RightSlidePanel from './RightSlidePanel';
 gsap.registerPlugin(ScrollToPlugin);
-
-type Message = { text: string; sender: 'user' | 'bot' };
 
 interface PracticeModeProps {
     textsForLang: ExercisePageTexts;
@@ -152,48 +151,37 @@ export default function PracticeMode({ textsForLang }: PracticeModeProps) {
         return { goStep: () => goStep(0) };
     };
 
-    const [messages, setMessages] = useState<Message[]>([]);
     const [loading, setLoading] = useState(false);
-    // const [problemFile, setProblemFile] = useState<File | null>(null);
     const [problemFiles, setProblemFiles] = useState<File[]>([]);
     const [problemProgress, setProblemProgress] = useState<Record<string, number>>({});
 
     const [solutionFiles, setSolutionFiles] = useState<File[]>([]);
-    // const [problemProgress, setProblemProgress] = useState(0);
     const [solutionProgress, setSolutionProgress] = useState<Record<string, number>>({});
 
     const [selectedClass, setSelectedClass] = useState('');
     const [selectedSubject, setSelectedSubject] = useState('');
 
+    const [slideData, setSlideData] = useState<{
+        examType: string[];
+        generalFeedback: string;
+        questions: { id: number; question: string; aiAnswer: string; type: string }[];
+    } | null>(null);
+
+    const [slideOpen, setSlideOpen] = useState(false);
+
     const handleFileUpload = (file: File, type: 'problem' | 'solution') => {
-        // Khởi tạo progress = 0
-        if (type === 'problem') {
-            setProblemProgress((prev) => ({ ...prev, [file.name]: 0 }));
-        } else {
-            setSolutionProgress((prev) => ({ ...prev, [file.name]: 0 }));
-        }
-
-        // progressSetter luôn nhận 1 số và cập nhật đúng object
         const progressSetter = (val: number) => {
-            if (type === 'problem') {
-                setProblemProgress((prev) => ({ ...prev, [file.name]: val }));
-            } else {
-                setSolutionProgress((prev) => ({ ...prev, [file.name]: val }));
-            }
+            type === 'problem'
+                ? setProblemProgress((prev) => ({ ...prev, [file.name]: val }))
+                : setSolutionProgress((prev) => ({ ...prev, [file.name]: val }));
         };
-
         let progress = 0;
         const interval = setInterval(() => {
             progress += Math.random() * 15;
             if (progress >= 100) progress = 100;
-            progressSetter(progress); // ✅ Luôn cập nhật object
+            progressSetter(progress);
             animateMascotProgress(progress, type);
-
-            if (progress === 100) {
-                const mascot = document.getElementById('mascout');
-                if (mascot) mascot.style.backgroundImage = "url('/mascoutimgs/finished.png')";
-                clearInterval(interval);
-            }
+            if (progress === 100) clearInterval(interval);
         }, 200);
     };
 
@@ -202,34 +190,29 @@ export default function PracticeMode({ textsForLang }: PracticeModeProps) {
         type: 'problem' | 'solution',
     ) => {
         const files = e.target.files;
-        if (!files || files.length === 0) return;
+        if (!files) return;
 
+        const newFiles = Array.from(files) as File[];
         if (type === 'problem') {
-            const newFiles = Array.from(files).filter(Boolean) as File[];
-            setProblemFiles((prev) => {
-                const combined = [...prev, ...newFiles].slice(0, 2); // giới hạn 2 file
-                combined.forEach((f) => handleFileUpload(f, 'problem'));
-                return combined;
-            });
+            const combined = [...problemFiles, ...newFiles].slice(0, 2);
+            combined.forEach((f) => handleFileUpload(f, 'problem'));
+            setProblemFiles(combined);
         } else {
-            const newFiles = Array.from(files).filter(Boolean) as File[]; // ✅ Chắc chắn không undefined
-            setSolutionFiles((prev) => {
-                const combined = [...prev, ...newFiles].slice(0, 8); // giới hạn 8 file
-                combined.forEach((f) => handleFileUpload(f, 'solution'));
-                return combined;
-            });
+            const combined = [...solutionFiles, ...newFiles].slice(0, 8);
+            combined.forEach((f) => handleFileUpload(f, 'solution'));
+            setSolutionFiles(combined);
         }
     };
 
-    const handleCancelFile = (type: 'problem' | 'solution', fileName?: string) => {
-        if (type === 'problem' && fileName) {
+    const handleCancelFile = (type: 'problem' | 'solution', fileName: string) => {
+        if (type === 'problem') {
             setProblemFiles((prev) => prev.filter((f) => f.name !== fileName));
             setProblemProgress((prev) => {
                 const updated = { ...prev };
                 delete updated[fileName];
                 return updated;
             });
-        } else if (type === 'solution' && fileName) {
+        } else {
             setSolutionFiles((prev) => prev.filter((f) => f.name !== fileName));
             setSolutionProgress((prev) => {
                 const updated = { ...prev };
@@ -241,17 +224,15 @@ export default function PracticeMode({ textsForLang }: PracticeModeProps) {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
-        const notice = textsForLang.exercise.macoutTutorial.notice;
-        const isChooseGrade = textsForLang.exercise.macoutTutorial.isChooseGrade;
-        const isChooseSubject = textsForLang.exercise.macoutTutorial.isChooseSubject;
-        console.log(isChooseGrade, isChooseSubject);
-
         if (!selectedClass || !selectedSubject) {
-            showMascotReminder(notice, selectedClass ? isChooseSubject : isChooseGrade);
+            showMascotReminder(
+                textsForLang.exercise.macoutTutorial.notice,
+                selectedClass
+                    ? textsForLang.exercise.macoutTutorial.isChooseSubject
+                    : textsForLang.exercise.macoutTutorial.isChooseGrade,
+            );
             return;
         }
-
         if (problemFiles.length === 0 || solutionFiles.length === 0) return;
         if (
             Object.values(problemProgress).some((p) => p < 100) ||
@@ -260,48 +241,40 @@ export default function PracticeMode({ textsForLang }: PracticeModeProps) {
             return;
 
         setLoading(true);
-        setMessages((prev) => [
-            ...prev,
-            { text: `Đang gửi bài tập và ${solutionFiles.length} file đáp án...`, sender: 'user' },
-        ]);
-
         try {
             const formData = new FormData();
-            problemFiles.forEach((f, idx) => {
-                const renamed = new File([f], `de-bai-${idx + 1}.${f.name.split('.').pop()}`);
-                formData.append('problems', renamed);
-            });
-            solutionFiles.forEach((f, idx) => {
-                const renamed = new File([f], `bai-lam-${idx + 1}.${f.name.split('.').pop()}`);
-                formData.append('solutions', renamed);
-            });
-
+            problemFiles.forEach((f, idx) =>
+                formData.append(
+                    'problems',
+                    new File([f], `de-bai-${idx + 1}.${f.name.split('.').pop()}`),
+                ),
+            );
+            solutionFiles.forEach((f, idx) =>
+                formData.append(
+                    'solutions',
+                    new File([f], `bai-lam-${idx + 1}.${f.name.split('.').pop()}`),
+                ),
+            );
             formData.append('class', selectedClass);
             formData.append('subject', selectedSubject);
 
             const response = await fetch('/api/ai-submit', { method: 'POST', body: formData });
-            const data = await response.json();
-            setMessages((prev) => [...prev, { text: data.text, sender: 'bot' }]);
+            const resData = await response.json();
+
+            setSlideData(resData.data);
+            setSlideOpen(true);
         } catch (error) {
             console.error(error);
-            setMessages((prev) => [...prev, { text: 'Something went wrong', sender: 'bot' }]);
         } finally {
             setLoading(false);
-            const mascot = document.getElementById('mascout');
-            if (mascot) mascot.style.backgroundImage = "url('/mascoutimgs/image-part-16-r3c2.png')";
-
-            // ✅ Reset các khung upload
             setProblemFiles([]);
             setSolutionFiles([]);
             setProblemProgress({});
             setSolutionProgress({});
-
-            // Nếu bạn muốn reset input HTML file (tránh vẫn giữ file cũ trong UI)
             const problemInput = document.querySelector<HTMLInputElement>(
                 '#problem-upload input[type="file"]',
             );
             if (problemInput) problemInput.value = '';
-
             const solutionInput = document.querySelector<HTMLInputElement>(
                 '#solution-upload input[type="file"]',
             );
@@ -319,6 +292,15 @@ export default function PracticeMode({ textsForLang }: PracticeModeProps) {
 
     return (
         <div className="flex flex-col gap-6 ">
+            <RightSlidePanel
+                title="Phản hồi"
+                examType={slideData?.examType}
+                generalFeedback={slideData?.generalFeedback}
+                data={slideData?.questions}
+                open={slideOpen}
+                onOpenChange={setSlideOpen}
+            />
+
             {/* --- Chọn lớp / môn --- */}
             <div className="flex gap-4 justify-center mb-4">
                 <div className="flex flex-col">
@@ -375,10 +357,10 @@ export default function PracticeMode({ textsForLang }: PracticeModeProps) {
             </div>
             <div className="flex gap-6 ">
                 {/* --- Upload problem / solution --- */}
-                <div className="flex w-1/3">
+                <div className="flex w-full">
                     <form
                         onSubmit={handleSubmit}
-                        className="grid grid-cols-1 md:flex md:flex-col gap-4 relative z-10 md:flex-1  md:mb-12 mb-12"
+                        className="md:flex md:flex-col gap-4 relative z-10 md:flex-1  md:mb-12 mb-12"
                     >
                         {/* Problem Upload */}
                         <div className="flex flex-col gap-2 ">
@@ -518,60 +500,6 @@ export default function PracticeMode({ textsForLang }: PracticeModeProps) {
                         </button>
                     </form>
                 </div>
-                {/* --- Messages / chat --- */}
-                <div
-                    id="chat-box"
-                    className="flex-1 w-2/3 overflow-y-auto h-[560px] p-4 bg-gray-100 border-2 border-[#B1C74D] rounded-2xl shadow-inner space-y-3 relative"
-                >
-                    {messages.map((msg, idx) => (
-                        <div
-                            key={idx}
-                            className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} relative`}
-                        >
-                            <div
-                                className={`max-w-[70%] px-4 py-2 rounded-2xl ${
-                                    msg.sender === 'user'
-                                        ? 'bg-green-200 text-gray-800 rounded-br-none'
-                                        : 'bg-gray-200 text-gray-900 rounded-bl-none'
-                                }`}
-                            >
-                                <div className="flex justify-between items-start">
-                                    <div
-                                        className="whitespace-pre-line"
-                                        dangerouslySetInnerHTML={{
-                                            __html: msg.text
-                                                .replace(/\[PAR\]/g, '<></>') // ngắt đoạn
-                                                .replace(/\[LINE\]/g, '<></>'), // xuống dòng
-                                        }}
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => {
-                                            setMessages((prev) => prev.filter((_, i) => i !== idx));
-                                        }}
-                                        className="ml-2 text-red-500 hover:text-red-700 font-bold"
-                                    >
-                                        X
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-
-                    {loading && (
-                        <div className="flex items-center gap-2">
-                            <div
-                                className="w-12 h-12 bg-no-repeat bg-contain"
-                                style={{
-                                    backgroundImage: "url('/mascoutimgs/image-part-16-r3c2.png')",
-                                }}
-                            />
-                            <div className="max-w-[70%] px-4 py-2 rounded-2xl bg-gray-200 text-gray-500 animate-pulse">
-                                Typing...
-                            </div>
-                        </div>
-                    )}
-                </div>
             </div>
 
             {/* mascout */}
@@ -597,13 +525,9 @@ export default function PracticeMode({ textsForLang }: PracticeModeProps) {
     );
 }
 
-// --- Helper truncate tên file ---
 const truncateFileName = (name: string, maxLength = 12) => {
     const dotIndex = name.lastIndexOf('.');
     const ext = dotIndex !== -1 ? name.slice(dotIndex) : '';
     const base = dotIndex !== -1 ? name.slice(0, dotIndex) : name;
-    if (base.length > maxLength) {
-        return base.slice(0, maxLength) + '...' + ext;
-    }
-    return name;
+    return base.length > maxLength ? base.slice(0, maxLength) + '...' + ext : name;
 };

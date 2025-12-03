@@ -1,0 +1,1 @@
+ALTER TABLE `exercise_progress` ADD PRIMARY KEY(`user_id`,`exercise_id`);

@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "18248180-e631-44fb-9f16-588bda4ce04c",
+  "id": "a6bb1144-5cc5-45fa-a75c-b1822219fc0c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "users": {
@@ -108,88 +108,6 @@
       },
       "checkConstraint": {}
     },
-    "ai_results": {
-      "name": "ai_results",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "exercise_submission_id": {
-          "name": "exercise_submission_id",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "score": {
-          "name": "score",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "feedback": {
-          "name": "feedback",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "analysis_summary": {
-          "name": "analysis_summary",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "(now())"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "(now())"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "ai_results_exercise_submission_id_exercise_submissions_id_fk": {
-          "name": "ai_results_exercise_submission_id_exercise_submissions_id_fk",
-          "tableFrom": "ai_results",
-          "tableTo": "exercise_submissions",
-          "columnsFrom": [
-            "exercise_submission_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {
-        "ai_results_id": {
-          "name": "ai_results_id",
-          "columns": [
-            "id"
-          ]
-        }
-      },
-      "uniqueConstraints": {},
-      "checkConstraint": {}
-    },
     "classes": {
       "name": "classes",
       "columns": {
@@ -275,29 +193,23 @@
           "notNull": true,
           "autoincrement": false
         },
-        "file_url": {
-          "name": "file_url",
-          "type": "text",
+        "ai_result_json": {
+          "name": "ai_result_json",
+          "type": "json",
           "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "final_score": {
-          "name": "final_score",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "ai_feedback_summary": {
-          "name": "ai_feedback_summary",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false
         },
         "created_at": {
           "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "updated_at": {
+          "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
@@ -362,13 +274,13 @@
           "notNull": true,
           "autoincrement": false
         },
-        "completed": {
-          "name": "completed",
-          "type": "boolean",
+        "role": {
+          "name": "role",
+          "type": "enum('SUBMITTED_ON_TIME','SUBMITTED_LATE')",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false,
-          "default": false
+          "default": "'SUBMITTED_ON_TIME'"
         },
         "completed_at": {
           "name": "completed_at",
@@ -379,6 +291,14 @@
         },
         "created_at": {
           "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "updated_at": {
+          "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
@@ -464,6 +384,13 @@
           "notNull": false,
           "autoincrement": false
         },
+        "s3_key": {
+          "name": "s3_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp",
@@ -511,8 +438,8 @@
           "notNull": true,
           "autoincrement": false
         },
-        "file_url": {
-          "name": "file_url",
+        "s3_key": {
+          "name": "s3_key",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
@@ -525,15 +452,16 @@
           "notNull": true,
           "autoincrement": false
         },
-        "ocr_text": {
-          "name": "ocr_text",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
         "created_at": {
           "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "updated_at": {
+          "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,

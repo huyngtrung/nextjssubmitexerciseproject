@@ -11,6 +11,10 @@ export const env = createEnv({
         CLERK_SECRET_KEY: z.string().min(1),
         CLERK_WEBHOOK_SECRET: z.string().min(1),
         AI_API_KEY: z.string().min(1),
+        AWS_S3_REGION: z.string().min(1),
+        AWS_S3_ACCESS_KEY_ID: z.string().min(1),
+        AWS_S3_SECRET_ACCESS_KEY: z.string().min(1),
+        TYPESENSE_API_KEY: z.string().min(1),
     },
     experimental__runtimeEnv: process.env,
 });

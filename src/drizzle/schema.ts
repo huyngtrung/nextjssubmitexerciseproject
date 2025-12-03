@@ -1,5 +1,4 @@
 export * from './schema/user';
-export * from './schema/aiResults';
 export * from './schema/classes';
 export * from './schema/exerciseSubmissions';
 export * from './schema/exercise_progress';

@@ -11,6 +11,7 @@ export const ExercisesTable = mysqlTable('exercises', {
     subject: text('subject').notNull(),
     dueDate: timestamp('due_date', { mode: 'date' }),
     maxScore: float('max_score'),
+    s3Key: text('s3_key').notNull(),
     createdAt,
     updatedAt,
 });

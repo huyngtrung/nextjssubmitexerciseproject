@@ -1,5 +1,5 @@
-import { mysqlTable, text, varchar } from 'drizzle-orm/mysql-core';
-import { createdAt, id } from '../schemaHelpers';
+import { json, mysqlTable, varchar } from 'drizzle-orm/mysql-core';
+import { createdAt, id, updatedAt } from '../schemaHelpers';
 import { UserTable } from './user';
 import { relations } from 'drizzle-orm';
 import { ExercisesTable } from './exercises';
@@ -13,10 +13,9 @@ export const ExerciseSubmissionsTable = mysqlTable('exercise_submissions', {
     exerciseId: varchar('exercise_id', { length: 255 })
         .notNull()
         .references(() => ExercisesTable.id, { onDelete: 'cascade' }),
-    fileUrl: text('file_url').notNull(),
-    finalScore: varchar('final_score', { length: 255 }).notNull(),
-    aiFeedBack: text('ai_feedback_summary').notNull(),
+    aiResultJson: json('ai_result_json'),
     createdAt,
+    updatedAt,
 });
 
 export const ExerciseSubmissionsRelationships = relations(

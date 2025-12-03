@@ -14,17 +14,6 @@ CREATE TABLE `users` (
 	CONSTRAINT `users_clerk_user_id_unique` UNIQUE(`clerk_user_id`)
 );
 --> statement-breakpoint
-CREATE TABLE `ai_results` (
-	`id` varchar(255) NOT NULL,
-	`exercise_submission_id` varchar(255) NOT NULL,
-	`score` text NOT NULL,
-	`feedback` text NOT NULL,
-	`analysis_summary` text NOT NULL,
-	`created_at` timestamp NOT NULL DEFAULT (now()),
-	`updated_at` timestamp NOT NULL DEFAULT (now()),
-	CONSTRAINT `ai_results_id` PRIMARY KEY(`id`)
-);
---> statement-breakpoint
 CREATE TABLE `classes` (
 	`id` varchar(255) NOT NULL,
 	`name` text NOT NULL,
@@ -39,19 +28,19 @@ CREATE TABLE `exercise_submissions` (
 	`id` varchar(255) NOT NULL,
 	`user_id` varchar(255) NOT NULL,
 	`exercise_id` varchar(255) NOT NULL,
-	`file_url` text NOT NULL,
-	`final_score` varchar(255) NOT NULL,
-	`ai_feedback_summary` text NOT NULL,
+	`ai_result_json` json,
 	`created_at` timestamp NOT NULL DEFAULT (now()),
+	`updated_at` timestamp NOT NULL DEFAULT (now()),
 	CONSTRAINT `exercise_submissions_id` PRIMARY KEY(`id`)
 );
 --> statement-breakpoint
 CREATE TABLE `exercise_progress` (
 	`user_id` varchar(255) NOT NULL,
 	`exercise_id` varchar(255) NOT NULL,
-	`completed` boolean DEFAULT false,
+	`role` enum('SUBMITTED_ON_TIME','SUBMITTED_LATE') NOT NULL DEFAULT 'SUBMITTED_ON_TIME',
 	`completed_at` timestamp,
-	`created_at` timestamp NOT NULL DEFAULT (now())
+	`created_at` timestamp NOT NULL DEFAULT (now()),
+	`updated_at` timestamp NOT NULL DEFAULT (now())
 );
 --> statement-breakpoint
 CREATE TABLE `exercises` (
@@ -61,6 +50,7 @@ CREATE TABLE `exercises` (
 	`subject` text NOT NULL,
 	`due_date` timestamp,
 	`max_score` float,
+	`s3_key` text NOT NULL,
 	`created_at` timestamp NOT NULL DEFAULT (now()),
 	`updated_at` timestamp NOT NULL DEFAULT (now()),
 	CONSTRAINT `exercises_id` PRIMARY KEY(`id`)
@@ -69,10 +59,10 @@ CREATE TABLE `exercises` (
 CREATE TABLE `submission_files` (
 	`id` varchar(255) NOT NULL,
 	`ex_submission_id` varchar(255) NOT NULL,
-	`file_url` text NOT NULL,
+	`s3_key` text NOT NULL,
 	`file_type` varchar(255) NOT NULL,
-	`ocr_text` text NOT NULL,
 	`created_at` timestamp NOT NULL DEFAULT (now()),
+	`updated_at` timestamp NOT NULL DEFAULT (now()),
 	CONSTRAINT `submission_files_id` PRIMARY KEY(`id`)
 );
 --> statement-breakpoint
@@ -88,7 +78,6 @@ CREATE TABLE `user_classes` (
 	`order` int NOT NULL
 );
 --> statement-breakpoint
-ALTER TABLE `ai_results` ADD CONSTRAINT `ai_results_exercise_submission_id_exercise_submissions_id_fk` FOREIGN KEY (`exercise_submission_id`) REFERENCES `exercise_submissions`(`id`) ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE `exercise_submissions` ADD CONSTRAINT `exercise_submissions_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE `exercise_submissions` ADD CONSTRAINT `exercise_submissions_exercise_id_exercises_id_fk` FOREIGN KEY (`exercise_id`) REFERENCES `exercises`(`id`) ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE `exercise_progress` ADD CONSTRAINT `exercise_progress_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE cascade ON UPDATE no action;--> statement-breakpoint

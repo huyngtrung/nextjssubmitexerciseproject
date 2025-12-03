@@ -99,6 +99,7 @@ async function getExercise(exerciseId: string) {
             dueDate: true,
             maxScore: true,
             subject: true,
+            s3Key: true,
         },
         with: {
             exerciseClasses: {

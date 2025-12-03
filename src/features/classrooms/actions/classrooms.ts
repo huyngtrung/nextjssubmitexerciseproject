@@ -17,6 +17,16 @@ import {
 } from '../db/classrooms';
 import { db } from '@/drizzle/db';
 import { ClassesTable } from '@/drizzle/schema';
+import { typesenseClient } from '@/lib/typesense';
+import { CollectionSchema } from 'typesense/lib/Typesense/Collection';
+
+function normalizeString(str: string) {
+    return str
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '') // remove accents
+        .trim();
+}
 
 export async function createClassroom(lang: 'vi' | 'en', unsafeData: z.infer<typeof classSchema>) {
     const { success, data } = classSchema.safeParse(unsafeData);
@@ -36,8 +46,36 @@ export async function createClassroom(lang: 'vi' | 'en', unsafeData: z.infer<typ
         };
     }
     const order = await getNextClassroomOrder();
-
     const classroom = await insertClass({ ...data, order });
+
+    try {
+        // Kiểm tra collection
+        const collections: CollectionSchema[] = await typesenseClient.collections().retrieve();
+        const collectionExists = collections.some((c) => c.name === 'classrooms');
+
+        if (!collectionExists) {
+            await typesenseClient.collections().create({
+                name: 'classrooms',
+                fields: [
+                    { name: 'id', type: 'string' },
+                    { name: 'name', type: 'string' },
+                    { name: 'name_normalized', type: 'string' },
+                ],
+            });
+        }
+
+        // Thêm document
+        await typesenseClient
+            .collections('classrooms')
+            .documents()
+            .create({
+                id: classroom.id,
+                name: classroom.name,
+                name_normalized: normalizeString(classroom.name),
+            });
+    } catch (err) {
+        console.error('Typesense indexing failed on create:', err);
+    }
 
     return {
         error: false,
@@ -71,7 +109,20 @@ export async function updateClassroom(
 
     if (!currentClass) return { error: true, message: 'Class not found' };
 
-    await updateClassDb(id, { ...data, order: currentClass.order });
+    const updatedClass = await updateClassDb(id, { ...data, order: currentClass.order });
+
+    try {
+        await typesenseClient
+            .collections('classrooms')
+            .documents(id)
+            .update({
+                name: updatedClass.name,
+                name_normalized: normalizeString(updatedClass.name),
+                description: updatedClass.description,
+            });
+    } catch (err) {
+        console.error('Typesense indexing failed on update:', err);
+    }
 
     return {
         error: false,
@@ -88,6 +139,12 @@ export async function deleteclassroom(id: string, lang: 'vi' | 'en') {
     }
 
     await deleteclassroomdb(id);
+
+    try {
+        await typesenseClient.collections('classrooms').documents(id).delete();
+    } catch (err) {
+        console.error('Typesense delete failed:', err);
+    }
 
     return {
         error: false,

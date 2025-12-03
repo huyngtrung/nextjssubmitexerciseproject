@@ -74,18 +74,19 @@ export default async function ExercisePage({ params }: { params: Promise<{ lang:
 
 interface ExerciseClass {
     id: string;
-    name: string; // đảm bảo luôn là string
-    description: string; // có thể là rỗng nếu null
-    order: number; // có thể là 0 nếu null
+    name: string;
+    description: string;
+    order: number;
 }
 
 interface ExerciseItem {
     id: string;
     name: string;
-    description: string; // có thể là rỗng nếu null
+    description: string;
     dueDate: Date | null;
     maxScore: number | null;
-    subject: string; // có thể là rỗng nếu null
+    subject: string;
+    s3key: string | null;
     classes: ExerciseClass[];
 }
 
@@ -102,6 +103,7 @@ async function getExercises(): Promise<ExerciseItem[]> {
             dueDate: ExercisesTable.dueDate,
             maxScore: ExercisesTable.maxScore,
             subject: ExercisesTable.subject,
+            s3key: ExercisesTable.s3Key,
             classId: ClassesTable.id,
             className: ClassesTable.name,
             classDescription: ClassesTable.description,
@@ -123,6 +125,7 @@ async function getExercises(): Promise<ExerciseItem[]> {
                 dueDate: row.dueDate ?? null,
                 maxScore: row.maxScore ?? null,
                 subject: row.subject ?? '',
+                s3key: row.s3key ?? null,
                 classes: [],
             };
         }

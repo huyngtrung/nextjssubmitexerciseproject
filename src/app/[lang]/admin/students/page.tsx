@@ -77,7 +77,7 @@ interface StudentClass {
 
 interface StudentMapEntry {
     id: string;
-    clerkUserId: string; // nếu component yêu cầu string
+    clerkUserId: string;
     name: string | null;
     firstName: string | null;
     lastName: string | null;

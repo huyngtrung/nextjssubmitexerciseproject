@@ -7,4 +7,5 @@ export const exerciseSchema = z.object({
     dueDate: z.string().datetime({ offset: true }).or(z.string().min(1)).optional(),
     maxScore: z.number().optional(),
     classroomIds: z.array(z.string()).min(1, 'Please select at least one classroom'),
+    file: z.instanceof(File).optional(),
 });

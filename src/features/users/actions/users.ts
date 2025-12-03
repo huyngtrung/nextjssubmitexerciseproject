@@ -12,6 +12,16 @@ import { eq } from 'drizzle-orm';
 import { revalidateTag } from 'next/cache';
 import { getUserGlobalTag } from '../db/cache';
 import { getClassroomIdTag } from '@/features/classrooms/db/cache/classrooms';
+import { typesenseClient } from '@/lib/typesense';
+import { CollectionSchema } from 'typesense/lib/Typesense/Collection';
+
+function normalizeString(str: string) {
+    return str
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .trim();
+}
 
 export async function createUser(
     classIds: string[],
@@ -79,6 +89,32 @@ export async function createUser(
                 .where(eq(UserClassesTable.userId, newUser.id)),
         };
 
+        try {
+            // Kiểm tra collection
+            const collections: CollectionSchema[] = await typesenseClient.collections().retrieve();
+            const collectionExists = collections.some((c) => c.name === 'students');
+
+            if (!collectionExists) {
+                await typesenseClient.collections().create({
+                    name: 'students',
+                    fields: [
+                        { name: 'id', type: 'string' },
+                        { name: 'name', type: 'string' },
+                        { name: 'name_normalized', type: 'string' },
+                    ],
+                });
+            }
+
+            // Thêm document
+            await typesenseClient.collections('students').documents().create({
+                clerkUserId: clerkUser.id,
+                id: newUser.id,
+                name: newUser.name,
+            });
+        } catch (err) {
+            console.error('Typesense indexing failed on create:', err);
+        }
+
         return {
             error: false,
             message: lang === 'vi' ? 'Tạo học sinh thành công' : 'Successfully created user',
@@ -143,6 +179,18 @@ export async function updateUserAction(
             }
         }
 
+        try {
+            await typesenseClient
+                .collections('students')
+                .documents(clerkUserId)
+                .update({
+                    name: updatedUser.name,
+                    name_normalized: normalizeString(updatedUser.name as string),
+                });
+        } catch (err) {
+            console.error('Typesense indexing failed on update:', err);
+        }
+
         return {
             error: false,
             message: lang === 'vi' ? 'Cập nhật học sinh thành công' : 'Sucessfully updated user',
@@ -200,6 +248,12 @@ export async function deleteUserAction(clerkUserId: string, lang: 'vi' | 'en') {
         // 6️⃣ Revalidate cache cho user và tất cả lớp liên quan
         revalidateTag(getUserGlobalTag());
         userClasses.forEach(({ classId }) => revalidateTag(getClassroomIdTag(classId)));
+
+        try {
+            await typesenseClient.collections('students').documents(clerkUserId).delete();
+        } catch (err) {
+            console.error('Typesense delete failed:', err);
+        }
 
         return {
             error: false,
