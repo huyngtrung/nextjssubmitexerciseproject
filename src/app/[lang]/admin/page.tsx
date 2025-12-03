@@ -12,7 +12,6 @@ import { getClassroomGlobalTag } from '@/features/classrooms/db/cache/classrooms
 import { getExerciseGlobalTag } from '@/features/exercises/db/cache';
 import { getUserGlobalTag } from '@/features/users/db/cache';
 import { cacheTag } from 'next/dist/server/use-cache/cache-tag';
-import AdminPageClient from '@/components/admin/AdminPageClient';
 
 type Lang = 'vi' | 'en';
 
@@ -50,113 +49,113 @@ function getTextsForLang(lang: string): StudentTexts {
 }
 
 export default async function AdminPage({ params }: { params: Promise<{ lang: 'vi' | 'en' }> }) {
-    const { lang } = await params;
+    // const { lang } = await params;
 
-    // const classesData = await getClassesStudents();
-    const textsForLang = getTextsForLang(lang);
-    const subjects = ['Math', 'Physics', 'Chemistry', 'English', 'Vietnamese'];
-    const classNames = ['9A', '9B', '9C', '9D', '9E'];
+    // // const classesData = await getClassesStudents();
+    // const textsForLang = getTextsForLang(lang);
+    // const subjects = ['Math', 'Physics', 'Chemistry', 'English', 'Vietnamese'];
+    // const classNames = ['9A', '9B', '9C', '9D', '9E'];
 
-    // Số lượng bài cố định theo môn
-    const subjectExercisesCount: Record<string, number> = {
-        Math: 30,
-        Physics: 22,
-        Chemistry: 18,
-        English: 45,
-        Vietnamese: 9,
-    };
+    // // Số lượng bài cố định theo môn
+    // const subjectExercisesCount: Record<string, number> = {
+    //     Math: 30,
+    //     Physics: 22,
+    //     Chemistry: 18,
+    //     English: 45,
+    //     Vietnamese: 9,
+    // };
 
-    // Tạo danh sách bài tập chung cho tất cả học sinh
-    interface ExerciseTemplate {
-        id: string;
-        name: string;
-        subject: string;
-    }
+    // // Tạo danh sách bài tập chung cho tất cả học sinh
+    // interface ExerciseTemplate {
+    //     id: string;
+    //     name: string;
+    //     subject: string;
+    // }
 
-    const exerciseTemplates: ExerciseTemplate[] = [];
-    for (const subject of subjects) {
-        const count = subjectExercisesCount[subject];
-        for (let i = 1; i <= count; i++) {
-            exerciseTemplates.push({
-                id: `${subject}-ex-${i}`,
-                name: `Exercise ${i} (${subject})`,
-                subject,
-            });
-        }
-    }
+    // const exerciseTemplates: ExerciseTemplate[] = [];
+    // for (const subject of subjects) {
+    //     const count = subjectExercisesCount[subject];
+    //     for (let i = 1; i <= count; i++) {
+    //         exerciseTemplates.push({
+    //             id: `${subject}-ex-${i}`,
+    //             name: `Exercise ${i} (${subject})`,
+    //             subject,
+    //         });
+    //     }
+    // }
 
-    const classesData: ClassWithStudents[] = [];
+    // const classesData: ClassWithStudents[] = [];
 
-    for (let c = 0; c < classNames.length; c++) {
-        const classId = `class-${classNames[c]}`;
-        const students: StudentInfo[] = [];
+    // for (let c = 0; c < classNames.length; c++) {
+    //     const classId = `class-${classNames[c]}`;
+    //     const students: StudentInfo[] = [];
 
-        // Phân bố học sinh theo mức độ làm bài: làm hết, làm nhiều, làm trung bình, làm ít
-        const fullDone = 5; // làm hết
-        const manyDone = 10; // làm nhiều
-        const mediumDone = 15; // làm trung bình
-        const fewDone = 10; // làm ít
+    //     // Phân bố học sinh theo mức độ làm bài: làm hết, làm nhiều, làm trung bình, làm ít
+    //     const fullDone = 5; // làm hết
+    //     const manyDone = 10; // làm nhiều
+    //     const mediumDone = 15; // làm trung bình
+    //     const fewDone = 10; // làm ít
 
-        for (let s = 1; s <= 40; s++) {
-            const studentId = `${classId}-student-${s}`;
-            const exercises: ExerciseInfo[] = [];
+    //     for (let s = 1; s <= 40; s++) {
+    //         const studentId = `${classId}-student-${s}`;
+    //         const exercises: ExerciseInfo[] = [];
 
-            for (const exTemplate of exerciseTemplates) {
-                let status: ExerciseInfo['status'] | null = null;
+    //         for (const exTemplate of exerciseTemplates) {
+    //             let status: ExerciseInfo['status'] | null = null;
 
-                // Xác định tỉ lệ làm bài theo nhóm
-                const rand = Math.random();
-                if (s <= fullDone) {
-                    status = rand < 0.9 ? 'SUBMITTED_ON_TIME' : 'SUBMITTED_LATE';
-                } else if (s <= fullDone + manyDone) {
-                    if (rand < 0.75) status = 'SUBMITTED_ON_TIME';
-                    else if (rand < 0.9) status = 'SUBMITTED_LATE';
-                    else status = null;
-                } else if (s <= fullDone + manyDone + mediumDone) {
-                    if (rand < 0.5) status = 'SUBMITTED_ON_TIME';
-                    else if (rand < 0.7) status = 'SUBMITTED_LATE';
-                    else status = null;
-                } else {
-                    if (rand < 0.2) status = 'SUBMITTED_ON_TIME';
-                    else if (rand < 0.3) status = 'SUBMITTED_LATE';
-                    else status = null;
-                }
+    //             // Xác định tỉ lệ làm bài theo nhóm
+    //             const rand = Math.random();
+    //             if (s <= fullDone) {
+    //                 status = rand < 0.9 ? 'SUBMITTED_ON_TIME' : 'SUBMITTED_LATE';
+    //             } else if (s <= fullDone + manyDone) {
+    //                 if (rand < 0.75) status = 'SUBMITTED_ON_TIME';
+    //                 else if (rand < 0.9) status = 'SUBMITTED_LATE';
+    //                 else status = null;
+    //             } else if (s <= fullDone + manyDone + mediumDone) {
+    //                 if (rand < 0.5) status = 'SUBMITTED_ON_TIME';
+    //                 else if (rand < 0.7) status = 'SUBMITTED_LATE';
+    //                 else status = null;
+    //             } else {
+    //                 if (rand < 0.2) status = 'SUBMITTED_ON_TIME';
+    //                 else if (rand < 0.3) status = 'SUBMITTED_LATE';
+    //                 else status = null;
+    //             }
 
-                exercises.push({
-                    id: exTemplate.id,
-                    name: exTemplate.name,
-                    description: `Mô tả ${exTemplate.name}`,
-                    subject: exTemplate.subject,
-                    dueDate: new Date(Date.now() - Math.floor(Math.random() * 10) * 86400000),
-                    maxScore: 10,
-                    s3key: null,
-                    status,
-                });
-            }
+    //             exercises.push({
+    //                 id: exTemplate.id,
+    //                 name: exTemplate.name,
+    //                 description: `Mô tả ${exTemplate.name}`,
+    //                 subject: exTemplate.subject,
+    //                 dueDate: new Date(Date.now() - Math.floor(Math.random() * 10) * 86400000),
+    //                 maxScore: 10,
+    //                 s3key: null,
+    //                 status,
+    //             });
+    //         }
 
-            students.push({
-                id: studentId,
-                clerkUserId: `clerk-${studentId}`,
-                name: `Student ${s} Class ${classNames[c]}`,
-                firstName: `Student${s}`,
-                lastName: `Class${classNames[c]}`,
-                role: 'user',
-                email: `student${s}_class${classNames[c]}@example.com`,
-                exercises,
-            });
-        }
+    //         students.push({
+    //             id: studentId,
+    //             clerkUserId: `clerk-${studentId}`,
+    //             name: `Student ${s} Class ${classNames[c]}`,
+    //             firstName: `Student${s}`,
+    //             lastName: `Class${classNames[c]}`,
+    //             role: 'user',
+    //             email: `student${s}_class${classNames[c]}@example.com`,
+    //             exercises,
+    //         });
+    //     }
 
-        classesData.push({
-            id: classId,
-            name: classNames[c],
-            description: `Mô tả lớp ${classNames[c]}`,
-            order: c + 1,
-            students,
-        });
-    }
+    //     classesData.push({
+    //         id: classId,
+    //         name: classNames[c],
+    //         description: `Mô tả lớp ${classNames[c]}`,
+    //         order: c + 1,
+    //         students,
+    //     });
+    // }
 
     // Trả JSX cho Next.js
-    return <AdminPageClient classes={classesData} lang={lang} />;
+    return <>this is Dashboard</>;
 }
 
 interface ExerciseInfo {

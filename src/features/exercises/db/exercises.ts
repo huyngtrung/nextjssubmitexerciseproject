@@ -115,7 +115,7 @@ export async function saveUserSubmission({
 }: {
     exerciseId: string;
     userId: string;
-    aiResult: any;
+    aiResult: JSON;
     files: { s3Key: string; fileType: string }[];
 }) {
     return await db.transaction(async (tx) => {
