@@ -156,7 +156,7 @@ export function ExerciseTableComponent({
                                     <div className="font-semibold">{exercise.name}</div>
                                 </div>
                             </TableCell>
-                            <TableCell className="text-center text-sm text-foreground">
+                            {/* <TableCell className="text-center text-sm text-foreground">
                                 <div className="flex flex-wrap gap-2 justify-center">
                                     {exercise.classes?.map((cls) => (
                                         <span
@@ -188,7 +188,7 @@ export function ExerciseTableComponent({
                                 ) : (
                                     <span className="text-gray-400 italic">No file</span>
                                 )}
-                            </TableCell>
+                            </TableCell> */}
                             <TableCell className="text-right">
                                 <div className="flex justify-end gap-2 items-center">
                                     <Button asChild>
