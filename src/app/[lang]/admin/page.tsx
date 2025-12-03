@@ -5,6 +5,7 @@ import {
     ExerciseClassesTable,
     ExerciseProgressTable,
     ExercisesTable,
+    ExerciseSubmissionStatus,
     UserClassesTable,
     UserTable,
 } from '@/drizzle/schema';
