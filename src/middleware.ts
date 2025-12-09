@@ -24,7 +24,6 @@ export default clerkMiddleware(async (auth, req) => {
             return new NextResponse(null, { status: 404 });
         }
     }
-
     // 2. Kiểm tra các route cần login
     if (!isPublicRoute(req)) {
         try {

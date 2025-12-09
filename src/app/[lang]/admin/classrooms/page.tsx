@@ -6,7 +6,9 @@ import { ClassroomTable } from '@/features/classrooms/components/ClassroomTable'
 import { getClassroomGlobalTag } from '@/features/classrooms/db/cache/classrooms';
 import { getExerciseGlobalTag } from '@/features/exercises/db/cache';
 import { getUserGlobalTag } from '@/features/users/db/cache';
+import { getCurrentUser } from '@/services/clerk';
 import { countDistinct, eq } from 'drizzle-orm';
+import { get } from 'http';
 import { cacheTag } from 'next/dist/server/use-cache/cache-tag';
 import Link from 'next/link';
 
@@ -51,8 +53,16 @@ export default async function ClassroomPage({
     params: Promise<{ lang: 'vi' | 'en' }>;
 }) {
     const { lang } = await params;
+    const currentUser = await getCurrentUser();
 
-    const classrooms = await getclassrooms();
+    let classrooms = [];
+
+    if (currentUser.role == 'admin') {
+        classrooms = await getclassrooms();
+    }
+
+    // const classrooms = await getclassrooms();
+
     const textsForLang = getTextsForLang(lang);
 
     return (
