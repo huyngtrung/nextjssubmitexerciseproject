@@ -8,7 +8,6 @@ import { getExerciseGlobalTag } from '@/features/exercises/db/cache';
 import { getUserGlobalTag } from '@/features/users/db/cache';
 import { getCurrentUser } from '@/services/clerk';
 import { countDistinct, eq } from 'drizzle-orm';
-import { get } from 'http';
 import { cacheTag } from 'next/dist/server/use-cache/cache-tag';
 import Link from 'next/link';
 
@@ -54,8 +53,14 @@ export default async function ClassroomPage({
 }) {
     const { lang } = await params;
     const currentUser = await getCurrentUser();
-
-    let classrooms = [];
+    interface Classroom {
+        id: string;
+        name: string;
+        description: string;
+        usersCount: number;
+        exercisesCount: number;
+    }
+    let classrooms: Classroom[] = [];
 
     if (currentUser.role == 'admin') {
         classrooms = await getclassrooms();
